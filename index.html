@@ -4,7 +4,6 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Kut Milz TB</title>
-
   <script src="https://cdn.tailwindcss.com"></script>
 
   <!-- Lightweight Charts -->
@@ -13,7 +12,7 @@
   <style>
     /* ABSOLUTE RULE: DO NOT TOUCH OR CHANGE ANY BACKGROUND CODE */
     body {
-      font-family: 'Inter', system-ui, sans-serif;
+      font-family: 'Inter', sans-serif;
       background: #0f172a;
       color: #e2e8f0;
       min-height: 100vh;
@@ -46,6 +45,7 @@
       font-weight: 600;
       display: inline-flex;
       align-items: center;
+      gap: 6px;
     }
 
     .status-pill {
@@ -77,84 +77,53 @@
 
   <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
 
-    <!-- LEFT COLUMN -->
+    <!-- Column 1 -->
     <div class="lg:col-span-1">
 
-      <!-- BOT CONTROLS + LOGIN -->
+      <!-- Bot Controls -->
       <div class="card">
         <h2 class="text-xl font-semibold mb-4 text-sky-400">Bot Controls</h2>
 
-        <!-- API TOKEN -->
-        <div class="mb-3">
-          <label for="api-token" class="block text-sm font-medium mb-1 text-slate-300">Deriv API Token</label>
-          <div class="flex items-center rounded-lg bg-slate-700 border border-slate-600 focus-within:ring-2 focus-within:ring-sky-500 transition duration-150">
-            <span class="p-3 text-sky-400">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 5.25a3 3 0 0 1 3 3v2.25m-15.75 6a3 3 0 0 1 3-3h2.25m3.75-10.25v12a3 3 0 0 1-3 3h-2.25a3 3 0 0 1-3-3v-2.25m15.75-6a3 3 0 0 1-3 3h-2.25a3 3 0 0 1-3-3v-2.25m3.75 10.25v-12a3 3 0 0 1 3-3h2.25a3 3 0 0 1 3 3v2.25" />
-              </svg>
-            </span>
-            <input type="password" id="api-token" placeholder="Paste your API token here..."
-              class="flex-1 p-3 bg-transparent border-none text-slate-50 focus:ring-0 focus:outline-none placeholder-slate-400"
-              autocomplete="off">
-            <button id="toggle-visibility-btn" class="p-3 text-slate-400 hover:text-sky-300 transition duration-150"
-              type="button" title="Show/Hide Token">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
-                <path stroke-linecap="round" stroke-linejoin="round"
-                  d="M3.988 5.82a1.01 1.01 0 0 0-.083.125m3.668-.125c.112-.34.238-.667.38-.985a24.144 24.144 0 0 1 8.878 0c.142.318.268.645.38.985m3.668-.125c.112-.34.238-.667.38-.985a24.144 24.144 0 0 1 8.878 0c.142.318.268.645.38.985m-.12 11.082l-3.321-3.321a3.5 3.5 0 0 0-4.95-.99L3.988 5.82M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
-              </svg>
-            </button>
-          </div>
-          <p id="token-error-message" class="text-sm text-red-400 mt-2 hidden">API token required.</p>
-        </div>
+        <div class="mt-2 border-t border-slate-700 pt-4 space-y-3">
+          <h3 class="text-lg font-medium text-slate-300">Live Status</h3>
 
-        <!-- PASSWORD -->
-        <div class="mb-3">
-          <label for="start-password" class="block text-sm font-medium mb-1 text-slate-300">Start Password</label>
-          <input type="password" id="start-password" value="$1977"
-            class="w-full p-3 rounded-lg bg-slate-700 border border-slate-600 text-slate-50 focus:ring-sky-500 focus:border-sky-500"
-            autocomplete="off">
-          <p id="pw-error-message" class="text-sm text-red-400 mt-2 hidden">Wrong password — bot will NOT start.</p>
-        </div>
-
-        <!-- START/STOP -->
-        <button id="toggle-bot-btn"
-          class="w-full py-3 rounded-lg font-bold transition duration-200 bg-emerald-600 hover:bg-emerald-700 text-white shadow-lg">
-          START BOT
-        </button>
-
-        <div class="mt-4 text-xs text-slate-400">
-          Tip: Save token locally (auto). Works on Web / iOS / Android browsers.
-        </div>
-
-        <div class="mt-6 border-t border-slate-700 pt-4 space-y-3">
           <div class="flex justify-between items-center">
             <span class="text-sm">Connection:</span>
             <span id="connection-status" class="status-pill bg-red-800 text-white">DISCONNECTED</span>
           </div>
+
           <div class="flex justify-between items-center">
             <span class="text-sm">Account Type:</span>
-            <span id="account-type" class="status-pill bg-slate-600 text-slate-200">UNKNOWN</span>
+            <span id="account-type-status" class="status-pill bg-slate-600 text-slate-300">UNKNOWN</span>
           </div>
+
           <div class="flex justify-between items-center">
             <span class="text-sm">Trade Active:</span>
             <span id="trade-active-status" class="status-pill bg-slate-600 text-slate-300">Idle</span>
           </div>
+
           <div class="flex justify-between items-center">
             <span class="text-sm">Current Mode:</span>
             <span id="mode-status" class="status-pill bg-indigo-800 text-white">SCALP</span>
           </div>
+
           <div class="flex justify-between items-center">
             <span class="text-sm">H4 Trend:</span>
             <span id="h4-trend-display" class="status-pill bg-slate-600 text-slate-300">OFF</span>
           </div>
+
           <div class="flex justify-between items-center">
             <span class="text-sm">Reason Blocked:</span>
             <span id="block-reason-display" class="status-pill bg-slate-600 text-slate-300">None</span>
           </div>
+
+          <div id="account-warning" class="hidden mt-3 p-3 rounded-lg border border-red-500/40 bg-red-500/10 text-sm text-red-200">
+            ⚠️ Symbol not available on this account. Use a Deriv <b>Derived/Synthetic (STD)</b> account for Volatility indices and Vol 1s.
+          </div>
         </div>
       </div>
 
-      <!-- ACCOUNT SUMMARY -->
+      <!-- Account Summary -->
       <div class="card">
         <h2 class="text-xl font-semibold mb-4 text-sky-400">Account Summary</h2>
         <div class="space-y-3">
@@ -173,24 +142,7 @@
         </div>
       </div>
 
-      <!-- CONFIDENCE METER -->
-      <div class="card">
-        <div class="flex items-center justify-between mb-2">
-          <h2 class="text-xl font-semibold text-emerald-400">Confidence Meter</h2>
-          <span id="confidence-pill" class="pill bg-slate-700 text-slate-200">0%</span>
-        </div>
-        <div class="w-full bg-slate-700 rounded-full h-4 overflow-hidden">
-          <div id="confidence-bar" class="h-4 bg-emerald-500" style="width:0%"></div>
-        </div>
-        <div id="confidence-text" class="text-xs mt-2 text-slate-300">
-          0% — Waiting for ticks...
-        </div>
-        <div class="text-xs text-slate-400 mt-2">
-          Use this when Auto Trading is OFF to help decide manual entries. (Not financial advice.)
-        </div>
-      </div>
-
-      <!-- SYSTEM LOG -->
+      <!-- System Log -->
       <div class="card">
         <h2 class="text-xl font-semibold mb-4 text-amber-300">System Log</h2>
         <div class="p-3 bg-slate-900/40 border border-slate-700 rounded-lg text-xs whitespace-pre-wrap min-h-[120px] max-h-[220px] overflow-auto"
@@ -203,10 +155,10 @@
 
     </div>
 
-    <!-- RIGHT COLUMN -->
+    <!-- Column 2 -->
     <div class="lg:col-span-2">
 
-      <!-- CLUSTER ALERT -->
+      <!-- Clustering Detected Alert -->
       <div id="cluster-alert" class="card hidden border-yellow-500/40">
         <div class="flex items-start gap-3">
           <div class="text-yellow-400 text-xl">⚠️</div>
@@ -219,15 +171,7 @@
         </div>
       </div>
 
-      <!-- UPDATE TITLE (what you asked) -->
-      <div class="card">
-        <h2 class="text-xl font-semibold text-sky-400">Update Kut Milz TB (symbols + chart + fixes)</h2>
-        <p class="text-xs text-slate-400 mt-2">
-          Live ticks from Deriv API → Chart + Signal Engine + Auto/Manual controls.
-        </p>
-      </div>
-
-      <!-- TRADE SETTINGS -->
+      <!-- Trade Settings (Symbol + Manual Buttons + Auto Toggle) -->
       <div class="card">
         <h2 class="text-xl font-semibold mb-4 text-sky-400">Trade Settings</h2>
 
@@ -244,7 +188,7 @@
               <option value="R_75">Volatility 75 Index (R_75)</option>
               <option value="R_100" selected>Volatility 100 Index (R_100)</option>
 
-              <!-- 1s Vols (common Deriv symbols; if yours differs, use Custom Symbol) -->
+              <!-- 1s Vols -->
               <option value="1HZ10V">Volatility 10 (1s) (1HZ10V)</option>
               <option value="1HZ25V">Volatility 25 (1s) (1HZ25V)</option>
               <option value="1HZ50V">Volatility 50 (1s) (1HZ50V)</option>
@@ -267,8 +211,7 @@
               </button>
             </div>
             <p class="text-xs text-slate-400 mt-2">
-              If you’re on an account that doesn’t support Synthetic Volatility (e.g., some MT5/financial-only setups),
-              ticks will fail and you’ll see a warning in the log. Use a Derived/Synthetic account token.
+              If symbol fails to stream, you may be on an account that doesn’t allow it. Use a Derived/STD account for Volatility indices.
             </p>
           </div>
 
@@ -292,7 +235,7 @@
               <div class="text-purple-300 text-xl">⚡</div>
               <div>
                 <div class="font-semibold text-slate-200">Auto Trading</div>
-                <div class="text-xs text-slate-400">Turn OFF if you want to trade manually using the Confidence Meter</div>
+                <div class="text-xs text-slate-400">Enable to start automated trading based on current settings</div>
               </div>
             </div>
             <label class="relative inline-flex items-center cursor-pointer">
@@ -306,7 +249,7 @@
         </div>
       </div>
 
-      <!-- TRADING PARAMETERS (manual tweak) -->
+      <!-- Trading Parameters -->
       <div class="card">
         <h2 class="text-xl font-semibold mb-4 text-sky-400">Trading Parameters</h2>
 
@@ -352,7 +295,6 @@
               class="w-full p-2 rounded bg-slate-700 border border-slate-600 text-slate-50 focus:ring-sky-500 focus:border-sky-500">
           </div>
 
-          <!-- ✅ COOLDOWN IS BACK -->
           <div class="col-span-2">
             <label for="cooldownDuration" class="block text-sm font-medium mb-1">Cooldown Duration (s)</label>
             <input type="number" id="cooldownDuration" value="30" step="1"
@@ -361,7 +303,7 @@
         </div>
       </div>
 
-      <!-- PROTECTED DEFAULTS -->
+      <!-- Protected Defaults -->
       <div class="card">
         <div class="flex justify-between items-start mb-4 border-b border-slate-700 pb-3">
           <h2 class="text-xl font-semibold text-pink-400">Protected Defaults</h2>
@@ -372,6 +314,7 @@
         </div>
 
         <div class="space-y-4">
+
           <div class="flex items-center justify-between p-3 bg-slate-700/50 rounded-lg">
             <div class="flex flex-col sm:flex-row sm:items-center">
               <span class="text-sm font-medium text-slate-300 mr-4">Strategy Mode:</span>
@@ -415,14 +358,15 @@
                 after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-pink-600"></div>
             </label>
           </div>
+
         </div>
 
         <div class="mt-4 pt-3 border-t border-slate-700">
-          <p class="text-xs text-center text-slate-500">Kut Milz TB</p>
+          <p class="text-xs text-center text-slate-500">Made by Kut.Milz</p>
         </div>
       </div>
 
-      <!-- LIVE CHART -->
+      <!-- Chart Card -->
       <div class="card">
         <div class="flex items-center justify-between mb-3">
           <h2 class="text-xl font-semibold text-sky-400">Live Chart</h2>
@@ -430,13 +374,98 @@
         </div>
         <div id="chart-container"></div>
         <p class="text-xs text-slate-400 mt-2">
-          Live chart from Deriv tick stream. Candles if supported; otherwise line fallback.
+          Live <span class="text-sky-300 font-semibold">1-second candles</span> built from Deriv tick stream (auto-fallback supported).
         </p>
       </div>
 
-      <!-- MARKET INSIGHTS (fallback) -->
+      <!-- Confidence Meter (Manual Use When Auto Trading OFF) -->
+      <div class="card">
+        <div class="flex items-center justify-between mb-3">
+          <h2 class="text-xl font-semibold text-emerald-400">Confidence Meter</h2>
+          <span id="signal-pill" class="pill bg-slate-700 text-slate-200">WAIT</span>
+        </div>
+
+        <div class="w-full bg-slate-700 rounded-full h-4 overflow-hidden">
+          <div id="confidence-bar" class="h-4 bg-emerald-500" style="width:0%"></div>
+        </div>
+        <div class="flex justify-between mt-2 text-xs text-slate-300">
+          <div id="confidence-text">0%</div>
+          <div id="confidence-notes" class="text-slate-400">Waiting ticks…</div>
+        </div>
+
+        <div class="mt-3 text-xs text-slate-400">
+          If <b>Auto Trading</b> is OFF, you can use this bar + signal to decide manual entries. Not financial advice.
+        </div>
+      </div>
+
+      <!-- API Login (API above PW above Start Bot) -->
+      <div class="card">
+        <div class="flex justify-between items-center mb-4 pb-3 border-b border-slate-700">
+          <h2 class="text-xl font-semibold text-sky-400">API Login</h2>
+          <span id="login-status-badge" class="pill bg-red-800 text-white animate-pulse">DISCONNECTED</span>
+        </div>
+
+        <div class="relative mb-3">
+          <label for="api-token" class="block text-sm font-medium mb-1 text-slate-300">Deriv API Token</label>
+          <div class="flex items-center rounded-lg bg-slate-700 border border-slate-600 focus-within:ring-2 focus-within:ring-sky-500 transition duration-150">
+            <span class="p-3 text-sky-400">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 5.25a3 3 0 0 1 3 3v2.25m-15.75 6a3 3 0 0 1 3-3h2.25m3.75-10.25v12a3 3 0 0 1-3 3h-2.25a3 3 0 0 1-3-3v-2.25m15.75-6a3 3 0 0 1-3 3h-2.25a3 3 0 0 1-3-3v-2.25m3.75 10.25v-12a3 3 0 0 1 3-3h2.25a3 3 0 0 1 3 3v2.25" />
+              </svg>
+            </span>
+
+            <input type="password" id="api-token" placeholder="Paste your API token here..."
+              class="flex-1 p-3 bg-transparent border-none text-slate-50 focus:ring-0 focus:outline-none placeholder-slate-400"
+              autocomplete="off">
+
+            <button id="toggle-visibility-btn" class="p-3 text-slate-400 hover:text-sky-300 transition duration-150"
+              type="button" title="Show Token">
+              👁️
+            </button>
+          </div>
+        </div>
+
+        <div class="relative mb-3">
+          <label for="start-password" class="block text-sm font-medium mb-1 text-slate-300">Start Password</label>
+          <input type="password" id="start-password" placeholder="Type password to start bot…"
+            class="w-full p-3 rounded-lg bg-slate-700 border border-slate-600 text-slate-50 focus:ring-sky-500 focus:border-sky-500"
+            autocomplete="off" />
+          <p id="pw-error-message" class="mt-2 text-sm text-red-300 hidden">
+            Access Denied: Incorrect password to start bot.
+          </p>
+        </div>
+
+        <button id="toggle-bot-btn"
+          class="w-full py-3 rounded-lg font-bold transition duration-200 bg-emerald-600 hover:bg-emerald-700 text-white shadow-lg">
+          START BOT
+        </button>
+
+        <p id="token-error-message" class="text-sm text-red-400 mt-3 hidden">API token required to start the bot.</p>
+
+        <p class="text-xs text-slate-500 mt-3">
+          <span class="font-semibold text-sky-300">Permissions:</span> Read + Trade
+        </p>
+
+        <p id="edit-hint" class="text-xs text-slate-500 mb-4">
+          Token stored in browser (localStorage). Never share it.
+        </p>
+
+        <div class="p-3 bg-slate-700 rounded-lg border border-slate-600 flex flex-col sm:flex-row justify-between items-start sm:items-center">
+          <div class="text-xs space-y-1 sm:space-y-0">
+            <p>API URL: <code id="api-url-text" class="text-yellow-400 break-all text-[11px] select-all font-mono">wss://ws.binaryws.com/websockets/v3?app_id=1089</code></p>
+          </div>
+          <button id="copy-api-url-btn"
+            class="mt-2 sm:mt-0 text-xs py-1 px-3 rounded-full bg-slate-600 hover:bg-slate-500 transition duration-150 text-white font-medium"
+            type="button">
+            Copy URL
+          </button>
+        </div>
+      </div>
+
+      <!-- Insights -->
       <div class="card">
         <h2 class="text-xl font-semibold mb-4 text-emerald-400">Market Insights ✨</h2>
+
         <div class="flex flex-col sm:flex-row gap-4 mb-4">
           <button id="analyze-market-btn" class="flex-1 py-2 rounded-lg font-bold transition duration-200 bg-emerald-700 hover:bg-emerald-800 text-white shadow-lg">
             Analyze Market Sentiment ✨
@@ -451,7 +480,7 @@
         </div>
 
         <div id="gemini-output" class="p-3 bg-slate-700 rounded-lg text-sm text-slate-100 min-h-[100px] whitespace-pre-wrap">
-          Tap a button above for analysis. (Works without API key.)
+          Tap a button above for analysis. (Works even without API key.)
         </div>
 
         <div class="mt-3 text-xs text-slate-400">
@@ -465,7 +494,7 @@
 
 <script>
 /* =========================================================
-   SAFE DOM + LOG
+   SAFE DOM + LOGGING
 ========================================================= */
 function $(id){ return document.getElementById(id); }
 const LOG = $("system-log");
@@ -482,112 +511,111 @@ function logLine(msg){
 /* =========================================================
    CONFIG
 ========================================================= */
-const API_URL = "wss://ws.binaryws.com/websockets/v3?app_id=1089";
-const START_PASSWORD = "$1977";
+const API_URL = 'wss://ws.binaryws.com/websockets/v3?app_id=1089';
+const REQUIRED_PASSWORD = "$1977";
 
 /* =========================================================
-   MODE DEFAULTS
-   - Momentum best = Minutes (your request)
+   MODE DEFAULTS (Momentum best = Minutes)
 ========================================================= */
 const modeDefaults = {
-  SCALP:   { stake:1.00, duration:5, durationUnit:"t", tp:0.34, sl:10.00, maxTrades:1, cooldown:30, tickBuf:6,  thr:0.015, trend:false, strict:false },
-  MOMENTUM:{ stake:2.00, duration:1, durationUnit:"m", tp:0.60, sl:15.00, maxTrades:1, cooldown:45, tickBuf:10, thr:0.030, trend:true,  strict:false },
-  H4:      { stake:2.00, duration:2, durationUnit:"m", tp:0.80, sl:20.00, maxTrades:1, cooldown:60, tickBuf:12, thr:0.040, trend:true,  strict:true  }
+  SCALP:   { stake:1.00, duration:5, durationUnit:'t', tp:0.34, sl:10.00, maxTrades:1, cooldown:30, tickBuf:6,  thr:0.015, trend:false, strict:false },
+  MOMENTUM:{ stake:2.00, duration:1, durationUnit:'m', tp:0.60, sl:15.00, maxTrades:1, cooldown:45, tickBuf:10, thr:0.030, trend:true,  strict:false },
+  H4:      { stake:2.00, duration:2, durationUnit:'m', tp:0.80, sl:20.00, maxTrades:1, cooldown:60, tickBuf:12, thr:0.040, trend:true,  strict:true  }
 };
 
 /* =========================================================
    STATE
 ========================================================= */
 const appState = {
-  ws: null,
-  token: localStorage.getItem("derivToken") || "",
-  isBotRunning: false,
-  isAuthenticated: false,
-  isEntryInProgress: false,
+  ws:null,
+  token: localStorage.getItem('derivToken') || '',
+  isBotRunning:false,
+  isAuthenticated:false,
+  isEntryInProgress:false,
 
   symbol: "R_100",
 
-  currentBalance: 0,
-  sessionProfit: 0,
+  currentBalance:0,
+  sessionProfit:0,
 
-  tradeCounter: 0,
-  currentContractId: null,
-  is_sellable: 0,
-  isSelling: false,
+  tradeCounter:0,
+  currentContractId:null,
+  is_sellable:0,
+  isSelling:false,
 
-  mode: "SCALP",
-  isSettingsLocked: true,
-  isSafeMode: false,
-  autoResume: true,
-  autoTradingEnabled: true,
+  mode:'SCALP',
+  isSettingsLocked:true,
+  isSafeMode:false,
+  autoResume:true,
+  autoTradingEnabled:true,
 
-  stakeAmount: 1.00,
-  duration: 5,
-  durationUnit: "t",
-  tpUSD: 0.34,
-  slUSD: 10.00,
-  maxTradesPerSignal: 1,
-  cooldownDuration: 30,
-  cooldownUntil: 0,
+  stakeAmount:1.00,
+  duration:5,
+  durationUnit:'t',
+  tpUSD:0.34,
+  slUSD:10.00,
+  maxTradesPerSignal:1,
+  cooldownDuration:30,
+  cooldownUntil:0,
 
-  tickBuffer: [],
-  tickBufferSize: 6,
-  momentumThreshold: 0.015,
-  lastTick: null,
+  tickBuffer:[],
+  tickBufferSize:6,
+  momentumThreshold:0.015,
+  lastTick:null,
 
-  lastDigits: [],
+  // last digits for clustering (last 5 ticks)
+  lastDigits:[],
 
-  pendingProposalId: null,
+  // proposal/buy flow
+  pendingProposalId:null,
 
-  useTrendFilter: false,
-  breakoutStrict: false,
-  trend: {
-    enabled: false,
-    status: "OFF",
-    tfSeconds: 14400,
-    emaFast: 20,
-    emaSlow: 50,
-    lastUpdated: 0,
-    refreshMs: 60000
+  // trend
+  useTrendFilter:false,
+  breakoutStrict:false,
+  trend:{
+    enabled:false,
+    status:"OFF",
+    tfSeconds:14400,
+    emaFast:20,
+    emaSlow:50,
+    lastUpdated:0,
+    refreshMs:60000
   },
 
-  chart: {
-    lastCandleTime: 0,
-    lastOHLC: null,
-    hasTick: false,
-    seriesType: "line" // "candle" or "line"
+  // chart candle aggregator
+  chart:{
+    lastCandleTime:0,
+    lastOHLC:null,
+    hasTick:false
   },
 
-  account: {
-    isDemo: null
-  }
+  // account
+  isDemo: null
 };
 
 /* =========================================================
    DOM
 ========================================================= */
 const dom = {
-  toggleBotBtn: $("toggle-bot-btn"),
-  unlockBtn: $("unlock-settings-btn"),
-
-  apiToken: $("api-token"),
-  tokenError: $("token-error-message"),
-  pwInput: $("start-password"),
-  pwError: $("pw-error-message"),
-  toggleVisibilityBtn: $("toggle-visibility-btn"),
-
+  // status
   connectionStatus: $("connection-status"),
-  accountType: $("account-type"),
+  accountTypeStatus: $("account-type-status"),
   tradeActiveStatus: $("trade-active-status"),
-  modeStatus: $("mode-status"),
-  modePill: $("mode-pill"),
-  modeSelect: $("mode-select"),
   h4TrendDisplay: $("h4-trend-display"),
   blockReasonDisplay: $("block-reason-display"),
+  accountWarning: $("account-warning"),
 
+  // balance
   balanceDisplay: $("current-balance-display"),
   profitDisplay: $("current-profit-display"),
   sellableDisplay: $("sellable-display"),
+
+  // controls
+  toggleBotBtn: $("toggle-bot-btn"),
+  unlockBtn: $("unlock-settings-btn"),
+  modeSelect: $("mode-select"),
+  modePill: $("mode-pill"),
+  modeStatus: $("mode-status"),
 
   stakeInput: $("stakeAmount"),
   durationInput: $("duration"),
@@ -604,6 +632,27 @@ const dom = {
   autoResumeToggle: $("autoresume-toggle"),
   autoResumeIndicator: $("autoresume-indicator"),
 
+  // api + pw
+  apiToken: $("api-token"),
+  tokenError: $("token-error-message"),
+  loginBadge: $("login-status-badge"),
+  toggleVisibilityBtn: $("toggle-visibility-btn"),
+  copyApiUrlBtn: $("copy-api-url-btn"),
+  apiUrlText: $("api-url-text"),
+  editHint: $("edit-hint"),
+  pwInput: $("start-password"),
+  pwError: $("pw-error-message"),
+
+  // chart
+  chartStatus: $("chart-status"),
+
+  // insights
+  analyzeBtn: $("analyze-market-btn"),
+  riskBtn: $("assess-risk-btn"),
+  geminiOut: $("gemini-output"),
+  geminiLoading: $("gemini-loading-indicator"),
+
+  // trade settings
   symbolSelect: $("symbolSelect"),
   currentSymbolLabel: $("currentSymbolLabel"),
   customSymbol: $("customSymbol"),
@@ -618,42 +667,48 @@ const dom = {
   bulk5Label: $("bulk5Label"),
   autoTradingToggle: $("autoTradingToggle"),
 
+  // clustering
   clusterAlert: $("cluster-alert"),
   clusterText: $("cluster-text"),
 
+  // log controls
   clearLogBtn: $("clear-log-btn"),
   exportLogBtn: $("export-log-btn"),
 
-  chartStatus: $("chart-status"),
-
-  analyzeBtn: $("analyze-market-btn"),
-  riskBtn: $("assess-risk-btn"),
-  geminiOut: $("gemini-output"),
-  geminiLoading: $("gemini-loading-indicator"),
-
+  // confidence
   confidenceBar: $("confidence-bar"),
   confidenceText: $("confidence-text"),
-  confidencePill: $("confidence-pill"),
+  confidenceNotes: $("confidence-notes"),
+  signalPill: $("signal-pill")
 };
 
 /* =========================================================
-   UI HELPERS
+   UI helpers
 ========================================================= */
-function setStatusPill(el, text, cls){
-  if (!el) return;
-  el.textContent = text;
-  el.className = `status-pill ${cls}`;
-}
 function setPill(el, text, cls){
   if (!el) return;
   el.textContent = text;
-  el.className = `pill ${cls}`;
+  if (el.className.includes("status-pill")) el.className = `status-pill ${cls}`;
+  else el.className = `pill ${cls}`;
 }
-function setIfNotEditing(el, value){
-  if (!el) return;
-  if (document.activeElement === el) return;
-  el.value = value;
+
+function updateConnection(status, cls){
+  setPill(dom.connectionStatus, status, cls);
+  updateLoginBadge();
 }
+
+function updateLoginBadge(){
+  if (!dom.loginBadge || !dom.connectionStatus) return;
+  const t = dom.connectionStatus.textContent || "";
+  if (t === "CONNECTED") setPill(dom.loginBadge, "CONNECTED", "bg-emerald-600 text-white");
+  else if (t.includes("ERROR") || t.includes("DISCONNECTED")) setPill(dom.loginBadge, "DISCONNECTED", "bg-red-800 text-white");
+  else setPill(dom.loginBadge, "CONNECTING...", "bg-yellow-600 text-white animate-pulse");
+}
+
+function updateTradeStatus(text, cls="bg-slate-600 text-slate-300"){
+  setPill(dom.tradeActiveStatus, text, cls);
+}
+
 function updateProfit(p){
   if (!dom.profitDisplay) return;
   dom.profitDisplay.textContent = p.toFixed(2);
@@ -662,22 +717,19 @@ function updateProfit(p){
   if (p < 0) color = "text-red-400";
   dom.profitDisplay.className = `text-lg font-bold ${color}`;
 }
-function updateConnection(status, cls){
-  setStatusPill(dom.connectionStatus, status, cls);
-}
-function updateTradeStatus(text, cls="bg-slate-600 text-slate-300"){
-  setStatusPill(dom.tradeActiveStatus, text, cls);
-}
+
 function setSellable(isSellable){
   appState.is_sellable = isSellable;
-  if (isSellable === 1) setStatusPill(dom.sellableDisplay, "YES", "bg-emerald-600 text-white");
-  else setStatusPill(dom.sellableDisplay, "NO", "bg-red-500 text-white");
+  if (isSellable === 1) setPill(dom.sellableDisplay, "YES", "bg-emerald-600 text-white");
+  else setPill(dom.sellableDisplay, "NO", "bg-red-500 text-white");
 }
-function updateAccountTypeUI(){
-  if (appState.account.isDemo === true) setStatusPill(dom.accountType, "DEMO", "bg-yellow-600 text-white");
-  else if (appState.account.isDemo === false) setStatusPill(dom.accountType, "REAL", "bg-emerald-600 text-white");
-  else setStatusPill(dom.accountType, "UNKNOWN", "bg-slate-600 text-slate-200");
+
+function setIfNotEditing(el, value){
+  if (!el) return;
+  if (document.activeElement === el) return;
+  el.value = value;
 }
+
 function updateTrendUI(){
   if (!dom.h4TrendDisplay) return;
   const t = appState.trend.enabled ? appState.trend.status : "OFF";
@@ -686,12 +738,14 @@ function updateTrendUI(){
   if (t === "BEAR") cls = "bg-red-600 text-white";
   if (t === "NEUTRAL") cls = "bg-yellow-600 text-white";
   if (t === "ERROR") cls = "bg-red-800 text-white";
-  setStatusPill(dom.h4TrendDisplay, t, cls);
+  setPill(dom.h4TrendDisplay, t, cls);
 }
+
 function updateUI(){
   if (dom.modePill) dom.modePill.textContent = appState.mode;
   if (dom.modeStatus) dom.modeStatus.textContent = appState.mode;
 
+  // Safe mode indicator
   if (dom.safeIndicator){
     dom.safeIndicator.textContent = appState.isSafeMode ? "ON" : "OFF";
     dom.safeIndicator.className = `pill ${appState.isSafeMode ? "bg-emerald-600" : "bg-red-600"} text-white`;
@@ -702,6 +756,7 @@ function updateUI(){
       : "Safe Mode is DISABLED.";
   }
 
+  // Inputs (do not overwrite while typing)
   setIfNotEditing(dom.stakeInput, appState.stakeAmount.toFixed(2));
   setIfNotEditing(dom.durationInput, String(appState.duration));
   if (dom.durationUnitInput && document.activeElement !== dom.durationUnitInput) dom.durationUnitInput.value = appState.durationUnit;
@@ -713,22 +768,32 @@ function updateUI(){
   if (dom.modeSelect && document.activeElement !== dom.modeSelect) dom.modeSelect.value = appState.mode;
   if (dom.safeToggle && document.activeElement !== dom.safeToggle) dom.safeToggle.checked = appState.isSafeMode;
 
+  // Auto-resume UI
   if (dom.autoResumeIndicator){
     dom.autoResumeIndicator.textContent = appState.autoResume ? "ON" : "OFF";
     dom.autoResumeIndicator.className = `pill ${appState.autoResume ? "bg-emerald-600" : "bg-red-600"} text-white`;
   }
   if (dom.autoResumeToggle) dom.autoResumeToggle.checked = !!appState.autoResume;
 
+  // Trend UI
+  updateTrendUI();
+
+  // Symbol label
   if (dom.currentSymbolLabel) dom.currentSymbolLabel.textContent = appState.symbol;
+
+  // Stake labels
   if (dom.placeStakeLabel) dom.placeStakeLabel.textContent = `$${appState.stakeAmount.toFixed(2)}`;
   if (dom.bulk3Label) dom.bulk3Label.textContent = `$${(appState.stakeAmount*3).toFixed(2)}`;
   if (dom.bulk5Label) dom.bulk5Label.textContent = `$${(appState.stakeAmount*5).toFixed(2)}`;
 
-  if (dom.autoTradingToggle) dom.autoTradingToggle.checked = !!appState.autoTradingEnabled;
+  // Account type
+  if (dom.accountTypeStatus){
+    if (appState.isDemo === true) setPill(dom.accountTypeStatus, "DEMO", "bg-yellow-600 text-white");
+    else if (appState.isDemo === false) setPill(dom.accountTypeStatus, "REAL", "bg-emerald-700 text-white");
+    else setPill(dom.accountTypeStatus, "UNKNOWN", "bg-slate-600 text-slate-300");
+  }
 
-  updateTrendUI();
-  updateAccountTypeUI();
-
+  // Start/Stop button
   if (dom.toggleBotBtn){
     if (appState.isBotRunning){
       dom.toggleBotBtn.textContent = "STOP BOT";
@@ -738,13 +803,17 @@ function updateUI(){
       dom.toggleBotBtn.className = "w-full py-3 rounded-lg font-bold transition duration-200 bg-emerald-600 hover:bg-emerald-700 text-white shadow-lg";
     }
   }
+
+  updateLoginBadge();
+  updateConfidenceUI();
 }
 
 /* =========================================================
-   SETTINGS LOCK
+   Lock/Unlock settings
 ========================================================= */
 function setSettingsLock(isLocked){
   appState.isSettingsLocked = isLocked;
+
   const list = [
     dom.stakeInput, dom.durationInput, dom.durationUnitInput,
     dom.tpInput, dom.slInput, dom.maxTradesInput, dom.cooldownInput,
@@ -762,7 +831,8 @@ function setSettingsLock(isLocked){
 }
 
 /* =========================================================
-   INPUT -> STATE (LIVE typing)
+   Input -> state (LIVE typing)
+   FIXED: Safe Mode is now read here, so it won't snap back.
 ========================================================= */
 function updateStateFromUI(){
   try{
@@ -773,8 +843,13 @@ function updateStateFromUI(){
     if (dom.slInput) appState.slUSD = parseFloat(dom.slInput.value) || 0;
     if (dom.maxTradesInput) appState.maxTradesPerSignal = parseInt(dom.maxTradesInput.value) || 0;
     if (dom.cooldownInput) appState.cooldownDuration = parseInt(dom.cooldownInput.value) || 0;
+
     if (dom.autoResumeToggle) appState.autoResume = !!dom.autoResumeToggle.checked;
     if (dom.autoTradingToggle) appState.autoTradingEnabled = !!dom.autoTradingToggle.checked;
+
+    // ✅ CRITICAL FIX:
+    if (dom.safeToggle) appState.isSafeMode = !!dom.safeToggle.checked;
+
     updateUI();
   } catch(e){
     logLine("UI parse error: " + e.message);
@@ -782,7 +857,7 @@ function updateStateFromUI(){
 }
 
 /* =========================================================
-   MODE DEFAULTS
+   Mode defaults
 ========================================================= */
 function loadDefaults(mode){
   const d = modeDefaults[mode];
@@ -805,28 +880,25 @@ function loadDefaults(mode){
 
   appState.trend.enabled = appState.useTrendFilter;
   appState.trend.status = appState.trend.enabled ? "LOADING" : "OFF";
-
   updateUI();
 }
 
 /* =========================================================
-   CHART (candles if supported, else line)
+   Chart (Candles with compatibility + fallback)
 ========================================================= */
-let chart = null;
-let series = null;
-let ro = null;
+let chart=null, series=null, seriesKind="line", ro=null;
 
 function initChart(){
-  const container = $("chart-container");
+  const container = document.getElementById("chart-container");
   if (!container) return;
 
   if (typeof LightweightCharts === "undefined"){
-    setPill(dom.chartStatus, "CHART CDN ERROR", "bg-red-700 text-white");
+    if (dom.chartStatus) setPill(dom.chartStatus, "CHART CDN ERROR", "bg-red-700 text-white");
     logLine("Chart library failed to load.");
     return;
   }
 
-  try { if (chart) chart.remove(); } catch(_){}
+  try{ if (chart && chart.remove) chart.remove(); }catch(_){}
 
   chart = LightweightCharts.createChart(container, {
     width: container.clientWidth,
@@ -837,40 +909,32 @@ function initChart(){
     timeScale: { borderColor:"#334155", timeVisible:true, secondsVisible:true }
   });
 
-  // ✅ supports BOTH old + new versions of lightweight-charts
-  series = null;
-  appState.chart.seriesType = "line";
-
+  // Try v3/v4 API
   try{
-    if (typeof chart.addCandlestickSeries === "function"){
+    if (chart.addCandlestickSeries){
       series = chart.addCandlestickSeries({ priceLineVisible:false, lastValueVisible:true });
-      appState.chart.seriesType = "candle";
-      logLine("Chart ready (candles).");
-    } else if (typeof chart.addSeries === "function" && LightweightCharts?.CandlestickSeries){
+      seriesKind = "candles";
+      logLine("Chart ready (candles v3/v4).");
+    } else if (chart.addSeries && LightweightCharts.CandlestickSeries){
+      // v5 API
       series = chart.addSeries(LightweightCharts.CandlestickSeries, { priceLineVisible:false, lastValueVisible:true });
-      appState.chart.seriesType = "candle";
+      seriesKind = "candles";
       logLine("Chart ready (candles v5).");
-    } else if (typeof chart.addLineSeries === "function"){
-      series = chart.addLineSeries({ priceLineVisible:false });
-      appState.chart.seriesType = "line";
-      logLine("Chart ready (line fallback).");
     } else {
-      throw new Error("No series method found");
+      throw new Error("Candles not supported");
     }
   } catch(e){
-    // last resort line
-    try{
-      series = chart.addLineSeries({ priceLineVisible:false });
-      appState.chart.seriesType = "line";
-      logLine("Chart fallback forced to line.");
-    }catch(err){
-      logLine("Chart init failed: " + err.message);
-      setPill(dom.chartStatus, "CHART ERROR", "bg-red-700 text-white");
-      return;
+    // fallback line series
+    if (chart.addLineSeries){
+      series = chart.addLineSeries({ priceLineVisible:false, lastValueVisible:true });
+    } else if (chart.addSeries && LightweightCharts.LineSeries){
+      series = chart.addSeries(LightweightCharts.LineSeries, { priceLineVisible:false, lastValueVisible:true });
     }
+    seriesKind = "line";
+    logLine("Chart fallback → line series (candles unavailable).");
   }
 
-  setPill(dom.chartStatus, "READY", "bg-emerald-700 text-white");
+  if (dom.chartStatus) setPill(dom.chartStatus, "READY", "bg-emerald-700 text-white");
 
   if (ro) ro.disconnect();
   ro = new ResizeObserver(() => {
@@ -879,30 +943,25 @@ function initChart(){
     }catch(_){}
   });
   ro.observe(container);
-
-  // reset candle state
-  appState.chart.lastCandleTime = 0;
-  appState.chart.lastOHLC = null;
-  appState.chart.hasTick = false;
 }
 
-/* candle builder (1s candles from tick stream) */
-function updateChartFromTick(price){
+function updateSeriesFromTick(price){
   if (!series) return;
-
   const nowSec = Math.floor(Date.now()/1000);
-  if (nowSec < appState.chart.lastCandleTime) return;
 
-  if (appState.chart.seriesType === "line"){
-    series.update({ time: nowSec, value: price });
+  if (seriesKind === "line"){
+    // line update
+    try{ series.update({ time: nowSec, value: price }); }catch(_){}
     return;
   }
 
-  // candle
+  // candle building
+  if (nowSec < appState.chart.lastCandleTime) return;
+
   if (appState.chart.lastCandleTime === 0){
     appState.chart.lastCandleTime = nowSec;
     appState.chart.lastOHLC = { time: nowSec, open: price, high: price, low: price, close: price };
-    series.update(appState.chart.lastOHLC);
+    try{ series.update(appState.chart.lastOHLC); }catch(_){}
     return;
   }
 
@@ -911,81 +970,16 @@ function updateChartFromTick(price){
     c.high = Math.max(c.high, price);
     c.low  = Math.min(c.low, price);
     c.close = price;
-    series.update(c);
+    try{ series.update(c); }catch(_){}
   } else {
     appState.chart.lastCandleTime = nowSec;
     appState.chart.lastOHLC = { time: nowSec, open: price, high: price, low: price, close: price };
-    series.update(appState.chart.lastOHLC);
+    try{ series.update(appState.chart.lastOHLC); }catch(_){}
   }
 }
 
 /* =========================================================
-   CONFIDENCE BAR (0-100)
-   - Uses: momentum delta + breakout position + optional trend alignment
-========================================================= */
-function computeConfidence(){
-  const buf = appState.tickBuffer;
-  if (buf.length < Math.max(6, appState.tickBufferSize)) return 0;
-
-  const first = buf[0];
-  const last  = buf[buf.length-1];
-  const delta = last - first;
-  const absDelta = Math.abs(delta);
-
-  const hi = Math.max(...buf);
-  const lo = Math.min(...buf);
-  const span = (hi - lo) || 1;
-
-  // momentum score (0..60)
-  const mScore = Math.max(0, Math.min(60, (absDelta / (appState.momentumThreshold || 0.000001)) * 10));
-
-  // breakout score (0..25)
-  // if CALL: last near hi, if PUT: last near lo
-  const dir = absDelta < appState.momentumThreshold ? null : (delta > 0 ? "CALL" : "PUT");
-  let bScore = 0;
-  if (dir){
-    const near = dir === "CALL" ? (1 - (hi - last)/span) : (1 - (last - lo)/span);
-    bScore = Math.max(0, Math.min(25, near * 25));
-  }
-
-  // trend score (0..15)
-  let tScore = 0;
-  if (!appState.trend.enabled) tScore = 8; // neutral bonus
-  else {
-    if (dir === "CALL" && appState.trend.status === "BULL") tScore = 15;
-    else if (dir === "PUT" && appState.trend.status === "BEAR") tScore = 15;
-    else if (appState.trend.status === "NEUTRAL") tScore = 6;
-    else tScore = 0;
-  }
-
-  const score = Math.max(0, Math.min(100, mScore + bScore + tScore));
-  return score;
-}
-
-function renderConfidence(){
-  const v = computeConfidence();
-  if (dom.confidenceBar) dom.confidenceBar.style.width = `${v.toFixed(0)}%`;
-
-  const good = v >= 70;
-  const mid  = v >= 40 && v < 70;
-
-  if (dom.confidenceBar){
-    dom.confidenceBar.className = `h-4 ${good ? "bg-emerald-500" : mid ? "bg-yellow-500" : "bg-red-500"}`;
-  }
-  if (dom.confidencePill){
-    setPill(dom.confidencePill, `${v.toFixed(0)}%`, good ? "bg-emerald-700 text-white" : mid ? "bg-yellow-700 text-white" : "bg-red-700 text-white");
-  }
-  if (dom.confidenceText){
-    dom.confidenceText.textContent =
-      v < 20 ? `${v.toFixed(0)}% — Weak / choppy. Better WAIT.` :
-      v < 40 ? `${v.toFixed(0)}% — Low confidence. Careful.` :
-      v < 70 ? `${v.toFixed(0)}% — Medium confidence. Prefer smaller stake.` :
-               `${v.toFixed(0)}% — Stronger conditions. Still manage risk.`;
-  }
-}
-
-/* =========================================================
-   TREND (EMA20/EMA50) via H4 candles
+   Trend EMA
 ========================================================= */
 function calcEMA(values, period){
   if (!values || values.length < period) return null;
@@ -1022,7 +1016,7 @@ function trendAllows(direction){
 }
 
 /* =========================================================
-   SIGNALS
+   Signals
 ========================================================= */
 function getMomentumDirection(){
   if (appState.tickBuffer.length < appState.tickBufferSize) return null;
@@ -1046,7 +1040,7 @@ function passesBreakoutFilter(direction){
 }
 
 /* =========================================================
-   CLUSTERING (simple)
+   Clustering detection
 ========================================================= */
 function updateClustering(price){
   const s = String(price);
@@ -1055,6 +1049,7 @@ function updateClustering(price){
 
   appState.lastDigits.push(d);
   while(appState.lastDigits.length > 5) appState.lastDigits.shift();
+
   if (appState.lastDigits.length < 5) return;
 
   let sameCount = 0;
@@ -1071,7 +1066,68 @@ function updateClustering(price){
 }
 
 /* =========================================================
-   DERIV WS
+   Confidence Meter + Signal (for manual entries)
+========================================================= */
+function computeConfidence(){
+  const buf = appState.tickBuffer;
+  if (buf.length < appState.tickBufferSize) return { score: 0, signal: "WAIT", notes: "Waiting ticks…" };
+
+  const first = buf[0];
+  const last = buf[buf.length-1];
+  const delta = last - first;
+  const dir = getMomentumDirection();
+
+  // base from momentum strength
+  const strength = Math.min(1, Math.abs(delta) / Math.max(appState.momentumThreshold, 1e-9));
+  let score = Math.round(strength * 60); // up to 60
+
+  // breakout strict adds confidence
+  const breakoutOk = passesBreakoutFilter(dir || "CALL");
+  if (breakoutOk) score += 15;
+
+  // trend alignment (only if enabled)
+  if (appState.trend.enabled){
+    if (appState.trend.status === "LOADING") score -= 10;
+    else if (dir && trendAllows(dir)) score += 20;
+    else score -= 20;
+  }
+
+  // clustering penalty
+  if (dom.clusterAlert && !dom.clusterAlert.classList.contains("hidden")) score -= 15;
+
+  score = Math.max(0, Math.min(100, score));
+
+  let signal = "WAIT";
+  if (dir && score >= 70) signal = (dir === "CALL") ? "BUY" : "SELL";
+  else if (dir && score >= 45) signal = "WATCH";
+
+  const notes = `Δ=${delta.toFixed(4)} | Mode=${appState.mode} | Trend=${appState.trend.enabled ? appState.trend.status : "OFF"} | Breakout=${breakoutOk ? "OK" : "WAIT"}`;
+
+  return { score, signal, notes };
+}
+
+function updateConfidenceUI(){
+  if (!dom.confidenceBar || !dom.confidenceText || !dom.signalPill || !dom.confidenceNotes) return;
+
+  const { score, signal, notes } = computeConfidence();
+  dom.confidenceBar.style.width = score + "%";
+  dom.confidenceText.textContent = score + "%";
+  dom.confidenceNotes.textContent = notes;
+
+  let barCls = "bg-red-500";
+  if (score >= 70) barCls = "bg-emerald-500";
+  else if (score >= 45) barCls = "bg-yellow-500";
+  dom.confidenceBar.className = `h-4 ${barCls}`;
+
+  let pillCls = "bg-slate-700 text-slate-200";
+  if (signal === "BUY") pillCls = "bg-emerald-700 text-white";
+  if (signal === "SELL") pillCls = "bg-red-700 text-white";
+  if (signal === "WATCH") pillCls = "bg-yellow-600 text-white";
+  setPill(dom.signalPill, signal, pillCls);
+}
+
+/* =========================================================
+   Deriv WS + Trading
 ========================================================= */
 function connectToDeriv(){
   try{
@@ -1117,69 +1173,6 @@ function connectToDeriv(){
   };
 }
 
-function subscribeTicks(symbol){
-  if (!appState.ws || !appState.isAuthenticated) return;
-  try { appState.ws.send(JSON.stringify({ forget_all: "ticks" })); } catch(_){}
-  appState.ws.send(JSON.stringify({ ticks: symbol, subscribe: 1 }));
-  logLine("Subscribing ticks: " + symbol);
-}
-
-/* =========================================================
-   START/STOP (password gate)
-========================================================= */
-function startBot(){
-  if (appState.isBotRunning) return;
-
-  const token = (dom.apiToken?.value || "").trim();
-  const pw    = (dom.pwInput?.value || "").trim();
-
-  // gate checks
-  if (!token){
-    dom.tokenError?.classList.remove("hidden");
-    logLine("Start blocked: missing API token.");
-    updateTradeStatus("ERROR: Enter API Token", "bg-red-600 text-white");
-    return;
-  } else dom.tokenError?.classList.add("hidden");
-
-  if (pw !== START_PASSWORD){
-    dom.pwError?.classList.remove("hidden");
-    logLine("Start blocked: wrong password.");
-    updateTradeStatus("ERROR: Wrong Password", "bg-red-600 text-white");
-    return;
-  } else dom.pwError?.classList.add("hidden");
-
-  localStorage.setItem("derivToken", token);
-  appState.token = token;
-
-  // reset session
-  appState.sessionProfit = 0;
-  appState.tradeCounter = 0;
-  appState.currentContractId = null;
-  appState.isEntryInProgress = false;
-  appState.isSelling = false;
-  appState.cooldownUntil = 0;
-  appState.tickBuffer = [];
-  appState.pendingProposalId = null;
-  appState.lastDigits = [];
-
-  // reset chart state
-  appState.chart.lastCandleTime = 0;
-  appState.chart.lastOHLC = null;
-  appState.chart.hasTick = false;
-
-  updateProfit(appState.sessionProfit);
-
-  // init chart once per start (safe)
-  initChart();
-
-  appState.isBotRunning = true;
-  updateUI();
-  connectToDeriv();
-
-  setPill(dom.chartStatus, "WAITING", "bg-slate-700 text-slate-200");
-  logLine("Bot started (PW OK).");
-}
-
 function stopBot(){
   try{ if (appState.ws) appState.ws.close(); }catch(_){}
   appState.ws = null;
@@ -1193,177 +1186,117 @@ function stopBot(){
   appState.cooldownUntil = 0;
   appState.pendingProposalId = null;
 
+  dom.accountWarning?.classList.add("hidden");
+
   updateConnection("DISCONNECTED", "bg-red-800 text-white");
   updateTradeStatus("Stopped.", "bg-slate-600 text-slate-300");
-  dom.blockReasonDisplay && (dom.blockReasonDisplay.textContent = "None");
-  setPill(dom.chartStatus, "WAITING", "bg-slate-700 text-slate-200");
+  if (dom.blockReasonDisplay) dom.blockReasonDisplay.textContent = "None";
 
+  if (dom.chartStatus) setPill(dom.chartStatus, "WAITING", "bg-slate-700 text-slate-200");
   logLine("Bot stopped.");
   updateUI();
 }
 
-/* =========================================================
-   TRADE ENGINE (same style: TP sells, SL sells only Safe Mode)
-========================================================= */
-function checkAndEnterTrade(){
-  if (!appState.isBotRunning || !appState.isAuthenticated) return;
+function startBot(){
+  if (appState.isBotRunning) return;
 
-  if (Date.now() < appState.cooldownUntil){
-    dom.blockReasonDisplay && (dom.blockReasonDisplay.textContent = "Cooldown");
+  // ✅ Password gate (manual typing only)
+  const pw = (dom.pwInput?.value || "").trim();
+  if (pw !== REQUIRED_PASSWORD){
+    dom.pwError?.classList.remove("hidden");
+    updateTradeStatus("ACCESS DENIED", "bg-red-600 text-white");
+    logLine("Access denied: incorrect password.");
     return;
   }
-  if (appState.isEntryInProgress){
-    dom.blockReasonDisplay && (dom.blockReasonDisplay.textContent = "Entry In Progress");
-    return;
-  }
-  if (appState.currentContractId){
-    dom.blockReasonDisplay && (dom.blockReasonDisplay.textContent = "Trade Active");
-    return;
-  }
-  if (appState.tradeCounter >= appState.maxTradesPerSignal){
-    dom.blockReasonDisplay && (dom.blockReasonDisplay.textContent = "Max Trades/Signal Hit");
-    return;
-  }
+  dom.pwError?.classList.add("hidden");
 
-  const direction = getMomentumDirection();
-  if (!direction){
-    dom.blockReasonDisplay && (dom.blockReasonDisplay.textContent = "Waiting Good Move");
+  const token = (dom.apiToken?.value || "").trim();
+  if (!token){
+    dom.tokenError?.classList.remove("hidden");
+    updateTradeStatus("ERROR: Enter API Token", "bg-red-600 text-white");
+    logLine("Start blocked: missing API token.");
     return;
   }
-  if (!passesBreakoutFilter(direction)){
-    dom.blockReasonDisplay && (dom.blockReasonDisplay.textContent = "Waiting Breakout");
-    return;
-  }
-  if (appState.trend.enabled){
-    if (appState.trend.status === "LOADING"){
-      dom.blockReasonDisplay && (dom.blockReasonDisplay.textContent = "H4 Trend Loading");
-      return;
-    }
-    if (!trendAllows(direction)){
-      dom.blockReasonDisplay && (dom.blockReasonDisplay.textContent = `H4 Trend Blocked (${appState.trend.status})`);
-      return;
-    }
-  }
+  dom.tokenError?.classList.add("hidden");
 
-  dom.blockReasonDisplay && (dom.blockReasonDisplay.textContent = "None");
-  enterTrade(direction, appState.stakeAmount);
-}
+  localStorage.setItem("derivToken", token);
+  appState.token = token;
 
-function enterTrade(direction, stake){
-  if (!appState.ws || !appState.isAuthenticated) return;
-
-  appState.isEntryInProgress = true;
-  appState.pendingProposalId = null;
+  // reset session
+  appState.sessionProfit = 0;
+  appState.tradeCounter = 0;
+  appState.currentContractId = null;
+  appState.isEntryInProgress = false;
+  appState.isSelling = false;
+  appState.cooldownUntil = 0;
   appState.tickBuffer = [];
-  updateTradeStatus(`Creating Proposal (${direction})...`, "bg-orange-500 text-white");
+  appState.pendingProposalId = null;
+  appState.chart.lastCandleTime = 0;
+  appState.chart.lastOHLC = null;
+  appState.chart.hasTick = false;
+  appState.lastDigits = [];
+  dom.accountWarning?.classList.add("hidden");
 
-  const req = {
-    proposal: 1,
-    amount: stake,
-    basis: "stake",
-    contract_type: direction,
-    currency: "USD",
-    duration: appState.duration,
-    duration_unit: appState.durationUnit,
-    symbol: appState.symbol
-  };
-  appState.ws.send(JSON.stringify(req));
+  updateProfit(appState.sessionProfit);
 
-  setTimeout(() => {
-    if (!appState.isBotRunning) return;
-    if (appState.currentContractId) return;
-    if (appState.isEntryInProgress){
-      appState.isEntryInProgress = false;
-      updateTradeStatus("Monitoring Ticks...", "bg-yellow-600 text-white");
-      dom.blockReasonDisplay && (dom.blockReasonDisplay.textContent = "Entry Timeout");
-      logLine("Entry timeout. Reset.");
-    }
-  }, 10000);
-
-  appState.tradeCounter++;
+  appState.isBotRunning = true;
+  logLine("Bot started.");
+  updateUI();
+  connectToDeriv();
 }
 
-function checkProfitAndLoss(contract){
-  const currentProfit = Number(contract.profit);
-
-  // TP: sell if sellable
-  if (currentProfit >= appState.tpUSD){
-    sellContract();
-    return;
-  }
-
-  // SL: only if Safe Mode ON
-  if (appState.isSafeMode){
-    const lossThreshold = -Math.abs(appState.slUSD);
-    if (currentProfit <= lossThreshold){
-      sellContract();
-    }
-  }
+function subscribeTicks(symbol){
+  if (!appState.ws || !appState.isAuthenticated) return;
+  try{
+    appState.ws.send(JSON.stringify({ forget_all: "ticks" }));
+  }catch(_){}
+  appState.ws.send(JSON.stringify({ ticks: symbol, subscribe: 1 }));
+  logLine("Subscribing ticks: " + symbol);
 }
 
-function sellContract(){
-  if (appState.isSelling) return;
-  if (!appState.currentContractId) return;
-
-  if (appState.is_sellable !== 1){
-    dom.blockReasonDisplay && (dom.blockReasonDisplay.textContent = "Not Sellable");
-    return;
-  }
-
-  appState.isSelling = true;
-  updateTradeStatus("Selling...", "bg-red-500 text-white");
-  appState.ws.send(JSON.stringify({ sell: appState.currentContractId, price: 0 }));
-  logLine("Sell requested.");
-}
-
-/* =========================================================
-   RESPONSES
-========================================================= */
 function handleResponse(res){
   if (res.error){
     const msg = res.error.message || "Unknown API error";
     logLine("API Error: " + msg);
 
-    // token/account mismatch info
-    if (String(msg).toLowerCase().includes("authorization")){
-      dom.blockReasonDisplay && (dom.blockReasonDisplay.textContent = "Auth Failed");
-      stopBot();
-      return;
+    const m = msg.toLowerCase();
+    if (m.includes("symbol") || m.includes("market") || m.includes("available") || m.includes("not found")){
+      dom.accountWarning?.classList.remove("hidden");
+      if (dom.blockReasonDisplay) dom.blockReasonDisplay.textContent = "Symbol not available on this account";
+      updateTradeStatus("SYMBOL ERROR", "bg-red-600 text-white");
     }
 
-    // symbol problems: warn about account type
-    if (String(msg).toLowerCase().includes("market") || String(msg).toLowerCase().includes("symbol")){
-      dom.blockReasonDisplay && (dom.blockReasonDisplay.textContent = "Symbol not available on this account");
-      updateTradeStatus("SYMBOL ERROR", "bg-red-600 text-white");
-      logLine("If this is an MT5/financial-only setup, use a Derived/Synthetic account API token for VOL indices.");
+    if (res.error.code === "AuthorizationRequired"){
+      if (dom.blockReasonDisplay) dom.blockReasonDisplay.textContent = "Auth Failed";
+      stopBot();
     }
     return;
   }
 
   switch(res.msg_type){
 
-    case "authorize": {
+    case "authorize":{
       appState.isAuthenticated = true;
-
-      // demo/real detection (your request)
-      const isVirtual = !!res.authorize.is_virtual;
-      appState.account.isDemo = isVirtual;
-      updateAccountTypeUI();
-
       const bal = Number(res.authorize.balance || 0);
       appState.currentBalance = bal;
+      appState.isDemo = !!res.authorize.is_virtual;
+
       if (dom.balanceDisplay){
         dom.balanceDisplay.textContent = `${res.authorize.currency || "USD"} ${bal.toFixed(2)}`;
       }
 
-      logLine("Authorized (" + (isVirtual ? "DEMO" : "REAL") + ").");
+      logLine("Authorized. Account=" + (appState.isDemo ? "DEMO" : "REAL"));
 
-      // subscribe ticks + balance + contract stream
+      // Subscribe to ticks for current symbol
       subscribeTicks(appState.symbol);
+
+      // Balance updates
       appState.ws.send(JSON.stringify({ balance: 1, subscribe: 1 }));
+
+      // Contract updates (global)
       appState.ws.send(JSON.stringify({ proposal_open_contract: 1, subscribe: 1 }));
 
-      // trend
+      // Trend
       appState.trend.lastUpdated = 0;
       if (appState.trend.enabled){
         appState.trend.status = "LOADING";
@@ -1373,13 +1306,14 @@ function handleResponse(res){
       }
 
       updateTradeStatus("Monitoring Ticks...", "bg-yellow-600 text-white");
-      dom.blockReasonDisplay && (dom.blockReasonDisplay.textContent = "None");
-      setPill(dom.chartStatus, "LIVE", "bg-sky-700 text-white");
+      if (dom.blockReasonDisplay) dom.blockReasonDisplay.textContent = "None";
+      if (dom.chartStatus) setPill(dom.chartStatus, "LIVE", "bg-sky-700 text-white");
+
       updateUI();
       break;
     }
 
-    case "balance": {
+    case "balance":{
       const bal = Number(res.balance.balance || 0);
       appState.currentBalance = bal;
       if (dom.balanceDisplay){
@@ -1388,32 +1322,33 @@ function handleResponse(res){
       break;
     }
 
-    case "tick": {
+    case "tick":{
       if (!appState.isBotRunning) return;
 
       const price = Number(res.tick.quote);
       if (!Number.isFinite(price)) return;
 
-      // chart + buffers
-      updateChartFromTick(price);
+      // chart
+      updateSeriesFromTick(price);
+
+      // clustering
       updateClustering(price);
 
+      // tick buffer
       appState.lastTick = price;
       appState.tickBuffer.push(price);
       while(appState.tickBuffer.length > appState.tickBufferSize) appState.tickBuffer.shift();
 
       maybeRefreshTrend();
 
-      // confidence always updates (manual use too)
-      renderConfidence();
-
+      // AUTO TRADING gate
       if (appState.autoTradingEnabled) checkAndEnterTrade();
 
       updateUI();
       break;
     }
 
-    case "candles": {
+    case "candles":{
       if (!res.candles || !Array.isArray(res.candles)){
         appState.trend.status = "ERROR";
         logLine("Trend candles error.");
@@ -1428,7 +1363,7 @@ function handleResponse(res){
       break;
     }
 
-    case "proposal": {
+    case "proposal":{
       if (!appState.isEntryInProgress) return;
       if (!res.proposal?.id){
         appState.isEntryInProgress = false;
@@ -1440,7 +1375,7 @@ function handleResponse(res){
       break;
     }
 
-    case "buy": {
+    case "buy":{
       appState.isEntryInProgress = false;
       appState.pendingProposalId = null;
       appState.currentContractId = res.buy.contract_id;
@@ -1449,7 +1384,7 @@ function handleResponse(res){
       break;
     }
 
-    case "proposal_open_contract": {
+    case "proposal_open_contract":{
       const c = res.proposal_open_contract;
       if (!c) return;
 
@@ -1468,7 +1403,7 @@ function handleResponse(res){
           appState.tradeCounter = 0;
 
           appState.cooldownUntil = Date.now() + (appState.cooldownDuration * 1000);
-          dom.blockReasonDisplay && (dom.blockReasonDisplay.textContent = "Cooldown");
+          if (dom.blockReasonDisplay) dom.blockReasonDisplay.textContent = "Cooldown";
           updateTradeStatus("Trade Closed. Cooldown...", "bg-orange-500 text-white");
           logLine("Trade closed. Profit: " + profit.toFixed(2));
 
@@ -1476,7 +1411,7 @@ function handleResponse(res){
             setTimeout(() => {
               if (!appState.isBotRunning) return;
               if (Date.now() >= appState.cooldownUntil){
-                dom.blockReasonDisplay && (dom.blockReasonDisplay.textContent = "None");
+                if (dom.blockReasonDisplay) dom.blockReasonDisplay.textContent = "None";
                 updateTradeStatus("Monitoring Ticks...", "bg-yellow-600 text-white");
               }
             }, appState.cooldownDuration * 1000);
@@ -1492,79 +1427,121 @@ function handleResponse(res){
 }
 
 /* =========================================================
-   MANUAL CONTROLS
+   Entry + TP/SL (strategy kept)
 ========================================================= */
-function manualPlaceTrade(mult=1){
-  if (!appState.isAuthenticated){
-    logLine("Manual trade blocked: not connected.");
-    updateTradeStatus("Connect first.", "bg-red-600 text-white");
+function checkAndEnterTrade(){
+  if (!appState.isBotRunning || !appState.isAuthenticated) return;
+
+  if (Date.now() < appState.cooldownUntil){
+    if (dom.blockReasonDisplay) dom.blockReasonDisplay.textContent = "Cooldown";
     return;
   }
-  if (appState.currentContractId || appState.isEntryInProgress){
-    logLine("Manual trade blocked: trade already active.");
+  if (appState.isEntryInProgress){
+    if (dom.blockReasonDisplay) dom.blockReasonDisplay.textContent = "Entry In Progress";
+    return;
+  }
+  if (appState.currentContractId){
+    if (dom.blockReasonDisplay) dom.blockReasonDisplay.textContent = "Trade Active";
+    return;
+  }
+  if (appState.tradeCounter >= appState.maxTradesPerSignal){
+    if (dom.blockReasonDisplay) dom.blockReasonDisplay.textContent = "Max Trades/Signal Hit";
     return;
   }
 
-  const dir = getMomentumDirection();
-  if (!dir){
-    updateTradeStatus("WAIT: no signal", "bg-yellow-600 text-white");
-    logLine("Manual trade: no momentum signal yet.");
+  const direction = getMomentumDirection();
+  if (!direction){
+    if (dom.blockReasonDisplay) dom.blockReasonDisplay.textContent = "Waiting Good Move";
     return;
   }
-  if (appState.trend.enabled && !trendAllows(dir)){
-    updateTradeStatus("AVOID: trend mismatch", "bg-yellow-600 text-white");
-    logLine("Manual trade blocked: trend mismatch.");
+  if (!passesBreakoutFilter(direction)){
+    if (dom.blockReasonDisplay) dom.blockReasonDisplay.textContent = "Waiting Breakout";
     return;
   }
-  if (!passesBreakoutFilter(dir)){
-    updateTradeStatus("WAIT: breakout not clean", "bg-yellow-600 text-white");
-    logLine("Manual trade: breakout not clean.");
-    return;
+  if (appState.trend.enabled){
+    if (appState.trend.status === "LOADING"){
+      if (dom.blockReasonDisplay) dom.blockReasonDisplay.textContent = "H4 Trend Loading";
+      return;
+    }
+    if (!trendAllows(direction)){
+      if (dom.blockReasonDisplay) dom.blockReasonDisplay.textContent = `H4 Trend Blocked (${appState.trend.status})`;
+      return;
+    }
   }
 
-  enterTrade(dir, appState.stakeAmount * mult);
+  if (dom.blockReasonDisplay) dom.blockReasonDisplay.textContent = "None";
+  enterTrade(direction, appState.stakeAmount);
 }
 
-function clearHistory(){
-  appState.sessionProfit = 0;
-  updateProfit(appState.sessionProfit);
-  logLine("History cleared (session profit reset).");
-}
+function enterTrade(direction, stake){
+  if (!appState.ws || !appState.isAuthenticated) return;
 
-/* =========================================================
-   SYMBOL SWITCHING (chart + ticks + trend)
-========================================================= */
-function setSymbol(newSymbol){
-  newSymbol = (newSymbol || "").trim();
-  if (!newSymbol) return;
-
-  appState.symbol = newSymbol;
-  if (dom.currentSymbolLabel) dom.currentSymbolLabel.textContent = newSymbol;
-
-  // reset buffers + chart candle state
+  appState.isEntryInProgress = true;
+  appState.pendingProposalId = null;
   appState.tickBuffer = [];
-  appState.lastDigits = [];
-  appState.chart.lastCandleTime = 0;
-  appState.chart.lastOHLC = null;
+  updateTradeStatus(`Creating Proposal (${direction})...`, "bg-orange-500 text-white");
 
-  // trend refresh
-  appState.trend.lastUpdated = 0;
-  if (appState.trend.enabled) appState.trend.status = "LOADING";
+  const req = {
+    proposal: 1,
+    amount: stake,
+    basis: "stake",
+    contract_type: direction,      // CALL / PUT
+    currency: "USD",
+    duration: appState.duration,
+    duration_unit: appState.durationUnit,
+    symbol: appState.symbol
+  };
+  appState.ws.send(JSON.stringify(req));
 
-  if (appState.isAuthenticated){
-    subscribeTicks(newSymbol);
-    requestH4Candles();
-    logLine("Symbol switched to: " + newSymbol);
-  } else {
-    logLine("Symbol set (will subscribe after connect): " + newSymbol);
+  setTimeout(() => {
+    if (!appState.isBotRunning) return;
+    if (appState.currentContractId) return;
+    if (appState.isEntryInProgress){
+      appState.isEntryInProgress = false;
+      updateTradeStatus("Monitoring Ticks...", "bg-yellow-600 text-white");
+      if (dom.blockReasonDisplay) dom.blockReasonDisplay.textContent = "Entry Timeout";
+      logLine("Entry timeout. Reset.");
+    }
+  }, 10000);
+
+  appState.tradeCounter++;
+}
+
+function checkProfitAndLoss(contract){
+  const currentProfit = Number(contract.profit);
+
+  // TP
+  if (currentProfit >= appState.tpUSD){
+    sellContract();
+    return;
   }
 
-  setPill(dom.chartStatus, "LIVE", "bg-sky-700 text-white");
-  updateUI();
+  // SL only if Safe Mode ON
+  if (appState.isSafeMode){
+    const lossThreshold = -Math.abs(appState.slUSD);
+    if (currentProfit <= lossThreshold){
+      sellContract();
+    }
+  }
+}
+
+function sellContract(){
+  if (appState.isSelling) return;
+  if (!appState.currentContractId) return;
+
+  if (appState.is_sellable !== 1){
+    if (dom.blockReasonDisplay) dom.blockReasonDisplay.textContent = "Not Sellable";
+    return;
+  }
+
+  appState.isSelling = true;
+  updateTradeStatus("Selling...", "bg-red-500 text-white");
+  appState.ws.send(JSON.stringify({ sell: appState.currentContractId, price: 0 }));
+  logLine("Sell requested.");
 }
 
 /* =========================================================
-   INSIGHTS (fallback)
+   Insights (fallback)
 ========================================================= */
 function fallbackInsight(type){
   const trend = appState.trend.enabled ? appState.trend.status : "OFF";
@@ -1573,25 +1550,25 @@ function fallbackInsight(type){
   const first = buf.length ? buf[0] : null;
   const last  = buf.length ? buf[buf.length-1] : null;
   const delta = (first!=null && last!=null) ? (last-first) : 0;
-  const conf = computeConfidence().toFixed(0);
 
   if (type === "sentiment"){
+    const conf = computeConfidence();
     return [
       `Safe Entry Suggestion (Fallback):`,
       `• Symbol: ${appState.symbol}`,
       `• Mode: ${appState.mode}`,
       `• Trend Filter: ${trend}`,
       `• Momentum: ${dir} | Δ=${delta.toFixed(4)}`,
-      `• Confidence: ${conf}%`,
       `• Breakout Strict: ${appState.breakoutStrict ? "ON" : "OFF"}`,
+      `• Confidence: ${conf.score}% | Signal: ${conf.signal}`,
       ``,
       `Suggested Action:`,
-      dir === "NONE" ? "• WAIT (not enough momentum)" :
-      (appState.trend.enabled && !trendAllows(dir)) ? `• AVOID (trend not aligned)` :
-      (!passesBreakoutFilter(dir)) ? "• WAIT (breakout not clean yet)" :
-      "• OK (conditions passing — still risk-manage)",
+      conf.signal === "BUY" ? "• BUY setup is strong (conditions passing)" :
+      conf.signal === "SELL" ? "• SELL setup is strong (conditions passing)" :
+      conf.signal === "WATCH" ? "• WATCH (signal forming, wait cleaner move)" :
+      "• WAIT (not enough confirmation)",
       ``,
-      `Reminder: Synthetics move fast. Keep stake small.`
+      `Risk Level: MEDIUM (synthetics move fast — keep stake small).`
     ].join("\\n");
   }
 
@@ -1616,11 +1593,96 @@ async function showInsight(type){
 }
 
 /* =========================================================
-   TOKEN / COPY / VISIBILITY
+   Token helpers
 ========================================================= */
 function toggleTokenVisibility(){
   if (!dom.apiToken) return;
   dom.apiToken.type = (dom.apiToken.type === "password") ? "text" : "password";
+}
+function copyApiUrl(){
+  const t = dom.apiUrlText?.textContent || "";
+  navigator.clipboard?.writeText(t).then(() => logLine("API URL copied."), () => logLine("Copy failed."));
+}
+
+/* =========================================================
+   Manual controls
+========================================================= */
+function manualPlaceTrade(mult=1){
+  if (!appState.isAuthenticated){
+    logLine("Manual trade blocked: not connected.");
+    updateTradeStatus("Connect first.", "bg-red-600 text-white");
+    return;
+  }
+  if (appState.currentContractId || appState.isEntryInProgress){
+    logLine("Manual trade blocked: trade already active.");
+    return;
+  }
+
+  const conf = computeConfidence();
+  const dir = getMomentumDirection();
+
+  if (!dir){
+    updateTradeStatus("WAIT: no signal", "bg-yellow-600 text-white");
+    logLine("Manual trade: no momentum signal yet.");
+    return;
+  }
+  if (appState.trend.enabled && !trendAllows(dir)){
+    updateTradeStatus("AVOID: trend mismatch", "bg-yellow-600 text-white");
+    logLine("Manual trade blocked: trend mismatch.");
+    return;
+  }
+  if (!passesBreakoutFilter(dir)){
+    updateTradeStatus("WAIT: breakout not clean", "bg-yellow-600 text-white");
+    logLine("Manual trade: breakout not clean.");
+    return;
+  }
+
+  // optional safety: require minimum confidence for manual button
+  if (conf.score < 45){
+    updateTradeStatus("WATCH: confidence low", "bg-yellow-600 text-white");
+    logLine("Manual trade blocked: confidence below 45%.");
+    return;
+  }
+
+  enterTrade(dir, appState.stakeAmount * mult);
+}
+
+function clearHistory(){
+  appState.sessionProfit = 0;
+  updateProfit(appState.sessionProfit);
+  logLine("History cleared (session profit reset).");
+}
+
+/* =========================================================
+   Symbol switching
+========================================================= */
+function setSymbol(newSymbol){
+  newSymbol = (newSymbol || "").trim();
+  if (!newSymbol) return;
+
+  dom.accountWarning?.classList.add("hidden");
+
+  appState.symbol = newSymbol;
+  if (dom.currentSymbolLabel) dom.currentSymbolLabel.textContent = newSymbol;
+
+  // reset buffers + chart state
+  appState.tickBuffer = [];
+  appState.lastDigits = [];
+  appState.chart.lastCandleTime = 0;
+  appState.chart.lastOHLC = null;
+
+  // trend refresh
+  appState.trend.lastUpdated = 0;
+  if (appState.trend.enabled) appState.trend.status = "LOADING";
+
+  if (appState.isAuthenticated){
+    subscribeTicks(newSymbol);
+    requestH4Candles();
+    logLine("Symbol switched to: " + newSymbol);
+  } else {
+    logLine("Symbol set (will subscribe after connect): " + newSymbol);
+  }
+  updateUI();
 }
 
 /* =========================================================
@@ -1628,23 +1690,25 @@ function toggleTokenVisibility(){
 ========================================================= */
 document.addEventListener("DOMContentLoaded", () => {
   try{
-    // preload token
-    if (appState.token && dom.apiToken){
-      dom.apiToken.value = appState.token;
-      logLine("Token loaded from browser storage.");
-    }
-
-    // init chart once at load (safe)
     initChart();
 
     // defaults
     loadDefaults(appState.mode);
     setSettingsLock(true);
 
-    // default symbol select
+    // token preload
+    if (appState.token && dom.apiToken){
+      dom.apiToken.value = appState.token;
+      if (dom.editHint) dom.editHint.textContent = "Token loaded and saved. Type password then click START BOT to connect.";
+    }
+
+    // do NOT prefill password (requested)
+    if (dom.pwInput) dom.pwInput.value = "";
+
+    // default symbol
     if (dom.symbolSelect) dom.symbolSelect.value = appState.symbol;
 
-    // bind inputs
+    // bind inputs safely (LIVE)
     document.querySelectorAll("input, select").forEach(el => {
       el.addEventListener("input", updateStateFromUI);
       el.addEventListener("change", updateStateFromUI);
@@ -1652,16 +1716,30 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // buttons
     dom.toggleBotBtn?.addEventListener("click", () => {
+      // do not allow bot to start unless password is correct
+      if (!appState.isBotRunning){
+        const token = (dom.apiToken?.value || "").trim();
+        if (!token){
+          dom.tokenError?.classList.remove("hidden");
+          return;
+        } else dom.tokenError?.classList.add("hidden");
+      }
+
       if (appState.isBotRunning) stopBot();
       else startBot();
     });
 
     dom.unlockBtn?.addEventListener("click", () => setSettingsLock(!appState.isSettingsLocked));
     dom.modeSelect?.addEventListener("change", (e) => loadDefaults(e.target.value));
-    dom.safeToggle?.addEventListener("change", (e) => { appState.isSafeMode = !!e.target.checked; updateUI(); });
-    dom.autoResumeToggle?.addEventListener("change", (e) => { appState.autoResume = !!e.target.checked; updateUI(); });
+
+    // Safe toggle already handled in updateStateFromUI,
+    // but keep this for instant UI feedback.
+    dom.safeToggle?.addEventListener("change", () => updateStateFromUI());
+
+    dom.autoResumeToggle?.addEventListener("change", () => updateStateFromUI());
 
     dom.toggleVisibilityBtn?.addEventListener("click", toggleTokenVisibility);
+    dom.copyApiUrlBtn?.addEventListener("click", copyApiUrl);
 
     dom.analyzeBtn?.addEventListener("click", () => showInsight("sentiment"));
     dom.riskBtn?.addEventListener("click", () => showInsight("risk"));
@@ -1686,7 +1764,7 @@ document.addEventListener("DOMContentLoaded", () => {
         await navigator.clipboard.writeText(LOG?.textContent || "");
         logLine("Log copied to clipboard.");
       }catch(e){
-        logLine("Copy log failed (browser blocked).");
+        logLine("Copy log failed.");
       }
     });
 
@@ -1695,7 +1773,6 @@ document.addEventListener("DOMContentLoaded", () => {
     updateTradeStatus("Idle", "bg-slate-600 text-slate-300");
     setSellable(0);
     updateProfit(appState.sessionProfit);
-    renderConfidence();
     updateUI();
 
     logLine("Kut Milz TB loaded. Ready.");
