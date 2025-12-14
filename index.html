@@ -171,6 +171,26 @@
         </div>
       </div>
 
+      <!-- ✅ MOVED HERE: Confidence Meter (Manual Use When Auto Trading OFF) -->
+      <div class="card">
+        <div class="flex items-center justify-between mb-3">
+          <h2 class="text-xl font-semibold text-emerald-400">Confidence Meter</h2>
+          <span id="signal-pill" class="pill bg-slate-700 text-slate-200">WAIT</span>
+        </div>
+
+        <div class="w-full bg-slate-700 rounded-full h-4 overflow-hidden">
+          <div id="confidence-bar" class="h-4 bg-emerald-500" style="width:0%"></div>
+        </div>
+        <div class="flex justify-between mt-2 text-xs text-slate-300">
+          <div id="confidence-text">0%</div>
+          <div id="confidence-notes" class="text-slate-400">Waiting ticks…</div>
+        </div>
+
+        <div class="mt-3 text-xs text-slate-400">
+          If <b>Auto Trading</b> is OFF, you can use this bar + signal to decide manual entries. Not financial advice.
+        </div>
+      </div>
+
       <!-- Trade Settings (Symbol + Manual Buttons + Auto Toggle) -->
       <div class="card">
         <h2 class="text-xl font-semibold mb-4 text-sky-400">Trade Settings</h2>
@@ -376,26 +396,6 @@
         <p class="text-xs text-slate-400 mt-2">
           Live <span class="text-sky-300 font-semibold">1-second candles</span> built from Deriv tick stream (auto-fallback supported).
         </p>
-      </div>
-
-      <!-- Confidence Meter (Manual Use When Auto Trading OFF) -->
-      <div class="card">
-        <div class="flex items-center justify-between mb-3">
-          <h2 class="text-xl font-semibold text-emerald-400">Confidence Meter</h2>
-          <span id="signal-pill" class="pill bg-slate-700 text-slate-200">WAIT</span>
-        </div>
-
-        <div class="w-full bg-slate-700 rounded-full h-4 overflow-hidden">
-          <div id="confidence-bar" class="h-4 bg-emerald-500" style="width:0%"></div>
-        </div>
-        <div class="flex justify-between mt-2 text-xs text-slate-300">
-          <div id="confidence-text">0%</div>
-          <div id="confidence-notes" class="text-slate-400">Waiting ticks…</div>
-        </div>
-
-        <div class="mt-3 text-xs text-slate-400">
-          If <b>Auto Trading</b> is OFF, you can use this bar + signal to decide manual entries. Not financial advice.
-        </div>
       </div>
 
       <!-- API Login (API above PW above Start Bot) -->
