@@ -131,14 +131,36 @@
             <span class="text-sm">Current Balance:</span>
             <span id="current-balance-display" class="text-lg font-bold text-yellow-400">...</span>
           </div>
+
           <div class="flex justify-between items-center">
             <span class="text-sm">Session Profit (USD):</span>
             <span id="current-profit-display" class="text-lg font-bold text-slate-300">0.00</span>
           </div>
+
+          <!-- ✅ ADDED: Session Loss -->
+          <div class="flex justify-between items-center">
+            <span class="text-sm">Session Loss (USD):</span>
+            <span id="current-loss-display" class="text-lg font-bold text-red-300">0.00</span>
+          </div>
+
           <div class="flex justify-between items-center">
             <span class="text-sm">Contract Sellable:</span>
             <span id="sellable-display" class="status-pill bg-red-500 text-white">NO</span>
           </div>
+        </div>
+      </div>
+
+      <!-- ✅ ADDED: Transaction Log -->
+      <div class="card">
+        <h2 class="text-xl font-semibold mb-4 text-emerald-300">Transaction Log</h2>
+        <div class="p-3 bg-slate-900/40 border border-slate-700 rounded-lg text-xs whitespace-pre-wrap min-h-[120px] max-h-[220px] overflow-auto"
+             id="tx-log"></div>
+        <div class="mt-3 flex gap-2">
+          <button id="clear-txlog-btn" class="text-xs py-2 px-3 rounded bg-slate-600 hover:bg-slate-500 text-white">Clear Log</button>
+          <button id="export-txlog-btn" class="text-xs py-2 px-3 rounded bg-slate-600 hover:bg-slate-500 text-white">Copy Log</button>
+        </div>
+        <div class="mt-2 text-[11px] text-slate-400">
+          Format: <span class="text-slate-300">CLOSED | SYMBOL | CALL/PUT | +/-value</span>
         </div>
       </div>
 
@@ -171,7 +193,7 @@
         </div>
       </div>
 
-      <!-- ✅ MOVED HERE: Confidence Meter (Manual Use When Auto Trading OFF) -->
+      <!-- Confidence Meter -->
       <div class="card">
         <div class="flex items-center justify-between mb-3">
           <h2 class="text-xl font-semibold text-emerald-400">Confidence Meter</h2>
@@ -191,7 +213,7 @@
         </div>
       </div>
 
-      <!-- Trade Settings (Symbol + Manual Buttons + Auto Toggle) -->
+      <!-- Trade Settings -->
       <div class="card">
         <h2 class="text-xl font-semibold mb-4 text-sky-400">Trade Settings</h2>
 
@@ -201,14 +223,11 @@
             <label class="block text-sm font-medium mb-1">Select Market</label>
             <select id="symbolSelect"
               class="w-full p-2 rounded bg-slate-700 border border-slate-600 text-slate-50 focus:ring-sky-500 focus:border-sky-500">
-              <!-- Main Vols -->
               <option value="R_10">Volatility 10 Index (R_10)</option>
               <option value="R_25">Volatility 25 Index (R_25)</option>
               <option value="R_50">Volatility 50 Index (R_50)</option>
               <option value="R_75">Volatility 75 Index (R_75)</option>
               <option value="R_100" selected>Volatility 100 Index (R_100)</option>
-
-              <!-- 1s Vols -->
               <option value="1HZ10V">Volatility 10 (1s) (1HZ10V)</option>
               <option value="1HZ25V">Volatility 25 (1s) (1HZ25V)</option>
               <option value="1HZ50V">Volatility 50 (1s) (1HZ50V)</option>
@@ -398,7 +417,7 @@
         </p>
       </div>
 
-      <!-- API Login (API above PW above Start Bot) -->
+      <!-- API Login -->
       <div class="card">
         <div class="flex justify-between items-center mb-4 pb-3 border-b border-slate-700">
           <h2 class="text-xl font-semibold text-sky-400">API Login</h2>
@@ -498,6 +517,7 @@
 ========================================================= */
 function $(id){ return document.getElementById(id); }
 const LOG = $("system-log");
+const TXLOG = $("tx-log");
 function logLine(msg){
   const t = new Date().toLocaleTimeString();
   const line = `[${t}] ${msg}`;
@@ -505,6 +525,17 @@ function logLine(msg){
   if (LOG){
     LOG.textContent = (LOG.textContent ? (LOG.textContent + "\\n") : "") + line;
     LOG.scrollTop = LOG.scrollHeight;
+  }
+}
+
+// ✅ Transaction log lines: CLOSED | SYMBOL | CALL/PUT | +/-value
+function txLogLine(msg){
+  const t = new Date().toLocaleTimeString();
+  const line = `[${t}] ${msg}`;
+  console.log("TX:", line);
+  if (TXLOG){
+    TXLOG.textContent = (TXLOG.textContent ? (TXLOG.textContent + "\\n") : "") + line;
+    TXLOG.scrollTop = TXLOG.scrollHeight;
   }
 }
 
@@ -536,12 +567,19 @@ const appState = {
   symbol: "R_100",
 
   currentBalance:0,
-  sessionProfit:0,
+
+  // ✅ Session tracking
+  sessionProfit:0,     // net P/L
+  sessionLoss:0,       // absolute loss total
 
   tradeCounter:0,
   currentContractId:null,
   is_sellable:0,
   isSelling:false,
+
+  // ✅ Track last trade meta so TX log shows CALL/PUT + symbol
+  currentDirection:null,       // "CALL" / "PUT"
+  currentSymbolAtEntry:null,   // e.g., "R_100"
 
   mode:'SCALP',
   isSettingsLocked:true,
@@ -608,6 +646,7 @@ const dom = {
   // balance
   balanceDisplay: $("current-balance-display"),
   profitDisplay: $("current-profit-display"),
+  lossDisplay: $("current-loss-display"), // ✅ added
   sellableDisplay: $("sellable-display"),
 
   // controls
@@ -675,6 +714,10 @@ const dom = {
   clearLogBtn: $("clear-log-btn"),
   exportLogBtn: $("export-log-btn"),
 
+  // ✅ tx log controls
+  clearTxLogBtn: $("clear-txlog-btn"),
+  exportTxLogBtn: $("export-txlog-btn"),
+
   // confidence
   confidenceBar: $("confidence-bar"),
   confidenceText: $("confidence-text"),
@@ -716,6 +759,12 @@ function updateProfit(p){
   if (p > 0) color = "text-emerald-400";
   if (p < 0) color = "text-red-400";
   dom.profitDisplay.className = `text-lg font-bold ${color}`;
+}
+
+function updateLoss(l){
+  if (!dom.lossDisplay) return;
+  dom.lossDisplay.textContent = l.toFixed(2);
+  dom.lossDisplay.className = "text-lg font-bold text-red-300";
 }
 
 function setSellable(isSellable){
@@ -806,6 +855,9 @@ function updateUI(){
 
   updateLoginBadge();
   updateConfidenceUI();
+
+  // ✅ Keep Loss UI synced
+  updateLoss(appState.sessionLoss);
 }
 
 /* =========================================================
@@ -832,7 +884,6 @@ function setSettingsLock(isLocked){
 
 /* =========================================================
    Input -> state (LIVE typing)
-   FIXED: Safe Mode is now read here, so it won't snap back.
 ========================================================= */
 function updateStateFromUI(){
   try{
@@ -847,7 +898,6 @@ function updateStateFromUI(){
     if (dom.autoResumeToggle) appState.autoResume = !!dom.autoResumeToggle.checked;
     if (dom.autoTradingToggle) appState.autoTradingEnabled = !!dom.autoTradingToggle.checked;
 
-    // ✅ CRITICAL FIX:
     if (dom.safeToggle) appState.isSafeMode = !!dom.safeToggle.checked;
 
     updateUI();
@@ -909,14 +959,12 @@ function initChart(){
     timeScale: { borderColor:"#334155", timeVisible:true, secondsVisible:true }
   });
 
-  // Try v3/v4 API
   try{
     if (chart.addCandlestickSeries){
       series = chart.addCandlestickSeries({ priceLineVisible:false, lastValueVisible:true });
       seriesKind = "candles";
       logLine("Chart ready (candles v3/v4).");
     } else if (chart.addSeries && LightweightCharts.CandlestickSeries){
-      // v5 API
       series = chart.addSeries(LightweightCharts.CandlestickSeries, { priceLineVisible:false, lastValueVisible:true });
       seriesKind = "candles";
       logLine("Chart ready (candles v5).");
@@ -924,7 +972,6 @@ function initChart(){
       throw new Error("Candles not supported");
     }
   } catch(e){
-    // fallback line series
     if (chart.addLineSeries){
       series = chart.addLineSeries({ priceLineVisible:false, lastValueVisible:true });
     } else if (chart.addSeries && LightweightCharts.LineSeries){
@@ -950,12 +997,10 @@ function updateSeriesFromTick(price){
   const nowSec = Math.floor(Date.now()/1000);
 
   if (seriesKind === "line"){
-    // line update
     try{ series.update({ time: nowSec, value: price }); }catch(_){}
     return;
   }
 
-  // candle building
   if (nowSec < appState.chart.lastCandleTime) return;
 
   if (appState.chart.lastCandleTime === 0){
@@ -1066,7 +1111,7 @@ function updateClustering(price){
 }
 
 /* =========================================================
-   Confidence Meter + Signal (for manual entries)
+   Confidence Meter + Signal
 ========================================================= */
 function computeConfidence(){
   const buf = appState.tickBuffer;
@@ -1077,22 +1122,18 @@ function computeConfidence(){
   const delta = last - first;
   const dir = getMomentumDirection();
 
-  // base from momentum strength
   const strength = Math.min(1, Math.abs(delta) / Math.max(appState.momentumThreshold, 1e-9));
-  let score = Math.round(strength * 60); // up to 60
+  let score = Math.round(strength * 60);
 
-  // breakout strict adds confidence
   const breakoutOk = passesBreakoutFilter(dir || "CALL");
   if (breakoutOk) score += 15;
 
-  // trend alignment (only if enabled)
   if (appState.trend.enabled){
     if (appState.trend.status === "LOADING") score -= 10;
     else if (dir && trendAllows(dir)) score += 20;
     else score -= 20;
   }
 
-  // clustering penalty
   if (dom.clusterAlert && !dom.clusterAlert.classList.contains("hidden")) score -= 15;
 
   score = Math.max(0, Math.min(100, score));
@@ -1102,7 +1143,6 @@ function computeConfidence(){
   else if (dir && score >= 45) signal = "WATCH";
 
   const notes = `Δ=${delta.toFixed(4)} | Mode=${appState.mode} | Trend=${appState.trend.enabled ? appState.trend.status : "OFF"} | Breakout=${breakoutOk ? "OK" : "WAIT"}`;
-
   return { score, signal, notes };
 }
 
@@ -1186,6 +1226,9 @@ function stopBot(){
   appState.cooldownUntil = 0;
   appState.pendingProposalId = null;
 
+  appState.currentDirection = null;
+  appState.currentSymbolAtEntry = null;
+
   dom.accountWarning?.classList.add("hidden");
 
   updateConnection("DISCONNECTED", "bg-red-800 text-white");
@@ -1200,7 +1243,6 @@ function stopBot(){
 function startBot(){
   if (appState.isBotRunning) return;
 
-  // ✅ Password gate (manual typing only)
   const pw = (dom.pwInput?.value || "").trim();
   if (pw !== REQUIRED_PASSWORD){
     dom.pwError?.classList.remove("hidden");
@@ -1222,8 +1264,9 @@ function startBot(){
   localStorage.setItem("derivToken", token);
   appState.token = token;
 
-  // reset session
+  // ✅ reset session (new session)
   appState.sessionProfit = 0;
+  appState.sessionLoss = 0;
   appState.tradeCounter = 0;
   appState.currentContractId = null;
   appState.isEntryInProgress = false;
@@ -1235,9 +1278,14 @@ function startBot(){
   appState.chart.lastOHLC = null;
   appState.chart.hasTick = false;
   appState.lastDigits = [];
+
+  appState.currentDirection = null;
+  appState.currentSymbolAtEntry = null;
+
   dom.accountWarning?.classList.add("hidden");
 
   updateProfit(appState.sessionProfit);
+  updateLoss(appState.sessionLoss);
 
   appState.isBotRunning = true;
   logLine("Bot started.");
@@ -1287,16 +1335,10 @@ function handleResponse(res){
 
       logLine("Authorized. Account=" + (appState.isDemo ? "DEMO" : "REAL"));
 
-      // Subscribe to ticks for current symbol
       subscribeTicks(appState.symbol);
-
-      // Balance updates
       appState.ws.send(JSON.stringify({ balance: 1, subscribe: 1 }));
-
-      // Contract updates (global)
       appState.ws.send(JSON.stringify({ proposal_open_contract: 1, subscribe: 1 }));
 
-      // Trend
       appState.trend.lastUpdated = 0;
       if (appState.trend.enabled){
         appState.trend.status = "LOADING";
@@ -1328,20 +1370,15 @@ function handleResponse(res){
       const price = Number(res.tick.quote);
       if (!Number.isFinite(price)) return;
 
-      // chart
       updateSeriesFromTick(price);
-
-      // clustering
       updateClustering(price);
 
-      // tick buffer
       appState.lastTick = price;
       appState.tickBuffer.push(price);
       while(appState.tickBuffer.length > appState.tickBufferSize) appState.tickBuffer.shift();
 
       maybeRefreshTrend();
 
-      // AUTO TRADING gate
       if (appState.autoTradingEnabled) checkAndEnterTrade();
 
       updateUI();
@@ -1390,22 +1427,35 @@ function handleResponse(res){
 
       setSellable(c.is_sellable);
 
-      // only manage OUR contract
       if (appState.currentContractId && c.contract_id === appState.currentContractId){
         if (c.is_sold === 1){
           const profit = Number(c.sell_price) - Number(c.buy_price);
+
+          // ✅ Update session profit (net) and session loss (absolute)
           appState.sessionProfit += profit;
+          if (profit < 0) appState.sessionLoss += Math.abs(profit);
+
           updateProfit(appState.sessionProfit);
+          updateLoss(appState.sessionLoss);
+
+          // ✅ Transaction log line
+          const sym = appState.currentSymbolAtEntry || appState.symbol || "UNKNOWN";
+          const dir = appState.currentDirection || "UNKNOWN";
+          const pnl = (profit >= 0 ? "+" : "") + profit.toFixed(2);
+          txLogLine(`CLOSED | ${sym} | ${dir} | ${pnl}`);
 
           appState.currentContractId = null;
           appState.isSelling = false;
           appState.tickBuffer = [];
           appState.tradeCounter = 0;
 
+          appState.currentDirection = null;
+          appState.currentSymbolAtEntry = null;
+
           appState.cooldownUntil = Date.now() + (appState.cooldownDuration * 1000);
           if (dom.blockReasonDisplay) dom.blockReasonDisplay.textContent = "Cooldown";
           updateTradeStatus("Trade Closed. Cooldown...", "bg-orange-500 text-white");
-          logLine("Trade closed. Profit: " + profit.toFixed(2));
+          logLine("Trade closed. P/L: " + profit.toFixed(2));
 
           if (appState.autoResume){
             setTimeout(() => {
@@ -1427,7 +1477,7 @@ function handleResponse(res){
 }
 
 /* =========================================================
-   Entry + TP/SL (strategy kept)
+   Entry + TP/SL
 ========================================================= */
 function checkAndEnterTrade(){
   if (!appState.isBotRunning || !appState.isAuthenticated) return;
@@ -1476,6 +1526,10 @@ function checkAndEnterTrade(){
 function enterTrade(direction, stake){
   if (!appState.ws || !appState.isAuthenticated) return;
 
+  // ✅ store meta for TX log
+  appState.currentDirection = direction;
+  appState.currentSymbolAtEntry = appState.symbol;
+
   appState.isEntryInProgress = true;
   appState.pendingProposalId = null;
   appState.tickBuffer = [];
@@ -1485,7 +1539,7 @@ function enterTrade(direction, stake){
     proposal: 1,
     amount: stake,
     basis: "stake",
-    contract_type: direction,      // CALL / PUT
+    contract_type: direction,
     currency: "USD",
     duration: appState.duration,
     duration_unit: appState.durationUnit,
@@ -1510,13 +1564,11 @@ function enterTrade(direction, stake){
 function checkProfitAndLoss(contract){
   const currentProfit = Number(contract.profit);
 
-  // TP
   if (currentProfit >= appState.tpUSD){
     sellContract();
     return;
   }
 
-  // SL only if Safe Mode ON
   if (appState.isSafeMode){
     const lossThreshold = -Math.abs(appState.slUSD);
     if (currentProfit <= lossThreshold){
@@ -1579,7 +1631,7 @@ function fallbackInsight(type){
     `• Duration: ${appState.duration} ${appState.durationUnit}`,
     `• Cooldown: ${appState.cooldownDuration}s`,
     `• Auto Trading: ${appState.autoTradingEnabled ? "ON" : "OFF"}`,
-    `• Session P/L: $${appState.sessionProfit.toFixed(2)}`
+    `• Session P/L: $${appState.sessionProfit.toFixed(2)} | Loss: $${appState.sessionLoss.toFixed(2)}`
   ].join("\\n");
 }
 
@@ -1637,7 +1689,6 @@ function manualPlaceTrade(mult=1){
     return;
   }
 
-  // optional safety: require minimum confidence for manual button
   if (conf.score < 45){
     updateTradeStatus("WATCH: confidence low", "bg-yellow-600 text-white");
     logLine("Manual trade blocked: confidence below 45%.");
@@ -1648,9 +1699,17 @@ function manualPlaceTrade(mult=1){
 }
 
 function clearHistory(){
+  // ✅ clears session P/L + session loss (new session-like reset)
   appState.sessionProfit = 0;
+  appState.sessionLoss = 0;
   updateProfit(appState.sessionProfit);
-  logLine("History cleared (session profit reset).");
+  updateLoss(appState.sessionLoss);
+
+  // optional: clear tx log too (keeps it clean)
+  if (TXLOG) TXLOG.textContent = "";
+
+  logLine("History cleared (session profit/loss reset).");
+  txLogLine("CLEARED | Transaction log reset");
 }
 
 /* =========================================================
@@ -1665,13 +1724,11 @@ function setSymbol(newSymbol){
   appState.symbol = newSymbol;
   if (dom.currentSymbolLabel) dom.currentSymbolLabel.textContent = newSymbol;
 
-  // reset buffers + chart state
   appState.tickBuffer = [];
   appState.lastDigits = [];
   appState.chart.lastCandleTime = 0;
   appState.chart.lastOHLC = null;
 
-  // trend refresh
   appState.trend.lastUpdated = 0;
   if (appState.trend.enabled) appState.trend.status = "LOADING";
 
@@ -1692,31 +1749,24 @@ document.addEventListener("DOMContentLoaded", () => {
   try{
     initChart();
 
-    // defaults
     loadDefaults(appState.mode);
     setSettingsLock(true);
 
-    // token preload
     if (appState.token && dom.apiToken){
       dom.apiToken.value = appState.token;
       if (dom.editHint) dom.editHint.textContent = "Token loaded and saved. Type password then click START BOT to connect.";
     }
 
-    // do NOT prefill password (requested)
     if (dom.pwInput) dom.pwInput.value = "";
 
-    // default symbol
     if (dom.symbolSelect) dom.symbolSelect.value = appState.symbol;
 
-    // bind inputs safely (LIVE)
     document.querySelectorAll("input, select").forEach(el => {
       el.addEventListener("input", updateStateFromUI);
       el.addEventListener("change", updateStateFromUI);
     });
 
-    // buttons
     dom.toggleBotBtn?.addEventListener("click", () => {
-      // do not allow bot to start unless password is correct
       if (!appState.isBotRunning){
         const token = (dom.apiToken?.value || "").trim();
         if (!token){
@@ -1732,10 +1782,7 @@ document.addEventListener("DOMContentLoaded", () => {
     dom.unlockBtn?.addEventListener("click", () => setSettingsLock(!appState.isSettingsLocked));
     dom.modeSelect?.addEventListener("change", (e) => loadDefaults(e.target.value));
 
-    // Safe toggle already handled in updateStateFromUI,
-    // but keep this for instant UI feedback.
     dom.safeToggle?.addEventListener("change", () => updateStateFromUI());
-
     dom.autoResumeToggle?.addEventListener("change", () => updateStateFromUI());
 
     dom.toggleVisibilityBtn?.addEventListener("click", toggleTokenVisibility);
@@ -1768,14 +1815,26 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
 
-    // initial UI
+    // ✅ TX log copy/clear
+    dom.clearTxLogBtn?.addEventListener("click", () => { if (TXLOG) TXLOG.textContent = ""; txLogLine("CLEARED | Transaction log reset"); });
+    dom.exportTxLogBtn?.addEventListener("click", async () => {
+      try{
+        await navigator.clipboard.writeText(TXLOG?.textContent || "");
+        logLine("Transaction log copied to clipboard.");
+      }catch(e){
+        logLine("Copy transaction log failed.");
+      }
+    });
+
     updateConnection("DISCONNECTED", "bg-red-800 text-white");
     updateTradeStatus("Idle", "bg-slate-600 text-slate-300");
     setSellable(0);
     updateProfit(appState.sessionProfit);
+    updateLoss(appState.sessionLoss);
     updateUI();
 
     logLine("Kut Milz TB loaded. Ready.");
+    txLogLine("READY | Transaction log initialized");
   }catch(e){
     logLine("Init error: " + e.message);
   }
