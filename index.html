@@ -523,7 +523,7 @@ function logLine(msg){
   const line = `[${t}] ${msg}`;
   console.log(line);
   if (LOG){
-    LOG.textContent = (LOG.textContent ? (LOG.textContent + "\\n") : "") + line;
+    LOG.textContent = (LOG.textContent ? (LOG.textContent + "\n") : "") + line;
     LOG.scrollTop = LOG.scrollHeight;
   }
 }
@@ -534,7 +534,7 @@ function txLogLine(msg){
   const line = `[${t}] ${msg}`;
   console.log("TX:", line);
   if (TXLOG){
-    TXLOG.textContent = (TXLOG.textContent ? (TXLOG.textContent + "\\n") : "") + line;
+    TXLOG.textContent = (TXLOG.textContent ? (TXLOG.textContent + "\n") : "") + line;
     TXLOG.scrollTop = TXLOG.scrollHeight;
   }
 }
@@ -613,7 +613,7 @@ const appState = {
   trend:{
     enabled:false,
     status:"OFF",
-    tfSeconds:14400,
+    tfSeconds:14400,   // H4 = 4 hours
     emaFast:20,
     emaSlow:50,
     lastUpdated:0,
@@ -646,7 +646,7 @@ const dom = {
   // balance
   balanceDisplay: $("current-balance-display"),
   profitDisplay: $("current-profit-display"),
-  lossDisplay: $("current-loss-display"), // ✅ added
+  lossDisplay: $("current-loss-display"),
   sellableDisplay: $("sellable-display"),
 
   // controls
@@ -714,7 +714,7 @@ const dom = {
   clearLogBtn: $("clear-log-btn"),
   exportLogBtn: $("export-log-btn"),
 
-  // ✅ tx log controls
+  // tx log controls
   clearTxLogBtn: $("clear-txlog-btn"),
   exportTxLogBtn: $("export-txlog-btn"),
 
@@ -787,6 +787,7 @@ function updateTrendUI(){
   if (t === "BEAR") cls = "bg-red-600 text-white";
   if (t === "NEUTRAL") cls = "bg-yellow-600 text-white";
   if (t === "ERROR") cls = "bg-red-800 text-white";
+  if (t === "LOADING") cls = "bg-indigo-700 text-white";
   setPill(dom.h4TrendDisplay, t, cls);
 }
 
@@ -794,7 +795,6 @@ function updateUI(){
   if (dom.modePill) dom.modePill.textContent = appState.mode;
   if (dom.modeStatus) dom.modeStatus.textContent = appState.mode;
 
-  // Safe mode indicator
   if (dom.safeIndicator){
     dom.safeIndicator.textContent = appState.isSafeMode ? "ON" : "OFF";
     dom.safeIndicator.className = `pill ${appState.isSafeMode ? "bg-emerald-600" : "bg-red-600"} text-white`;
@@ -805,7 +805,6 @@ function updateUI(){
       : "Safe Mode is DISABLED.";
   }
 
-  // Inputs (do not overwrite while typing)
   setIfNotEditing(dom.stakeInput, appState.stakeAmount.toFixed(2));
   setIfNotEditing(dom.durationInput, String(appState.duration));
   if (dom.durationUnitInput && document.activeElement !== dom.durationUnitInput) dom.durationUnitInput.value = appState.durationUnit;
@@ -817,32 +816,26 @@ function updateUI(){
   if (dom.modeSelect && document.activeElement !== dom.modeSelect) dom.modeSelect.value = appState.mode;
   if (dom.safeToggle && document.activeElement !== dom.safeToggle) dom.safeToggle.checked = appState.isSafeMode;
 
-  // Auto-resume UI
   if (dom.autoResumeIndicator){
     dom.autoResumeIndicator.textContent = appState.autoResume ? "ON" : "OFF";
     dom.autoResumeIndicator.className = `pill ${appState.autoResume ? "bg-emerald-600" : "bg-red-600"} text-white`;
   }
   if (dom.autoResumeToggle) dom.autoResumeToggle.checked = !!appState.autoResume;
 
-  // Trend UI
   updateTrendUI();
 
-  // Symbol label
   if (dom.currentSymbolLabel) dom.currentSymbolLabel.textContent = appState.symbol;
 
-  // Stake labels
   if (dom.placeStakeLabel) dom.placeStakeLabel.textContent = `$${appState.stakeAmount.toFixed(2)}`;
   if (dom.bulk3Label) dom.bulk3Label.textContent = `$${(appState.stakeAmount*3).toFixed(2)}`;
   if (dom.bulk5Label) dom.bulk5Label.textContent = `$${(appState.stakeAmount*5).toFixed(2)}`;
 
-  // Account type
   if (dom.accountTypeStatus){
     if (appState.isDemo === true) setPill(dom.accountTypeStatus, "DEMO", "bg-yellow-600 text-white");
     else if (appState.isDemo === false) setPill(dom.accountTypeStatus, "REAL", "bg-emerald-700 text-white");
     else setPill(dom.accountTypeStatus, "UNKNOWN", "bg-slate-600 text-slate-300");
   }
 
-  // Start/Stop button
   if (dom.toggleBotBtn){
     if (appState.isBotRunning){
       dom.toggleBotBtn.textContent = "STOP BOT";
@@ -855,8 +848,6 @@ function updateUI(){
 
   updateLoginBadge();
   updateConfidenceUI();
-
-  // ✅ Keep Loss UI synced
   updateLoss(appState.sessionLoss);
 }
 
@@ -930,6 +921,11 @@ function loadDefaults(mode){
 
   appState.trend.enabled = appState.useTrendFilter;
   appState.trend.status = appState.trend.enabled ? "LOADING" : "OFF";
+
+  // ✅ if we are already connected, refresh H4 trend immediately when switching to MOMENTUM/H4
+  appState.trend.lastUpdated = 0;
+  if (appState.trend.enabled && appState.isAuthenticated) requestH4Candles();
+
   updateUI();
 }
 
@@ -1041,10 +1037,31 @@ function trendClassify(emaFast, emaSlow){
   if (diff < -eps) return "BEAR";
   return "NEUTRAL";
 }
+
+/* ✅ FIXED: Proper Deriv candles request uses ticks_history + style:"candles"
+   Response comes back as msg_type:"history" with history.candles[] */
 function requestH4Candles(){
   if (!appState.ws || !appState.isAuthenticated || !appState.trend.enabled) return;
-  appState.ws.send(JSON.stringify({ candles: appState.symbol, granularity: appState.trend.tfSeconds, count: 80, end:"latest" }));
+
+  const req = {
+    ticks_history: appState.symbol,
+    adjust_start_time: 1,
+    count: 80,
+    end: "latest",
+    style: "candles",
+    granularity: appState.trend.tfSeconds
+  };
+
+  try{
+    appState.ws.send(JSON.stringify(req));
+    logLine(`H4 candles requested (history) for ${appState.symbol}`);
+  }catch(e){
+    appState.trend.status = "ERROR";
+    logLine("H4 request send failed: " + e.message);
+    updateUI();
+  }
 }
+
 function maybeRefreshTrend(){
   if (!appState.trend.enabled) return;
   const now = Date.now();
@@ -1052,6 +1069,7 @@ function maybeRefreshTrend(){
   appState.trend.lastUpdated = now;
   requestH4Candles();
 }
+
 function trendAllows(direction){
   if (!appState.trend.enabled) return true;
   if (appState.trend.status === "LOADING") return false;
@@ -1089,7 +1107,7 @@ function passesBreakoutFilter(direction){
 ========================================================= */
 function updateClustering(price){
   const s = String(price);
-  const lastChar = s.replace(/\\D/g,'').slice(-1) || "0";
+  const lastChar = s.replace(/\D/g,'').slice(-1) || "0";
   const d = parseInt(lastChar,10);
 
   appState.lastDigits.push(d);
@@ -1264,7 +1282,6 @@ function startBot(){
   localStorage.setItem("derivToken", token);
   appState.token = token;
 
-  // ✅ reset session (new session)
   appState.sessionProfit = 0;
   appState.sessionLoss = 0;
   appState.tradeCounter = 0;
@@ -1307,6 +1324,13 @@ function handleResponse(res){
     const msg = res.error.message || "Unknown API error";
     logLine("API Error: " + msg);
 
+    // If trend request fails, don't leave it stuck on LOADING forever
+    if (appState.trend.enabled && msg.toLowerCase().includes("unrecognised request")){
+      appState.trend.status = "ERROR";
+      logLine("H4 Trend failed: wrong request. (Now fixed in this version)");
+      updateUI();
+    }
+
     const m = msg.toLowerCase();
     if (m.includes("symbol") || m.includes("market") || m.includes("available") || m.includes("not found")){
       dom.accountWarning?.classList.remove("hidden");
@@ -1342,7 +1366,7 @@ function handleResponse(res){
       appState.trend.lastUpdated = 0;
       if (appState.trend.enabled){
         appState.trend.status = "LOADING";
-        requestH4Candles();
+        requestH4Candles(); // ✅ now correct request
       } else {
         appState.trend.status = "OFF";
       }
@@ -1385,6 +1409,32 @@ function handleResponse(res){
       break;
     }
 
+    /* ✅ FIXED: H4 candles now arrive as msg_type:"history" */
+    case "history":{
+      if (!appState.trend.enabled) return;
+
+      const candles = res.history?.candles;
+      if (!candles || !Array.isArray(candles) || candles.length < 10){
+        appState.trend.status = "ERROR";
+        logLine("H4 Trend history error (no candles).");
+        updateUI();
+        return;
+      }
+
+      const closes = candles
+        .map(c => parseFloat(c.close))
+        .filter(n => Number.isFinite(n));
+
+      const ema20 = calcEMA(closes, appState.trend.emaFast);
+      const ema50 = calcEMA(closes, appState.trend.emaSlow);
+
+      appState.trend.status = trendClassify(ema20, ema50);
+      logLine(`H4 Trend updated: ${appState.trend.status}`);
+      updateUI();
+      break;
+    }
+
+    /* (Optional backwards compatibility if any environment still returns "candles") */
     case "candles":{
       if (!res.candles || !Array.isArray(res.candles)){
         appState.trend.status = "ERROR";
@@ -1431,14 +1481,12 @@ function handleResponse(res){
         if (c.is_sold === 1){
           const profit = Number(c.sell_price) - Number(c.buy_price);
 
-          // ✅ Update session profit (net) and session loss (absolute)
           appState.sessionProfit += profit;
           if (profit < 0) appState.sessionLoss += Math.abs(profit);
 
           updateProfit(appState.sessionProfit);
           updateLoss(appState.sessionLoss);
 
-          // ✅ Transaction log line
           const sym = appState.currentSymbolAtEntry || appState.symbol || "UNKNOWN";
           const dir = appState.currentDirection || "UNKNOWN";
           const pnl = (profit >= 0 ? "+" : "") + profit.toFixed(2);
@@ -1508,6 +1556,7 @@ function checkAndEnterTrade(){
     if (dom.blockReasonDisplay) dom.blockReasonDisplay.textContent = "Waiting Breakout";
     return;
   }
+
   if (appState.trend.enabled){
     if (appState.trend.status === "LOADING"){
       if (dom.blockReasonDisplay) dom.blockReasonDisplay.textContent = "H4 Trend Loading";
@@ -1526,7 +1575,6 @@ function checkAndEnterTrade(){
 function enterTrade(direction, stake){
   if (!appState.ws || !appState.isAuthenticated) return;
 
-  // ✅ store meta for TX log
   appState.currentDirection = direction;
   appState.currentSymbolAtEntry = appState.symbol;
 
@@ -1621,7 +1669,7 @@ function fallbackInsight(type){
       "• WAIT (not enough confirmation)",
       ``,
       `Risk Level: MEDIUM (synthetics move fast — keep stake small).`
-    ].join("\\n");
+    ].join("\n");
   }
 
   return [
@@ -1632,7 +1680,7 @@ function fallbackInsight(type){
     `• Cooldown: ${appState.cooldownDuration}s`,
     `• Auto Trading: ${appState.autoTradingEnabled ? "ON" : "OFF"}`,
     `• Session P/L: $${appState.sessionProfit.toFixed(2)} | Loss: $${appState.sessionLoss.toFixed(2)}`
-  ].join("\\n");
+  ].join("\n");
 }
 
 async function showInsight(type){
@@ -1699,13 +1747,11 @@ function manualPlaceTrade(mult=1){
 }
 
 function clearHistory(){
-  // ✅ clears session P/L + session loss (new session-like reset)
   appState.sessionProfit = 0;
   appState.sessionLoss = 0;
   updateProfit(appState.sessionProfit);
   updateLoss(appState.sessionLoss);
 
-  // optional: clear tx log too (keeps it clean)
   if (TXLOG) TXLOG.textContent = "";
 
   logLine("History cleared (session profit/loss reset).");
@@ -1734,7 +1780,10 @@ function setSymbol(newSymbol){
 
   if (appState.isAuthenticated){
     subscribeTicks(newSymbol);
-    requestH4Candles();
+
+    // ✅ refresh trend candles for the NEW symbol
+    if (appState.trend.enabled) requestH4Candles();
+
     logLine("Symbol switched to: " + newSymbol);
   } else {
     logLine("Symbol set (will subscribe after connect): " + newSymbol);
@@ -1815,7 +1864,6 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
 
-    // ✅ TX log copy/clear
     dom.clearTxLogBtn?.addEventListener("click", () => { if (TXLOG) TXLOG.textContent = ""; txLogLine("CLEARED | Transaction log reset"); });
     dom.exportTxLogBtn?.addEventListener("click", async () => {
       try{
