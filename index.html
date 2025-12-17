@@ -2212,7 +2212,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     dom.unlockBtn?.addEventListener("click", () => {
   const newState = !appState.isSettingsLocked;
-  setSettingsLock(newState);
+setSettingsLock(newState);
 
   // re-sync Daily Guard UI after lock/unlock
   dgLoadToUI();
