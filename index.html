@@ -1057,9 +1057,8 @@ function setSettingsLock(isLocked) {
   if (dom.unlockBtn) {
     dom.unlockBtn.textContent = isLocked ? "Unlock" : "Lock";
   }
-
-  if (typeof dgLoadUI === "function") dgLoadUI();
-}
+ if (typeof dgLoadUI === "function") dgLoadUI();
+  
   // 🔁 re-sync Daily Guard UI AFTER lock/unlock
   function dgLoadToUI(){
   if (!dom.dgStatusPill) return;
