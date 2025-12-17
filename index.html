@@ -2177,11 +2177,17 @@ function setSymbol(newSymbol){
    INIT
 ========================================================= */
 document.addEventListener("DOMContentLoaded", () => {
-  try{
+  try {
     initChart();
-
     loadDefaults(appState.mode);
-    
+
+    setSettingsLock(true);   // start locked
+    dgLoadToUI();            // refresh Daily Guard UI
+  } catch (e) {
+    console.error(e);
+    logLine("Init error: " + (e?.message || e));
+  }
+});
 
     if (appState.token && dom.apiToken){
       dom.apiToken.value = appState.token;
