@@ -1037,30 +1037,39 @@ updateLoss(appState.sessionLoss);
 /* =========================================================
    Lock/Unlock settings
 ========================================================= */
-function setSettingsLock(isLocked){
+function setSettingsLock(isLocked) {
   appState.isSettingsLocked = isLocked;
 
   const list = [
-    dom.stakeInput, dom.durationInput, dom.durationUnitInput,
-    dom.tpInput, dom.slInput, dom.maxTradesInput, dom.cooldownInput,
-    dom.modeSelect, dom.safeToggle, dom.autoResumeToggle,
+    dom.stakeInput,
+    dom.durationInput,
+    dom.durationUnitInput,
+    dom.tpInput,
+    dom.slInput,
+    dom.maxTradesInput,
+    dom.cooldownInput,
+    dom.modeSelect,
+    dom.safeToggle,
+    dom.autoResumeToggle,
 
-    // 🔐 Daily Guard inputs
-    dom.dgMaxLoss, dom.dgMaxProfit, dom.dgMaxTradesInput
+    // Daily Guard
+    dom.dgMaxLoss,
+    dom.dgMaxProfit,
+    dom.dgMaxTradesInput
   ].filter(Boolean);
 
   list.forEach(el => el.disabled = isLocked);
 
-  if (dom.unlockBtn){
+  if (dom.unlockBtn) {
     dom.unlockBtn.textContent = isLocked ? "Unlock" : "Lock";
     dom.unlockBtn.className = isLocked
       ? "text-sm text-pink-400 hover:text-pink-300 font-medium py-1 px-3 rounded-full border border-pink-500"
       : "text-sm text-white bg-pink-600 hover:bg-pink-700 font-medium py-1 px-3 rounded-full";
   }
 
+  if (typeof dgLoadUI === "function") dgLoadUI();
+}
   // 🔁 re-sync Daily Guard UI AFTER lock/unlock
-  dgLoadToUI();
-  }
   function dgLoadToUI(){
   if (!dom.dgStatusPill) return;
 
@@ -2182,7 +2191,7 @@ document.addEventListener("DOMContentLoaded", () => {
     initChart();
 
     loadDefaults(appState.mode);
-    setSettingsLock(true);
+    
 
     if (appState.token && dom.apiToken){
       dom.apiToken.value = appState.token;
