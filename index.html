@@ -994,7 +994,13 @@ function updateUI(){
   setIfNotEditing(dom.maxTradesInput, String(appState.maxTradesPerSignal));
   setIfNotEditing(dom.cooldownInput, String(appState.cooldownDuration));
 
-  if (dom.modeSelect && document.activeElement !== dom.modeSelect) dom.modeSelect.value = appState.mode;
+  if (
+  dom.modeSelect &&
+  appState.isSettingsLocked &&
+  document.activeElement !== dom.modeSelect
+) {
+  dom.modeSelect.value = appState.mode;
+}
   if (dom.safeToggle && document.activeElement !== dom.safeToggle) dom.safeToggle.checked = appState.isSafeMode;
 
   if (dom.autoResumeIndicator){
@@ -1037,20 +1043,23 @@ function setSettingsLock(isLocked) {
   appState.isSettingsLocked = isLocked;
 
   const list = [
-    dom.stakeInput,
-    dom.durationInput,
-    dom.durationUnitInput,
-    dom.tpInput,
-    dom.slInput,
-    dom.maxTradesInput,
-    dom.cooldownInput,
-    dom.modeSelect,
-    dom.safeToggle,
-    dom.autoResumeToggle,
-    dom.dgMaxLoss,
-    dom.dgMaxProfit,
-    dom.dgMaxTradesInput
-  ].filter(Boolean);
+  dom.stakeInput,
+  dom.durationInput,
+  dom.durationUnitInput,
+  dom.tpInput,
+  dom.slInput,
+  dom.maxTradesInput,
+  dom.cooldownInput,
+
+  dom.modeSelect,          // ✅ IMPORTANT (you removed this)
+  dom.safeToggle,
+  dom.autoResumeToggle,
+
+  // Daily Guard
+  dom.dgMaxLoss,
+  dom.dgMaxProfit,
+  dom.dgMaxTradesInput,
+].filter(Boolean);
 
   list.forEach(el => el.disabled = isLocked);
 
@@ -2216,12 +2225,14 @@ document.addEventListener("DOMContentLoaded", () => {
       else startBot();
     });
 
-    dom.unlockBtn?.addEventListener("click", () => {
+    dom.unlockBtn = document.getElementById("unlock-settings-btn");
+
+  dom.unlockBtn?.addEventListener("click", () => {
   const newState = !appState.isSettingsLocked;
 setSettingsLock(newState);
 
   // re-sync Daily Guard UI after lock/unlock
-  dgLoadToUI();
+  if (typeof dgLoadToUI === "function") dgLoadToUI();
 });
 dom.dgSaveBtn?.addEventListener("click", dgSaveFromUI);
 dom.dgResetBtn?.addEventListener("click", dgResetToday);
