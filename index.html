@@ -467,7 +467,53 @@
             class="text-sm text-pink-400 hover:text-pink-300 font-medium py-1 px-3 rounded-full border border-pink-500 transition duration-150">
             Unlock
           </button>
-        </div>
+          </div>
+        <!-- ✅ DAILY GUARD DASHBOARD (Locked unless Unlocked) -->
+<div class="p-3 bg-slate-700/50 rounded-lg border border-slate-600">
+  <div class="flex items-center justify-between mb-2">
+    <div class="font-semibold text-slate-200">Daily Guard Dashboard</div>
+    <span id="dg-status-pill" class="pill bg-slate-600 text-slate-200">LOADING</span>
+  </div>
+
+  <div class="text-xs text-slate-400 mb-3">
+    Date: <span id="dg-date" class="text-slate-200 font-semibold">----</span> •
+    Trades: <span id="dg-trades" class="text-slate-200 font-semibold">0</span> /
+    <span id="dg-maxTrades" class="text-slate-200 font-semibold">0</span>
+  </div>
+
+  <div class="grid grid-cols-3 gap-2">
+    <div>
+      <label class="block text-[11px] text-slate-400 mb-1">Max Loss ($)</label>
+      <input id="dg-maxLoss" type="number" step="0.01"
+        class="w-full p-2 rounded bg-slate-800 border border-slate-600 text-slate-50 text-sm">
+    </div>
+    <div>
+      <label class="block text-[11px] text-slate-400 mb-1">Max Profit ($)</label>
+      <input id="dg-maxProfit" type="number" step="0.01"
+        class="w-full p-2 rounded bg-slate-800 border border-slate-600 text-slate-50 text-sm">
+    </div>
+    <div>
+      <label class="block text-[11px] text-slate-400 mb-1">Max Trades</label>
+      <input id="dg-maxTradesInput" type="number" step="1"
+        class="w-full p-2 rounded bg-slate-800 border border-slate-600 text-slate-50 text-sm">
+    </div>
+  </div>
+
+  <div class="mt-3 flex gap-2">
+    <button id="dg-save-btn"
+      class="flex-1 py-2 rounded-lg font-bold bg-emerald-700 hover:bg-emerald-800 text-white text-sm">
+      Save Today Limits
+    </button>
+    <button id="dg-reset-btn"
+      class="py-2 px-3 rounded-lg font-bold bg-slate-600 hover:bg-slate-500 text-white text-sm">
+      Reset Today
+    </button>
+  </div>
+
+  <div id="dg-hint" class="mt-2 text-[11px] text-slate-400">
+    Locked. Click <b>Unlock</b> to edit today’s limits.
+  </div>
+</div>
 
         <div class="space-y-4">
 
@@ -755,6 +801,20 @@ const appState = {
    DOM
 ========================================================= */
 const dom = {
+  // Daily Guard UI
+dgStatusPill: $("dg-status-pill"),
+dgDate: $("dg-date"),
+dgTrades: $("dg-trades"),
+dgMaxTrades: $("dg-maxTrades"),
+
+dgMaxLoss: $("dg-maxLoss"),
+dgMaxProfit: $("dg-maxProfit"),
+dgMaxTradesInput: $("dg-maxTradesInput"),
+
+dgSaveBtn: $("dg-save-btn"),
+dgResetBtn: $("dg-reset-btn"),
+dgHint: $("dg-hint"),
+  
   // status
   connectionStatus: $("connection-status"),
   accountTypeStatus: $("account-type-status"),
@@ -967,9 +1027,13 @@ function updateUI(){
   }
 
   updateLoginBadge();
-  updateConfidenceUI();
-  updateLoss(appState.sessionLoss);
+updateConfidenceUI();
+updateLoss(appState.sessionLoss);
+
+// 🔐 Daily Guard dashboard sync
+dgLoadToUI();
 }
+  
 
 /* =========================================================
    Lock/Unlock settings
@@ -991,6 +1055,68 @@ function setSettingsLock(isLocked){
       ? "text-sm text-pink-400 hover:text-pink-300 font-medium py-1 px-3 rounded-full border border-pink-500 transition duration-150"
       : "text-sm text-white bg-pink-600 hover:bg-pink-700 font-medium py-1 px-3 rounded-full border border-pink-700 transition duration-150";
   }
+  function dgLoadToUI(){
+  if (!dom.dgStatusPill) return;
+
+  const s = DailyGuard.state;
+
+  // text stats
+  if (dom.dgDate) dom.dgDate.textContent = s.date || "—";
+  if (dom.dgTrades) dom.dgTrades.textContent = String(s.trades || 0);
+  if (dom.dgMaxTrades) dom.dgMaxTrades.textContent = String(s.maxTrades || 0);
+
+  // inputs
+  if (dom.dgMaxLoss) dom.dgMaxLoss.value = Number(s.maxLoss ?? 50).toFixed(2);
+  if (dom.dgMaxProfit) dom.dgMaxProfit.value = Number(s.maxProfit ?? 100).toFixed(2);
+  if (dom.dgMaxTradesInput) dom.dgMaxTradesInput.value = String(s.maxTrades ?? 50);
+
+  // status pill
+  if (s.hit){
+    setPill(dom.dgStatusPill, "LOCKED", "bg-red-700 text-white");
+  } else {
+    setPill(dom.dgStatusPill, "ACTIVE", "bg-emerald-700 text-white");
+  }
+
+  // lock/unlock behavior
+  const locked = appState.isSettingsLocked;
+  [dom.dgMaxLoss, dom.dgMaxProfit, dom.dgMaxTradesInput, dom.dgSaveBtn, dom.dgResetBtn]
+    .filter(Boolean)
+    .forEach(el => el.disabled = locked);
+
+  if (dom.dgHint){
+    dom.dgHint.textContent = locked
+      ? "Locked. Click Unlock to edit today’s limits."
+      : "Unlocked. Edit limits, then Save.";
+  }
+}
+
+function dgSaveFromUI(){
+  const s = DailyGuard.state;
+
+  s.maxLoss = Math.max(0, parseFloat(dom.dgMaxLoss?.value || "0") || 0);
+  s.maxProfit = Math.max(0, parseFloat(dom.dgMaxProfit?.value || "0") || 0);
+  s.maxTrades = Math.max(1, parseInt(dom.dgMaxTradesInput?.value || "1", 10) || 1);
+
+  s.hit = false; // allow trading again if you changed limits
+  localStorage.setItem("kutmilz_daily_guard", JSON.stringify(s));
+
+  dgLoadToUI();
+  logLine("Daily Guard saved for today.");
+}
+
+function dgResetToday(){
+  const today = new Date().toISOString().slice(0,10);
+  DailyGuard.state.date = today;
+  DailyGuard.state.maxLoss = 50;
+  DailyGuard.state.maxProfit = 100;
+  DailyGuard.state.maxTrades = 50;
+  DailyGuard.state.trades = 0;
+  DailyGuard.state.hit = false;
+  localStorage.setItem("kutmilz_daily_guard", JSON.stringify(DailyGuard.state));
+
+  dgLoadToUI();
+  logLine("Daily Guard reset for today.");
+}
 }
 
 /* =========================================================
@@ -1713,6 +1839,7 @@ function handleResponse(res){
       if (appState.currentContractId && c.contract_id === appState.currentContractId){
         if (c.is_sold === 1){
           const profit = Number(c.sell_price) - Number(c.buy_price);
+          DailyGuard.recordTrade(profit);
 
           appState.sessionProfit += profit;
           if (profit < 0) appState.sessionLoss += Math.abs(profit);
@@ -2079,6 +2206,10 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     dom.unlockBtn?.addEventListener("click", () => setSettingsLock(!appState.isSettingsLocked));
+
+    // 🔐 Daily Guard dashboard buttons
+dom.dgSaveBtn?.addEventListener("click", dgSaveFromUI);
+dom.dgResetBtn?.addEventListener("click", dgResetToday);
     dom.modeSelect?.addEventListener("change", (e) => loadDefaults(e.target.value));
 
     dom.safeToggle?.addEventListener("change", () => updateStateFromUI());
