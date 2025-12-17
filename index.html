@@ -1030,13 +1030,9 @@ function updateUI(){
   updateLoginBadge();
 updateConfidenceUI();
 updateLoss(appState.sessionLoss);
+}   // ✅ added
 
-
-  
-
-/* =========================================================
-   Lock/Unlock settings
-========================================================= */
+/* Lock/Unlock settings */
 function setSettingsLock(isLocked) {
   appState.isSettingsLocked = isLocked;
 
@@ -1051,8 +1047,6 @@ function setSettingsLock(isLocked) {
     dom.modeSelect,
     dom.safeToggle,
     dom.autoResumeToggle,
-
-    // Daily Guard
     dom.dgMaxLoss,
     dom.dgMaxProfit,
     dom.dgMaxTradesInput
@@ -1062,9 +1056,6 @@ function setSettingsLock(isLocked) {
 
   if (dom.unlockBtn) {
     dom.unlockBtn.textContent = isLocked ? "Unlock" : "Lock";
-    dom.unlockBtn.className = isLocked
-      ? "text-sm text-pink-400 hover:text-pink-300 font-medium py-1 px-3 rounded-full border border-pink-500"
-      : "text-sm text-white bg-pink-600 hover:bg-pink-700 font-medium py-1 px-3 rounded-full";
   }
 
   if (typeof dgLoadUI === "function") dgLoadUI();
