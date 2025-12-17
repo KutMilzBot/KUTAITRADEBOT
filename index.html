@@ -1030,9 +1030,7 @@ function updateUI(){
 updateConfidenceUI();
 updateLoss(appState.sessionLoss);
 
-// 🔐 Daily Guard dashboard sync
-dgLoadToUI();
-}
+
   
 
 /* =========================================================
@@ -1044,7 +1042,10 @@ function setSettingsLock(isLocked){
   const list = [
     dom.stakeInput, dom.durationInput, dom.durationUnitInput,
     dom.tpInput, dom.slInput, dom.maxTradesInput, dom.cooldownInput,
-    dom.modeSelect, dom.safeToggle, dom.autoResumeToggle
+    dom.modeSelect, dom.safeToggle, dom.autoResumeToggle,
+
+    // 🔐 Daily Guard inputs
+    dom.dgMaxLoss, dom.dgMaxProfit, dom.dgMaxTradesInput
   ].filter(Boolean);
 
   list.forEach(el => el.disabled = isLocked);
@@ -1052,8 +1053,12 @@ function setSettingsLock(isLocked){
   if (dom.unlockBtn){
     dom.unlockBtn.textContent = isLocked ? "Unlock" : "Lock";
     dom.unlockBtn.className = isLocked
-      ? "text-sm text-pink-400 hover:text-pink-300 font-medium py-1 px-3 rounded-full border border-pink-500 transition duration-150"
-      : "text-sm text-white bg-pink-600 hover:bg-pink-700 font-medium py-1 px-3 rounded-full border border-pink-700 transition duration-150";
+      ? "text-sm text-pink-400 hover:text-pink-300 font-medium py-1 px-3 rounded-full border border-pink-500"
+      : "text-sm text-white bg-pink-600 hover:bg-pink-700 font-medium py-1 px-3 rounded-full";
+  }
+
+  // 🔁 re-sync Daily Guard UI AFTER lock/unlock
+  dgLoadToUI();
   }
   function dgLoadToUI(){
   if (!dom.dgStatusPill) return;
