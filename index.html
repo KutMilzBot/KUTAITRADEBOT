@@ -3271,6 +3271,71 @@ document.addEventListener("DOMContentLoaded", () => {
 
     loadDefaults(appState.mode);
     setSettingsLock(true);
+
+    // =========================
+    // UI wiring (Unlock + ACCU)
+    // =========================
+    if (dom.unlockBtn){
+      dom.unlockBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+        setSettingsLock(!appState.isSettingsLocked);
+        updateUI();
+        logLine(`Settings ${appState.isSettingsLocked ? "LOCKED" : "UNLOCKED"}`);
+      }, { passive:false });
+    }
+
+    // Accumulator master toggle
+    if (dom.accuToggle){
+      dom.accuToggle.addEventListener("change", () => {
+        appState.accu.enabled = !!dom.accuToggle.checked;
+        updateUI();
+        logLine(`Accumulator: ${appState.accu.enabled ? "ON" : "OFF"}`);
+      });
+    }
+
+    // Accumulator Safe Mode
+    if (dom.accuSafe){
+      dom.accuSafe.addEventListener("change", () => {
+        appState.accu.safe = !!dom.accuSafe.checked;
+        updateUI();
+      });
+    }
+
+    // Growth rate selector (dropdown)
+    if (dom.accuGrowth){
+      dom.accuGrowth.addEventListener("change", () => {
+        const v = Number(dom.accuGrowth.value);
+        if (Number.isFinite(v) && v > 0){
+          appState.accu.growthRate = v;
+          updateUI();
+          logLine(`ACCU Growth: ${(v*100).toFixed(0)}%`);
+        }
+      });
+    }
+
+    // Growth rate quick buttons (1%..5%)
+    document.querySelectorAll("[data-accu-growth]").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const v = Number(btn.getAttribute("data-accu-growth"));
+        if (Number.isFinite(v) && v > 0){
+          appState.accu.growthRate = v;
+          if (dom.accuGrowth) dom.accuGrowth.value = String(v);
+          updateUI();
+          logLine(`ACCU Growth: ${(v*100).toFixed(0)}%`);
+        }
+      });
+    });
+
+    // Optional Auto-sell TP for ACCU (leave empty for no TP)
+    if (dom.accuTP){
+      dom.accuTP.addEventListener("change", () => {
+        const raw = String(dom.accuTP.value || "").trim();
+        const v = raw === "" ? null : Number(raw);
+        appState.accu.takeProfit = (v === null || !Number.isFinite(v) || v <= 0) ? null : v;
+        updateUI();
+      });
+    }
+
     // Session limits init
     if (dom.sessLimitEnabled){
       dom.sessLimitEnabled.checked = !!appState.sessLimitsEnabled;
