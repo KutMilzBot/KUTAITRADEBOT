@@ -1134,7 +1134,7 @@ function logLine(msg){
 }
 
 // ÃÂ¢ÃÂÃ
- Transaction log lines: CLOSED | SYMBOL | CALL/PUT | +/-value
+// Transaction log lines: CLOSED | SYMBOL | CALL/PUT | +/-value
 function txLogLine(msg){
   const t = new Date().toLocaleTimeString();
   const line = `[${t}] ${msg}`;
@@ -1180,11 +1180,11 @@ const appState = {
   currentBalance:0,
 
   // ÃÂ¢ÃÂÃ
- Session tracking
+// Session tracking
   sessionProfit:0,     // net P/L
   sessionLoss:0,       // absolute loss total
   // ÃÂÃÂ¢ÃÂÃÂÃÂÃ
- Session limits (extra safety layer)
+// Session limits (extra safety layer)
   sessionTrades: 0,
   sessionWins: 0,
   sessionLosses: 0,
@@ -1203,7 +1203,7 @@ const appState = {
   isSelling:false,
 
   // ÃÂ¢ÃÂÃ
- Track last trade meta so TX log shows CALL/PUT + symbol
+// Track last trade meta so TX log shows CALL/PUT + symbol
   currentDirection:null,       // "CALL" / "PUT"
   currentSymbolAtEntry:null,   // e.g., "R_100"
 
@@ -1517,7 +1517,7 @@ const aiLayer = {
     }
 
     // Allow ÃÂ¢ÃÂÃÂ record only on FINAL stage to avoid double-count
-    this.perf.allowCount += 1;
+// this.perf.allowCount += 1;
     if (ctx?.stage === "BEFORE_BUY"){
       this.perf.tradeTimes.push(now);
       this._pruneOldTradeTimes(now);
@@ -2191,7 +2191,7 @@ function loadDefaults(mode){
   appState.trend.status = appState.trend.enabled ? "LOADING" : "OFF";
 
   // ÃÂ¢ÃÂÃ
- if we are already connected, refresh H4 trend immediately when switching to MOMENTUM/H4
+// if we are already connected, refresh H4 trend immediately when switching to MOMENTUM/H4
   appState.trend.lastUpdated = 0;
   if (appState.trend.enabled && appState.isAuthenticated) requestH4Candles();
 
@@ -2704,7 +2704,7 @@ function startBot(){
   appState.lastDigits = [];
 
   // ÃÂ¢ÃÂÃ
- PRICE ACTION: reset candle history on start
+// PRICE ACTION: reset candle history on start
   appState.chart.closedCandles = [];
 
   appState.currentDirection = null;
@@ -2781,7 +2781,7 @@ function handleResponse(res){
       if (appState.trend.enabled){
         appState.trend.status = "LOADING";
         requestH4Candles(); // ÃÂ¢ÃÂÃ
- now correct request
+// now correct request
       } else {
         appState.trend.status = "OFF";
       }
@@ -3431,7 +3431,7 @@ function setSymbol(newSymbol){
   appState.chart.lastOHLC = null;
 
   // ÃÂ¢ÃÂÃ
- PRICE ACTION: reset candle history on symbol switch
+// PRICE ACTION: reset candle history on symbol switch
   appState.chart.closedCandles = [];
 
   appState.trend.lastUpdated = 0;
@@ -3441,7 +3441,7 @@ function setSymbol(newSymbol){
     subscribeTicks(newSymbol);
 
     // ÃÂ¢ÃÂÃ
- refresh trend candles for the NEW symbol
+// refresh trend candles for the NEW symbol
     if (appState.trend.enabled) requestH4Candles();
 
     logLine("Symbol switched to: " + newSymbol);
@@ -3509,10 +3509,20 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function attemptUnlock(){
-      const tokenVal = (tIn?.value || "").trim();
-      const passVal  = (pIn?.value || "").trim();
+      // Robust iOS/Safari-safe compare (autofill sometimes adds hidden chars/spaces)
+      const clean = (v) => (v || "")
+        .replace(/[\u200B\u200C\u200D\uFEFF]/g, "")   // zero-width chars
+        .replace(/\s+/g, " ")
+        .trim();
 
-      if (tokenVal === KM_LOCK_TOKEN && passVal === KM_LOCK_PASSWORD){
+      const tokenValRaw = clean(tIn?.value);
+      const passValRaw  = clean(pIn?.value);
+
+      // Token is treated case-insensitive (password stays exact)
+      const tokenOk = tokenValRaw.toLowerCase() === String(KM_LOCK_TOKEN).toLowerCase();
+      const passOk  = passValRaw === String(KM_LOCK_PASSWORD);
+
+      if (tokenOk && passOk){
         clearError();
         rememberOk(!!remember?.checked);
         setLocked(false);
@@ -3757,7 +3767,6 @@ dom.clearLogBtn?.addEventListener("click", () => { if (LOG) LOG.textContent = ""
   }catch(e){
     logLine("Init error: " + e.message);
   }
-});
-</script>
+});</script>
 </body>
 </html>
