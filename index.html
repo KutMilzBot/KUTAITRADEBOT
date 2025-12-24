@@ -344,199 +344,10 @@ button, .btn{
   box-shadow: 0 14px 26px rgba(239,68,68,0.18) !important;
 }
 
-/* =========================
-   KutMilzAi Lock Overlay
-   (UI-only layer; does not change bot logic)
-========================= */
-body.km-locked { overflow: hidden; }
-body.km-locked #app-root{
-  pointer-events: none;
-  user-select: none;
-  filter: blur(2px);
-}
-.km-lock-overlay{
-  position: fixed;
-  inset: 0;
-  z-index: 99999;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 18px;
-
-  /* Light-blue lock screen with bot-name watermark (iOS/Android/Web friendly) */
-  background: linear-gradient(180deg, #d9f2ff 0%, #bfe8ff 40%, #9fd8ff 100%);
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
-}
-.km-lock-overlay::before{
-  content:"";
-  position:absolute;
-  inset:0;
-  pointer-events:none;
-  opacity: 0.28;
-
-  /* SVG text pattern watermark */
-  background-image: url("data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20width=%22420%22%20height=%22240%22%3E%0A%20%20%3Cdefs%3E%0A%20%20%20%20%3Cpattern%20id=%22p%22%20width=%22420%22%20height=%22240%22%20patternUnits=%22userSpaceOnUse%22%3E%0A%20%20%20%20%20%20%3Ctext%20x=%2220%22%20y=%2280%22%20font-family=%22Arial%22%20font-size=%2228%22%20font-weight=%22700%22%20fill=%22%230b4a6f%22%20fill-opacity=%220.22%22%3EKUT%20MILZ%20TB%3C/text%3E%0A%20%20%20%20%20%20%3Ctext%20x=%2260%22%20y=%22150%22%20font-family=%22Arial%22%20font-size=%2228%22%20font-weight=%22700%22%20fill=%22%230b4a6f%22%20fill-opacity=%220.18%22%3EKUT%20MILZ%20TB%3C/text%3E%0A%20%20%20%20%20%20%3Ctext%20x=%22120%22%20y=%22220%22%20font-family=%22Arial%22%20font-size=%2228%22%20font-weight=%22700%22%20fill=%22%230b4a6f%22%20fill-opacity=%220.14%22%3EKUT%20MILZ%20TB%3C/text%3E%0A%20%20%20%20%3C/pattern%3E%0A%20%20%3C/defs%3E%0A%20%20%3Crect%20width=%22100%25%22%20height=%22100%25%22%20fill=%22url(%23p)%22/%3E%0A%3C/svg%3E");
-  background-repeat: repeat;
-  background-size: 420px 240px;
-}
-.km-lock-overlay::after{
-  content:"";
-  position:absolute;
-  inset:0;
-  pointer-events:none;
-  background:
-    radial-gradient(700px 400px at 15% 20%, rgba(255,255,255,0.70), transparent 60%),
-    radial-gradient(700px 400px at 85% 0%, rgba(255,255,255,0.55), transparent 60%),
-    radial-gradient(700px 450px at 50% 110%, rgba(255,255,255,0.45), transparent 60%);
-  mix-blend-mode: overlay;
-  opacity: 0.7;
-}
-.km-lock-card{ position: relative; z-index: 1; }
-
-.km-lock-card{
-  width: min(420px, 100%);
-  background: #ffffff;
-  border: 1px solid #e5e7eb;
-  border-radius: 16px;
-  box-shadow: 0 24px 70px rgba(0,0,0,0.28);
-  overflow: hidden;
-}
-.km-lock-head{
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 16px 16px 12px 16px;
-  border-bottom: 1px solid #e5e7eb;
-}
-.km-lock-title{
-  font-weight: 900;
-  color: #111827;
-  letter-spacing: 0.2px;
-}
-.km-lock-close{
-  width: 36px;
-  height: 36px;
-  border-radius: 10px;
-  border: 1px solid #e5e7eb;
-  background: #f9fafb;
-  color: #9ca3af;
-  font-size: 22px;
-  line-height: 1;
-  cursor: not-allowed;
-}
-.km-lock-body{ padding: 16px; }
-.km-lock-field{ margin-bottom: 12px; }
-.km-lock-field label{
-  display: block;
-  font-size: 12px;
-  font-weight: 800;
-  color: #374151;
-  margin-bottom: 6px;
-}
-.km-lock-field input{
-  width: 100%;
-  padding: 12px 12px;
-  border-radius: 12px;
-  border: 1px solid #d1d5db;
-  background: #ffffff;
-  color: #111827;
-  font-size: 14px;
-}
-.km-lock-field input:focus{
-  outline: none;
-  border-color: #60a5fa;
-  box-shadow: 0 0 0 4px rgba(59,130,246,0.18);
-}
-.km-lock-row{
-  display: flex;
-  gap: 10px;
-  align-items: center;
-}
-.km-lock-row input{ flex: 1; }
-.km-lock-show{
-  flex: 0 0 auto;
-  padding: 10px 12px;
-  border-radius: 12px;
-  border: 1px solid #e5e7eb;
-  background: #f9fafb;
-  font-weight: 900;
-  color: #111827;
-}
-.km-lock-check{
-  display: flex;
-  gap: 10px;
-  align-items: center;
-  font-size: 13px;
-  color: #374151;
-  font-weight: 700;
-  margin: 6px 0 14px 0;
-}
-.km-lock-unlock{
-  width: 100%;
-  padding: 12px 14px;
-  border-radius: 14px;
-  border: 0;
-  background: #3b82f6;
-  color: #ffffff;
-  font-weight: 900;
-  box-shadow: 0 14px 26px rgba(59,130,246,0.22);
-}
-.km-lock-error{
-  margin-top: 12px;
-  padding: 10px 12px;
-  border-radius: 12px;
-  border: 1px solid rgba(239,68,68,0.35);
-  background: rgba(239,68,68,0.08);
-  color: #b91c1c;
-  font-weight: 900;
-  font-size: 13px;
-}
-.km-lock-error.hidden{ display:none; }
-
 </style>
 </head>
 
-<body class="km-locked">
-<!-- =========================
-     KutMilzAi Lock Overlay
-     Blocks access until correct credentials are entered
-========================= -->
-<div id="km-lock-overlay" class="km-lock-overlay" role="dialog" aria-modal="true" aria-label="Locked - Kut Milz TB">
-  <div class="km-lock-card">
-    <div class="km-lock-head">
-      <div class="km-lock-title">KUT MILZ TB</div>
-      <!-- X is intentionally disabled: cannot bypass lock -->
-      <button id="km-lock-close" class="km-lock-close" type="button" aria-label="Close" disabled>&times;</button>
-    </div>
-
-    <div class="km-lock-body">
-      <div class="km-lock-field">
-        <label for="km-pass-token">Millz Pass Token</label>
-        <input id="km-pass-token" type="text" inputmode="email" autocomplete="off"
-               placeholder="Enter Millz Pass Token">
-      </div>
-
-      <div class="km-lock-field">
-        <label for="km-pass-pw">Password</label>
-        <div class="km-lock-row">
-          <input id="km-pass-pw" type="password" autocomplete="off"
-                 placeholder="Enter password">
-          <button id="km-pass-show" class="km-lock-show" type="button">Show</button>
-        </div>
-      </div>
-
-      <label class="km-lock-check">
-        <input id="km-remember" type="checkbox">
-        Remember me
-      </label>
-
-      <button id="km-unlock-btn" class="km-lock-unlock" type="button">Unlock</button>
-
-      <div id="km-lock-error" class="km-lock-error hidden" aria-live="polite">Access Declined.</div>
-    </div>
-  </div>
-</div>
+<body>
 <div class="container-wrapper" id="app-root">
   <h1 class="text-3xl text-center mb-6 brand-title">KUT MILZ TB</h1>
 
@@ -1151,9 +962,6 @@ function txLogLine(msg){
 const API_URL = 'wss://ws.binaryws.com/websockets/v3?app_id=1089';
 const REQUIRED_PASSWORD = "$1977";
 
-// KutMilzAi lock overlay credentials
-const KM_LOCK_TOKEN = "Amarie@millzbot";
-const KM_LOCK_PASSWORD = "$1977";
 
 
 /* =========================================================
@@ -3457,123 +3265,6 @@ function setSymbol(newSymbol){
 document.addEventListener("DOMContentLoaded", () => {
   try{
     // =========================
-    // KutMilzAi Lock Overlay wiring
-    // =========================
-    window.__kmUnlocked = false;
-
-    const overlay = $("km-lock-overlay");
-    const tIn = $("km-pass-token");
-    const pIn = $("km-pass-pw");
-    const remember = $("km-remember");
-    const btn = $("km-unlock-btn");
-    const err = $("km-lock-error");
-    const showBtn = $("km-pass-show");
-
-    function setLocked(locked){
-      if (locked){
-        document.body.classList.add("km-locked");
-        if (overlay) overlay.style.display = "flex";
-        window.__kmUnlocked = false;
-      } else {
-        document.body.classList.remove("km-locked");
-        if (overlay) overlay.style.display = "none";
-        window.__kmUnlocked = true;
-      }
-    }
-
-    function isRemembered(){
-      try{
-        if (localStorage.getItem("km_lock_ok") === "1") return true;
-        if (sessionStorage.getItem("km_lock_ok") === "1") return true;
-      } catch(_){}
-      return false;
-    }
-
-    function rememberOk(persist){
-      try{
-        if (persist){
-          localStorage.setItem("km_lock_ok", "1");
-        } else {
-          sessionStorage.setItem("km_lock_ok", "1");
-          localStorage.removeItem("km_lock_ok");
-        }
-      } catch(_){}
-    }
-
-    function showError(){
-      if (err) err.classList.remove("hidden");
-      try{ navigator.vibrate?.(80); }catch(_){}
-    }
-    function clearError(){
-      if (err) err.classList.add("hidden");
-    }
-
-    function attemptUnlock(){
-      // Robust iOS/Safari-safe compare (autofill sometimes adds hidden chars/spaces)
-      const clean = (v) => (v || "")
-        .replace(/[\u200B\u200C\u200D\uFEFF]/g, "")   // zero-width chars
-        .replace(/\s+/g, " ")
-        .trim();
-
-      const tokenValRaw = clean(tIn?.value);
-      const passValRaw  = clean(pIn?.value);
-
-      // Token is treated case-insensitive (password stays exact)
-      const tokenOk = tokenValRaw.toLowerCase() === String(KM_LOCK_TOKEN).toLowerCase();
-      const passOk  = passValRaw === String(KM_LOCK_PASSWORD);
-
-      if (tokenOk && passOk){
-        clearError();
-        rememberOk(!!remember?.checked);
-        setLocked(false);
-        logLine("Lock screen unlocked.");
-      } else {
-        showError();
-        logLine("Access declined: lock screen credentials incorrect.");
-      }
-    }
-
-    // init lock state
-    if (overlay){
-      // Prevent any accidental dismiss
-      overlay.addEventListener("click", (e) => {
-        // keep clicks inside card only
-        if (e.target === overlay) showError();
-      });
-    }
-
-    if (showBtn && pIn){
-      showBtn.addEventListener("click", () => {
-        const isPw = pIn.type === "password";
-        pIn.type = isPw ? "text" : "password";
-        showBtn.textContent = isPw ? "Hide" : "Show";
-      });
-    }
-
-    if (btn) btn.addEventListener("click", attemptUnlock);
-    // iOS/Safari extra: ensure Unlock always fires
-    if (btn){
-      btn.onclick = attemptUnlock;
-      btn.addEventListener("touchend", (e)=>{ e.preventDefault(); attemptUnlock(); }, {passive:false});
-      btn.addEventListener("pointerup", (e)=>{ try{ e.preventDefault(); }catch(_){ } attemptUnlock(); });
-    }
-
-    // Enter key unlock
-    [tIn, pIn].forEach(el => {
-      if (!el) return;
-      el.addEventListener("keydown", (e) => {
-        if (e.key === "Enter") attemptUnlock();
-      });
-    });
-
-    // lock remembered -> skip
-    if (isRemembered()){
-      setLocked(false);
-    } else {
-      setLocked(true);
-    }
-
-    // =========================
     // Continue normal app init
     // =========================
     initChart();
@@ -3616,6 +3307,12 @@ document.addEventListener("DOMContentLoaded", () => {
     if (dom.symbolSelect) dom.symbolSelect.value = appState.symbol;
 
     document.querySelectorAll("input, select").forEach(el => {
+      // IMPORTANT: Accumulator controls have their own handlers. If we bind the generic
+      // updateStateFromUI first, iOS/Safari will "snap back" the toggle before our
+      // accumulator handler runs. So we skip them here.
+      const skipIds = new Set(["accu-toggle","accu-safe","accu-growth","accu-tp"]);
+      if (el && el.id && skipIds.has(el.id)) return;
+
       el.addEventListener("input", updateStateFromUI);
       el.addEventListener("change", updateStateFromUI);
     });
