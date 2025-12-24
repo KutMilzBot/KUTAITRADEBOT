@@ -878,6 +878,60 @@ body.km-locked #app-root{
           </div>
         </div>
       </div>
+          <!-- Accumulator (True ACCU) -->
+          <div class="mt-4 p-4 rounded-lg border border-slate-700 bg-slate-900/30">
+            <div class="flex items-center justify-between gap-3">
+              <div>
+                <div class="text-sm font-extrabold text-slate-200">Accumulator (Scrape)</div>
+                <div class="text-xs text-slate-400">True <b>ACCU</b> contract with <b>Growth %</b> + optional <b>Auto-sell TP</b>.</div>
+              </div>
+              <label class="relative inline-flex items-center cursor-pointer">
+                <input type="checkbox" id="accu-toggle" class="sr-only peer">
+                <div class="w-11 h-6 bg-slate-500 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-sky-300 rounded-full peer
+                  peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px]
+                  after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-sky-600"></div>
+              </label>
+            </div>
+
+            <div id="accu-settings" class="mt-3 grid grid-cols-2 gap-3">
+              <div>
+                <label class="block text-sm font-medium mb-1">Growth rate</label>
+                <div id="accu-growth-bar" class="grid grid-cols-5 gap-2 bg-slate-800/60 p-1 rounded-xl border border-slate-700">
+                  <button type="button" class="accu-growth-btn py-2 rounded-lg text-sm font-semibold bg-slate-700 text-slate-200 hover:bg-slate-600" data-accu-growth="0.01">1%</button>
+                  <button type="button" class="accu-growth-btn py-2 rounded-lg text-sm font-semibold bg-slate-700 text-slate-200 hover:bg-slate-600" data-accu-growth="0.02">2%</button>
+                  <button type="button" class="accu-growth-btn py-2 rounded-lg text-sm font-semibold bg-slate-700 text-slate-200 hover:bg-slate-600" data-accu-growth="0.03">3%</button>
+                  <button type="button" class="accu-growth-btn py-2 rounded-lg text-sm font-semibold bg-slate-700 text-slate-200 hover:bg-slate-600" data-accu-growth="0.04">4%</button>
+                  <button type="button" class="accu-growth-btn py-2 rounded-lg text-sm font-semibold bg-slate-700 text-slate-200 hover:bg-slate-600" data-accu-growth="0.05">5%</button>
+                </div>
+                <!-- hidden input used by existing logic -->
+                <input type="hidden" id="accu-growth" value="0.01" />
+              </div>
+
+              <div>
+                <label for="accu-tp" class="block text-sm font-medium mb-1">Auto-sell TP (profit $)</label>
+                <input type="number" id="accu-tp" step="0.01" placeholder="e.g. 0.50"
+                  class="w-full p-2 rounded bg-slate-700 border border-slate-600 text-slate-50 focus:ring-sky-500 focus:border-sky-500">
+              </div>
+
+              <div class="col-span-2 flex items-center justify-between p-3 bg-slate-700/40 rounded-lg">
+                <div>
+                  <div class="text-sm font-semibold text-slate-200">Accumulator Safe Mode</div>
+                  <div class="text-xs text-slate-400">Caps growth to <b>1â2%</b> and lets AI Guard block spike/chop.</div>
+                </div>
+                <label class="relative inline-flex items-center cursor-pointer">
+                  <input type="checkbox" id="accu-safe" class="sr-only peer" checked>
+                  <div class="w-11 h-6 bg-slate-500 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-pink-300 rounded-full peer
+                    peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px]
+                    after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-pink-600"></div>
+                </label>
+              </div>
+
+              <div class="col-span-2 text-[11px] text-slate-400">
+                When <b>Accumulator</b> is ON, your normal CALL/PUT direction is still calculated, but entries will purchase an ACCU contract instead.
+              </div>
+            </div>
+          </div>
+
 
       <!-- Protected Defaults -->
       <div class="card">
@@ -929,6 +983,20 @@ body.km-locked #app-root{
             </div>
             <label class="relative inline-flex items-center cursor-pointer">
               <input type="checkbox" id="autoresume-toggle" class="sr-only peer" disabled checked>
+              <div class="w-11 h-6 bg-slate-500 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-pink-300 rounded-full peer
+                peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px]
+                after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-pink-600"></div>
+            </label>
+          </div>
+
+
+          <div class="flex items-center justify-between p-3 bg-slate-700/50 rounded-lg">
+            <div class="flex flex-col sm:flex-row sm:items-center">
+              <span class="text-sm font-medium text-slate-300 mr-4">Auto-sell (TP close):</span>
+              <span id="autosell-indicator" class="pill bg-emerald-600 text-white">ON</span>
+            </div>
+            <label class="relative inline-flex items-center cursor-pointer">
+              <input type="checkbox" id="autosell-toggle" class="sr-only peer" disabled checked>
               <div class="w-11 h-6 bg-slate-500 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-pink-300 rounded-full peer
                 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px]
                 after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-pink-600"></div>
@@ -1065,7 +1133,8 @@ function logLine(msg){
   }
 }
 
-// ÃÂ¢ÃÂÃÂ Transaction log lines: CLOSED | SYMBOL | CALL/PUT | +/-value
+// ÃÂ¢ÃÂÃ
+ Transaction log lines: CLOSED | SYMBOL | CALL/PUT | +/-value
 function txLogLine(msg){
   const t = new Date().toLocaleTimeString();
   const line = `[${t}] ${msg}`;
@@ -1110,10 +1179,12 @@ const appState = {
 
   currentBalance:0,
 
-  // ÃÂ¢ÃÂÃÂ Session tracking
+  // ÃÂ¢ÃÂÃ
+ Session tracking
   sessionProfit:0,     // net P/L
   sessionLoss:0,       // absolute loss total
-  // ÃÂÃÂ¢ÃÂÃÂÃÂÃÂ Session limits (extra safety layer)
+  // ÃÂÃÂ¢ÃÂÃÂÃÂÃ
+ Session limits (extra safety layer)
   sessionTrades: 0,
   sessionWins: 0,
   sessionLosses: 0,
@@ -1131,7 +1202,8 @@ const appState = {
   is_sellable:0,
   isSelling:false,
 
-  // ÃÂ¢ÃÂÃÂ Track last trade meta so TX log shows CALL/PUT + symbol
+  // ÃÂ¢ÃÂÃ
+ Track last trade meta so TX log shows CALL/PUT + symbol
   currentDirection:null,       // "CALL" / "PUT"
   currentSymbolAtEntry:null,   // e.g., "R_100"
 
@@ -1181,7 +1253,8 @@ const appState = {
     lastOHLC:null,
     hasTick:false,
 
-    /* ÃÂ¢ÃÂÃÂ PRICE ACTION: closed 1s candle history (used by filter) */
+    /* ÃÂ¢ÃÂÃ
+ PRICE ACTION: closed 1s candle history (used by filter) */
     closedCandles: []  // {time, open, high, low, close}
   },
 
@@ -1216,6 +1289,15 @@ const appState = {
     beAt:0.12,           // move to BE after +$0.12
     beBuffer:0.01        // keep +$0.01 cushion
   },
+  // â Accumulator (True ACCU) - optional scrape mode
+  accu:{
+    enabled:false,
+    growthRate:0.01,      // 1%..5% (0.01..0.05)
+    takeProfit:null,      // profit amount ($) for server-side auto-sell (limit_order.take_profit)
+    safe:true             // caps growth to 1â2% when ON
+  },
+
+
 
   // account
   isDemo: null
@@ -1788,6 +1870,13 @@ const dom = {
   sessLimitStatus: $("sess-limit-status"),
   sessCounts: $("sess-counts"),
   sessLimitReset: $("sess-limit-reset"),
+  // accumulator (ACCU)
+  accuToggle: $("accu-toggle"),
+  accuSettings: $("accu-settings"),
+  accuGrowth: $("accu-growth"),
+  accuTP: $("accu-tp"),
+  accuSafe: $("accu-safe"),
+
 };
 
 /* =========================================================
@@ -1991,6 +2080,26 @@ function updateUI(){
     }
   }
 
+
+  // Accumulator UI sync (True ACCU)
+  if (dom.accuToggle && document.activeElement !== dom.accuToggle) dom.accuToggle.checked = !!appState.accu.enabled;
+  if (dom.accuSettings) dom.accuSettings.style.display = appState.accu.enabled ? "grid" : "none";
+  if (dom.accuSafe && document.activeElement !== dom.accuSafe) dom.accuSafe.checked = !!appState.accu.safe;
+  if (dom.accuGrowth && document.activeElement !== dom.accuGrowth) dom.accuGrowth.value = String(appState.accu.growthRate || 0.01);
+  if (dom.accuTP && document.activeElement !== dom.accuTP) dom.accuTP.value = appState.accu.takeProfit ? String(appState.accu.takeProfit) : "";
+  // highlight growth buttons
+  try{
+    const cur = Number(appState.accu.growthRate || 0.01);
+    document.querySelectorAll("[data-accu-growth]").forEach(btn => {
+      const v = Number(btn.getAttribute("data-accu-growth"));
+      const isOn = Math.abs(v - cur) < 1e-9;
+      btn.classList.toggle("bg-sky-600", isOn);
+      btn.classList.toggle("text-white", isOn);
+      btn.classList.toggle("bg-slate-700", !isOn);
+      btn.classList.toggle("text-slate-200", !isOn);
+    });
+  }catch(_){ }
+
   updateLoginBadge();
   updateConfidenceUI();
   updateLoss(appState.sessionLoss);
@@ -2081,7 +2190,8 @@ function loadDefaults(mode){
   appState.trend.enabled = appState.useTrendFilter;
   appState.trend.status = appState.trend.enabled ? "LOADING" : "OFF";
 
-  // ÃÂ¢ÃÂÃÂ if we are already connected, refresh H4 trend immediately when switching to MOMENTUM/H4
+  // ÃÂ¢ÃÂÃ
+ if we are already connected, refresh H4 trend immediately when switching to MOMENTUM/H4
   appState.trend.lastUpdated = 0;
   if (appState.trend.enabled && appState.isAuthenticated) requestH4Candles();
 
@@ -2145,6 +2255,24 @@ function initChart(){
     }catch(_){}
   });
   ro.observe(container);
+  // Accumulator UI
+  if (dom.accuToggle && document.activeElement !== dom.accuToggle){
+    dom.accuToggle.checked = !!appState.accu?.enabled;
+  }
+  if (dom.accuSafe && document.activeElement !== dom.accuSafe){
+    dom.accuSafe.checked = !!appState.accu?.safe;
+  }
+  if (dom.accuGrowth && document.activeElement !== dom.accuGrowth){
+    dom.accuGrowth.value = String(appState.accu?.growthRate ?? 0.01);
+  }
+  if (dom.accuTP){
+    const tp = appState.accu?.takeProfit;
+    setIfNotEditing(dom.accuTP, (tp === null || tp === undefined) ? "" : String(tp));
+  }
+  if (dom.accuSettings){
+    dom.accuSettings.style.display = (appState.accu?.enabled ? "grid" : "none");
+  }
+
 }
 
 function updateSeriesFromTick(price){
@@ -2172,7 +2300,8 @@ function updateSeriesFromTick(price){
     c.close = price;
     try{ series.update(c); }catch(_){}
   } else {
-    /* ÃÂ¢ÃÂÃÂ PRICE ACTION: finalize previous candle into history */
+    /* ÃÂ¢ÃÂÃ
+ PRICE ACTION: finalize previous candle into history */
     if (appState.chart.lastOHLC){
       appState.chart.closedCandles.push({ ...appState.chart.lastOHLC });
       if (appState.chart.closedCandles.length > 240) appState.chart.closedCandles.shift(); // keep last ~4 mins
@@ -2203,7 +2332,8 @@ function trendClassify(emaFast, emaSlow){
   return "NEUTRAL";
 }
 
-/* ÃÂ¢ÃÂÃÂ FIXED: Proper Deriv candles request uses ticks_history + style:"candles"
+/* ÃÂ¢ÃÂÃ
+ FIXED: Proper Deriv candles request uses ticks_history + style:"candles"
    Response comes back as msg_type:"history" with history.candles[] */
 function requestH4Candles(){
   if (!appState.ws || !appState.isAuthenticated || !appState.trend.enabled) return;
@@ -2268,7 +2398,8 @@ function passesBreakoutFilter(direction){
 }
 
 /* =========================================================
-   ÃÂ¢ÃÂÃÂ PRICE ACTION FILTER (ALL 3 MODES)
+   ÃÂ¢ÃÂÃ
+ PRICE ACTION FILTER (ALL 3 MODES)
    - Uses real 1s candles from chart aggregator
    - Blocks: doji/weak body, wick traps, fake range breakouts
 ========================================================= */
@@ -2572,7 +2703,8 @@ function startBot(){
   appState.chart.hasTick = false;
   appState.lastDigits = [];
 
-  // ÃÂ¢ÃÂÃÂ PRICE ACTION: reset candle history on start
+  // ÃÂ¢ÃÂÃ
+ PRICE ACTION: reset candle history on start
   appState.chart.closedCandles = [];
 
   appState.currentDirection = null;
@@ -2648,7 +2780,8 @@ function handleResponse(res){
       appState.trend.lastUpdated = 0;
       if (appState.trend.enabled){
         appState.trend.status = "LOADING";
-        requestH4Candles(); // ÃÂ¢ÃÂÃÂ now correct request
+        requestH4Candles(); // ÃÂ¢ÃÂÃ
+ now correct request
       } else {
         appState.trend.status = "OFF";
       }
@@ -2701,7 +2834,8 @@ function handleResponse(res){
       break;
     }
 
-    /* ÃÂ¢ÃÂÃÂ FIXED: H4 candles now arrive as msg_type:"history" */
+    /* ÃÂ¢ÃÂÃ
+ FIXED: H4 candles now arrive as msg_type:"history" */
     case "history":{
       // H4 trend + optional HTF confirm both use msg_type:"history"
       if (!appState.trend.enabled && !appState.htfConfirm?.enabled) return;
@@ -2919,7 +3053,8 @@ function checkAndEnterTrade(){
     }
   }
 
-  /* ÃÂ¢ÃÂÃÂ PRICE ACTION GATE (AUTO) */
+  /* ÃÂ¢ÃÂÃ
+ PRICE ACTION GATE (AUTO) */
   if (!passesPriceActionFilter(direction)){
     // block reason already set inside the filter
     return;
@@ -2980,24 +3115,50 @@ function enterTrade(direction, stake){
     aiLayer.cooldownExtraUntil = Math.max(aiLayer.cooldownExtraUntil, Date.now() + decision.cooldownMs);
   }
 
-  appState.currentDirection = direction;
+  appState.currentDirection = (appState.accu && appState.accu.enabled) ? 'ACCU' : direction;
   appState.currentSymbolAtEntry = appState.symbol;
 
   appState.isEntryInProgress = true;
   appState.pendingProposalId = null;
   appState.tickBuffer = [];
-  updateTradeStatus(`Creating Proposal (${direction})...`, "bg-orange-500 text-white");
+  updateTradeStatus((appState.accu && appState.accu.enabled) ? "Creating Proposal (ACCU)..." : `Creating Proposal (${direction})...`, "bg-orange-500 text-white");
 
-  const req = {
-    proposal: 1,
-    amount: stake,
-    basis: "stake",
-    contract_type: direction,
-    currency: "USD",
-    duration: appState.duration,
-    duration_unit: appState.durationUnit,
-    symbol: appState.symbol
-  };
+  // Build proposal request (ACCU uses growth_rate + optional limit_order.take_profit)
+  let req;
+  if (appState.accu && appState.accu.enabled){
+    // Safe Mode: cap growth to 1â2%
+    const safe = !!appState.accu.safe;
+    const growth = Math.max(0.01, Math.min(0.05, Number(appState.accu.growthRate || 0.01)));
+    const growthRate = safe ? Math.min(growth, 0.02) : growth;
+
+    req = {
+      proposal: 1,
+      amount: stake,
+      basis: "stake",
+      contract_type: "ACCU",
+      currency: "USD",
+      symbol: appState.symbol,
+      growth_rate: growthRate
+    };
+
+    // Server-side auto sell by profit target (TP)
+    const tp = Number(appState.accu.takeProfit);
+    if (Number.isFinite(tp) && tp > 0){
+      req.limit_order = { take_profit: tp };
+    }
+  } else {
+    req = {
+      proposal: 1,
+      amount: stake,
+      basis: "stake",
+      contract_type: direction,
+      currency: "USD",
+      duration: appState.duration,
+      duration_unit: appState.durationUnit,
+      symbol: appState.symbol
+    };
+  }
+
   appState.ws.send(JSON.stringify(req));
 
   setTimeout(() => {
@@ -3151,7 +3312,8 @@ function manualPlaceTrade(mult=1){
     return;
   }
 
-  /* ÃÂ¢ÃÂÃÂ PRICE ACTION GATE (MANUAL) */
+  /* ÃÂ¢ÃÂÃ
+ PRICE ACTION GATE (MANUAL) */
   if (!passesPriceActionFilter(dir)){
     updateTradeStatus("WAIT: price action", "bg-yellow-600 text-white");
     return;
@@ -3268,7 +3430,8 @@ function setSymbol(newSymbol){
   appState.chart.lastCandleTime = 0;
   appState.chart.lastOHLC = null;
 
-  // ÃÂ¢ÃÂÃÂ PRICE ACTION: reset candle history on symbol switch
+  // ÃÂ¢ÃÂÃ
+ PRICE ACTION: reset candle history on symbol switch
   appState.chart.closedCandles = [];
 
   appState.trend.lastUpdated = 0;
@@ -3277,7 +3440,8 @@ function setSymbol(newSymbol){
   if (appState.isAuthenticated){
     subscribeTicks(newSymbol);
 
-    // ÃÂ¢ÃÂÃÂ refresh trend candles for the NEW symbol
+    // ÃÂ¢ÃÂÃ
+ refresh trend candles for the NEW symbol
     if (appState.trend.enabled) requestH4Candles();
 
     logLine("Symbol switched to: " + newSymbol);
@@ -3377,6 +3541,12 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     if (btn) btn.addEventListener("click", attemptUnlock);
+    // iOS/Safari extra: ensure Unlock always fires
+    if (btn){
+      btn.onclick = attemptUnlock;
+      btn.addEventListener("touchend", (e)=>{ e.preventDefault(); attemptUnlock(); }, {passive:false});
+      btn.addEventListener("pointerup", (e)=>{ try{ e.preventDefault(); }catch(_){ } attemptUnlock(); });
+    }
 
     // Enter key unlock
     [tIn, pIn].forEach(el => {
@@ -3480,7 +3650,82 @@ document.addEventListener("DOMContentLoaded", () => {
       updateUI();
     });
 
-    dom.clearLogBtn?.addEventListener("click", () => { if (LOG) LOG.textContent = ""; });
+    
+    // =========================
+    // Accumulator (True ACCU) wiring
+    // =========================
+    dom.accuToggle?.addEventListener("change", (e) => {
+      appState.accu.enabled = !!e.target.checked;
+      logLine("Accumulator: " + (appState.accu.enabled ? "ON" : "OFF"));
+      updateUI();
+    });
+
+    dom.accuSafe?.addEventListener("change", (e) => {
+      appState.accu.safe = !!e.target.checked;
+      // if safe is ON, clamp growth to 1â2%
+      if (appState.accu.safe && appState.accu.growthRate > 0.02){
+        appState.accu.growthRate = 0.02;
+      }
+      logLine("Accumulator Safe Mode: " + (appState.accu.safe ? "ON" : "OFF"));
+      updateUI();
+      if (typeof setAccuBtnActive === "function") setAccuBtnActive();
+    });
+
+    dom.accuGrowth?.addEventListener("change", (e) => {
+      let gr = Number(e.target.value);
+      if (!Number.isFinite(gr)) gr = 0.01;
+      if (appState.accu.safe) gr = Math.min(gr, 0.02); // safe cap
+      // allow only 0.01..0.05
+      gr = Math.max(0.01, Math.min(0.05, gr));
+      appState.accu.growthRate = gr;
+      logLine("Accumulator Growth Rate: " + Math.round(gr*100) + "%");
+      updateUI();
+      if (typeof setAccuBtnActive === "function") setAccuBtnActive();
+    });
+
+    // Growth rate bar (1%..5%) like Deriv app
+    const accuBtns = Array.from(document.querySelectorAll("[data-accu-growth]"));
+    function setAccuBtnActive(){
+      const cur = Number(appState.accu.growthRate || 0.01);
+      accuBtns.forEach(btn => {
+        const v = Number(btn.getAttribute("data-accu-growth"));
+        const isOn = Math.abs(v - cur) < 1e-9;
+        btn.classList.toggle("bg-sky-600", isOn);
+        btn.classList.toggle("text-white", isOn);
+        btn.classList.toggle("bg-slate-700", !isOn);
+        btn.classList.toggle("text-slate-200", !isOn);
+      });
+    }
+
+    accuBtns.forEach(btn => {
+      btn.addEventListener("click", () => {
+        const raw = Number(btn.getAttribute("data-accu-growth"));
+        if (!Number.isFinite(raw)) return;
+        // safe cap
+        let gr = Math.max(0.01, Math.min(0.05, raw));
+        if (appState.accu.safe) gr = Math.min(gr, 0.02);
+        appState.accu.growthRate = gr;
+        if (dom.accuGrowth) dom.accuGrowth.value = String(gr);
+        logLine("Accumulator Growth Rate: " + Math.round(gr*100) + "%");
+        setAccuBtnActive();
+        updateUI();
+      });
+    });
+
+    // initial highlight
+    setAccuBtnActive();
+
+
+    dom.accuTP?.addEventListener("input", (e) => {
+      const v = String(e.target.value || "").trim();
+      if (!v){
+        appState.accu.takeProfit = null;
+      } else {
+        const n = Number(v);
+        appState.accu.takeProfit = Number.isFinite(n) && n > 0 ? n : null;
+      }
+    });
+dom.clearLogBtn?.addEventListener("click", () => { if (LOG) LOG.textContent = ""; });
     dom.exportLogBtn?.addEventListener("click", async () => {
       try{
         await navigator.clipboard.writeText(LOG?.textContent || "");
