@@ -787,6 +787,24 @@ button, .btn{
             Safe Mode is currently DISABLED.
           </div>
 
+
+          <div class="flex items-center justify-between p-3 bg-slate-700/50 rounded-lg">
+            <div class="flex flex-col sm:flex-row sm:items-center">
+              <span class="text-sm font-medium text-slate-300 mr-4">Price Action Filter:</span>
+              <span id="price-action-indicator" class="pill bg-emerald-600 text-white">ON</span>
+            </div>
+            <label class="relative inline-flex items-center cursor-pointer">
+              <input type="checkbox" id="price-action-toggle" class="sr-only peer" disabled checked>
+              <div class="w-11 h-6 bg-slate-500 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-pink-300 rounded-full peer
+                peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px]
+                after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-pink-600"></div>
+            </label>
+          </div>
+
+          <div class="text-center text-xs text-slate-500" id="price-action-status">
+            Price Action Filter is currently ENABLED.
+          </div>
+
           <div class="flex items-center justify-between p-3 bg-slate-700/50 rounded-lg">
             <div class="flex flex-col sm:flex-row sm:items-center">
               <span class="text-sm font-medium text-slate-300 mr-4">Auto-resume after cooldown:</span>
@@ -1609,6 +1627,11 @@ const dom = {
   safeIndicator: $("safe-mode-indicator"),
   safeStatus: $("safe-mode-status"),
 
+  priceActionToggle: $("price-action-toggle"),
+  priceActionIndicator: $("price-action-indicator"),
+  priceActionStatus: $("price-action-status"),
+
+
   autoResumeToggle: $("autoresume-toggle"),
   autoResumeIndicator: $("autoresume-indicator"),
   autoSellToggle: $("autosell-toggle"),
@@ -1841,6 +1864,19 @@ function updateUI(){
       : "Safe Mode is DISABLED.";
   }
 
+  if (dom.priceActionToggle && appState.candleChecks){
+    dom.priceActionToggle.checked = !!appState.candleChecks.enabled;
+  }
+  if (dom.priceActionIndicator){
+    const on = !!(appState.candleChecks && appState.candleChecks.enabled);
+    dom.priceActionIndicator.textContent = on ? "ON" : "OFF";
+    dom.priceActionIndicator.className = `pill ${on ? "bg-emerald-600" : "bg-red-600"} text-white`;
+  }
+  if (dom.priceActionStatus){
+    const on = !!(appState.candleChecks && appState.candleChecks.enabled);
+    dom.priceActionStatus.textContent = on ? "Price Action Filter is ENABLED." : "Price Action Filter is DISABLED.";
+  }
+
   setIfNotEditing(dom.stakeInput, appState.stakeAmount.toFixed(2));
   setIfNotEditing(dom.durationInput, String(appState.duration));
   if (dom.durationUnitInput && document.activeElement !== dom.durationUnitInput) dom.durationUnitInput.value = appState.durationUnit;
@@ -1920,30 +1956,26 @@ function updateUI(){
 function setSettingsLock(isLocked){
   appState.isSettingsLocked = isLocked;
 
-  // Only lock the "Protected Defaults" controls (Option B behavior)
-  // Everything else (manual controls, stake, duration, TP/SL, etc.) must remain usable.
   const list = [
-    dom.modeSelect,
-    dom.safeToggle,
-    dom.autoResumeToggle,
-    dom.autoSellToggle,
-
-    // Session limits controls (optional safety layer)
-    dom.sessLimitEnabled,
-    dom.sessMaxProfit,
-    dom.sessMaxLoss,
-    dom.sessMaxTrades,
-    dom.sessMaxWins,
-    dom.sessMaxLosses,
-    dom.sessLimitReset
+    dom.stakeInput, dom.durationInput, dom.durationUnitInput,
+    dom.tpInput, dom.slInput, dom.maxTradesInput, dom.cooldownInput,
+    dom.modeSelect, dom.safeToggle, dom.priceActionToggle, dom.autoResumeToggle, dom.autoSellToggle,
+    dom.accuToggle, dom.accuSafe, dom.accuTP, dom.accuGrowth,
+    dom.sessLimitEnabled, dom.sessMaxProfit, dom.sessMaxLoss, dom.sessMaxTrades, dom.sessMaxWins, dom.sessMaxLosses, dom.sessLimitReset
   ].filter(Boolean);
 
-  list.forEach(el => el.disabled = !!isLocked);
-
-  // Also lock/unlock any elements marked with data-lock="protected"
-  document.querySelectorAll('[data-lock="protected"]').forEach(el => {
-    try { el.disabled = !!isLocked; } catch(_){}
+    list.forEach(el => {
+    // Some inputs are styled as toggles (sr-only + peer). Disabled is enough, but
+    // Safari can keep focus; force blur on lock.
+    try{ if (isLocked && document.activeElement === el) el.blur(); }catch(_){}
+    el.disabled = isLocked;
   });
+
+  // Accumulator growth buttons are not native inputs; lock the whole Accu settings box.
+  if (dom.accuSettings){
+    dom.accuSettings.classList.toggle("pointer-events-none", isLocked);
+    dom.accuSettings.classList.toggle("opacity-60", isLocked);
+  }
 
   if (dom.unlockBtn){
     dom.unlockBtn.textContent = isLocked ? "Unlock" : "Lock";
@@ -1952,7 +1984,6 @@ function setSettingsLock(isLocked){
       : "text-sm text-white bg-pink-600 hover:bg-pink-700 font-medium py-1 px-3 rounded-full border border-pink-700 transition duration-150";
   }
 }
-
 
 /* =========================================================
    Input -> state (LIVE typing)
@@ -1972,6 +2003,18 @@ function updateStateFromUI(){
     if (dom.autoTradingToggle) appState.autoTradingEnabled = !!dom.autoTradingToggle.checked;
 
     if (dom.safeToggle) appState.isSafeMode = !!dom.safeToggle.checked;
+
+    if (dom.priceActionToggle && appState.candleChecks) appState.candleChecks.enabled = !!dom.priceActionToggle.checked;
+
+    // Link bot Safe Mode -> Accumulator Safe Mode when settings are unlocked.
+    // This matches the "safe mode auto-detect" request: turning Safe Mode ON
+    // automatically turns Accu Safe ON (and OFF turns it off) so ACCU entries stay safer.
+    try{
+      if (!appState.isSettingsLocked && appState.accu){
+        appState.accu.safe = !!appState.isSafeMode;
+        if (dom.accuSafe) dom.accuSafe.checked = !!appState.accu.safe;
+      }
+    }catch(_){}
 
     // Session limits (extra safety)
     syncSessionLimitsFromUI();
@@ -2261,7 +2304,9 @@ function paIsFakeBreakout(last, rangeHi, rangeLo, direction, buffer){
 }
 
 function passesPriceActionFilter(direction){
-  // Need enough closed candles to judge structure
+    if (!appState.candleChecks?.enabled) return true;
+
+// Need enough closed candles to judge structure
   const candles = appState.chart.closedCandles;
   if (!candles || candles.length < 25) {
     if (dom.blockReasonDisplay) dom.blockReasonDisplay.textContent = "Price Action: Building Candles";
@@ -2485,13 +2530,6 @@ function stopBot(){
 
 function startBot(){
   if (appState.isBotRunning) return;
-
-  // Hard gate: website lock overlay must be unlocked first
-  if (!window.__kmUnlocked){
-    updateTradeStatus("ACCESS DENIED", "bg-red-600 text-white");
-    logLine("Access denied: lock screen active.");
-    return;
-  }
 
   const pw = (dom.pwInput?.value || "").trim();
   if (pw !== REQUIRED_PASSWORD){
@@ -2880,7 +2918,7 @@ function checkAndEnterTrade(){
 
   /* ÃÂÃÂ¢ÃÂÃÂÃÂ
  PRICE ACTION GATE (AUTO) */
-  if (!passesPriceActionFilter(direction)){
+  if (appState.candleChecks?.enabled && !passesPriceActionFilter(direction)) {
     // block reason already set inside the filter
     return;
   }
@@ -3411,13 +3449,12 @@ document.addEventListener("DOMContentLoaded", () => {
       if (appState.isBotRunning) stopBot();
       else startBot();
     });
-
-    dom.unlockBtn?.addEventListener("click", () => setSettingsLock(!appState.isSettingsLocked));
     dom.modeSelect?.addEventListener("change", (e) => loadDefaults(e.target.value));
 
     dom.safeToggle?.addEventListener("change", () => updateStateFromUI());
     dom.autoResumeToggle?.addEventListener("change", () => updateStateFromUI());
     dom.autoSellToggle?.addEventListener("change", () => updateStateFromUI());
+    dom.priceActionToggle?.addEventListener("change", () => updateStateFromUI());
 
     dom.toggleVisibilityBtn?.addEventListener("click", toggleTokenVisibility);
     dom.copyApiUrlBtn?.addEventListener("click", copyApiUrl);
