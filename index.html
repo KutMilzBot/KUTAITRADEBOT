@@ -1269,17 +1269,34 @@ const aiLayer = {
     }
 
     // Overtrading protection (final stage only)
-    this._pruneOldTradeTimes(now);
-    const drawdown = this.perf.consecutiveLosses >= 2;
+    // Accumulator "SCRAPE/SCALP" needs fast re-entries.
+    // Use a simple minimum gap (5s) instead of the per-minute cap to avoid getting "stuck".
+    const isAccu = !!ctx?.accuEnabled;
+    const isScrapeMode = /scalp|scrap|scrape/i.test(String(ctx?.mode || ""));
+    if (isAccu && isScrapeMode){
+      const tt = this.perf.tradeTimes || [];
+      const last = tt.length ? tt[tt.length - 1] : 0;
+      const minGap = 5000;
+      if (last && (now - last) < minGap){
+        this.perf.blockCount += 1;
+        const sec = Math.max(1, Math.ceil((minGap - (now - last))/1000));
+        return { allow:false, reason:`Overtrading Cooldown (${sec}s)`, cooldownMs: minGap };
+      }
+      // Keep history trimmed but don't enforce per-minute cap in scrape mode
+      this._pruneOldTradeTimes(now);
+    } else {
+      this._pruneOldTradeTimes(now);
+      const drawdown = this.perf.consecutiveLosses >= 2;
 
-    const maxTPM = drawdown ? Math.max(1, Math.floor(this.limits.maxTradesPerMinute * 0.6)) : this.limits.maxTradesPerMinute;
-    if ((this.perf.tradeTimes?.length || 0) >= maxTPM){
-      this.regime = drawdown ? "DRAWDOWN" : this.regime;
-      this.perf.blockCount += 1;
-      return { allow:false, reason:`Overtrading Guard (${maxTPM}/min)`, cooldownMs: drawdown ? 90000 : 30000 };
+      const maxTPM = drawdown ? Math.max(1, Math.floor(this.limits.maxTradesPerMinute * 0.6)) : this.limits.maxTradesPerMinute;
+      if ((this.perf.tradeTimes?.length || 0) >= maxTPM){
+        this.regime = drawdown ? "DRAWDOWN" : this.regime;
+        this.perf.blockCount += 1;
+        return { allow:false, reason:`Overtrading Guard (${maxTPM}/min)`, cooldownMs: drawdown ? 90000 : 30000 };
+      }
     }
 
-    // Rolling volatility checks
+// Rolling volatility checks
     const vol = this.rolling.vol || 0;
     const std = this.rolling.volStd || 0;
 
@@ -2781,6 +2798,7 @@ function handleResponse(res){
         stake: appState.stakeAmount,
         symbol: appState.symbol,
         mode: appState.mode,
+        accuEnabled: !!(appState.accu && appState.accu.enabled),
         tickBuffer: appState.tickBuffer,
         closedCandles: appState.chart?.closedCandles || [],
         sessionProfit: appState.sessionProfit,
@@ -2980,6 +2998,7 @@ function enterTrade(direction, stake){
     stake,
     symbol: appState.symbol,
     mode: appState.mode,
+    accuEnabled: !!(appState.accu && appState.accu.enabled),
     tickBuffer: appState.tickBuffer,
     closedCandles: appState.chart?.closedCandles || [],
     sessionProfit: appState.sessionProfit,
