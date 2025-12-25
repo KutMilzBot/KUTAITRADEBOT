@@ -1396,7 +1396,10 @@ function passesVolatilityGuard(){
   const last = ranges[ranges.length-1];
 
   // too quiet / dead
-  if (avgRange <= (appState.volGuard.deadMinRange || 0)){
+  // NOTE: Only hard-block "Dead Market" if user sets a positive deadMinRange.
+  // Default deadMinRange is 0, so the bot won't get stuck in "Dead Market" during flat ticks.
+  const deadMin = (typeof appState.volGuard.deadMinRange === "number") ? appState.volGuard.deadMinRange : 0;
+  if (deadMin > 0 && avgRange <= deadMin){
     dom.blockReasonDisplay && (dom.blockReasonDisplay.textContent = "Vol Guard: Dead Market");
     return false;
   }
@@ -2304,9 +2307,7 @@ function paIsFakeBreakout(last, rangeHi, rangeLo, direction, buffer){
 }
 
 function passesPriceActionFilter(direction){
-    if (!appState.candleChecks?.enabled) return true;
-
-// Need enough closed candles to judge structure
+  // Need enough closed candles to judge structure
   const candles = appState.chart.closedCandles;
   if (!candles || candles.length < 25) {
     if (dom.blockReasonDisplay) dom.blockReasonDisplay.textContent = "Price Action: Building Candles";
@@ -2918,7 +2919,7 @@ function checkAndEnterTrade(){
 
   /* ÃÂÃÂ¢ÃÂÃÂÃÂ
  PRICE ACTION GATE (AUTO) */
-  if (appState.candleChecks?.enabled && !passesPriceActionFilter(direction)) {
+  if (!passesPriceActionFilter(direction)){
     // block reason already set inside the filter
     return;
   }
