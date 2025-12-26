@@ -413,7 +413,7 @@ button, .btn{
           </div>
 
           <div id="account-warning" class="hidden mt-3 p-3 rounded-lg border border-red-500/40 bg-red-500/10 text-sm text-red-200">
-            ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¯ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¸ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ Symbol not available on this account. Use a Deriv <b>Derived/Synthetic (STD)</b> account for Volatility indices and Vol 1s.
+             Symbol not available on this account. Use a Deriv <b>Derived/Synthetic (STD)</b> account for Volatility indices and Vol 1s.
           </div>
         </div>
       </div>
@@ -531,7 +531,7 @@ button, .btn{
       <!-- Clustering Detected Alert -->
       <div id="cluster-alert" class="card hidden border-yellow-500/40">
         <div class="flex items-start gap-3">
-          <div class="text-yellow-400 text-xl">ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¯ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¸ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ</div>
+          <div class="text-yellow-400 text-xl"></div>
           <div>
             <div class="text-lg font-semibold text-yellow-300">Clustering Detected</div>
             <div id="cluster-text" class="text-sm text-slate-200 mt-1">
@@ -553,7 +553,7 @@ button, .btn{
         </div>
         <div class="flex justify-between mt-2 text-xs text-slate-300">
           <div id="confidence-text">0%</div>
-          <div id="confidence-notes" class="text-slate-400">Waiting ticksÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¦</div>
+          <div id="confidence-notes" class="text-slate-400">Waiting ticks...</div>
         </div>
 
         <div class="mt-3 text-xs text-slate-400">
@@ -598,7 +598,7 @@ button, .btn{
               </button>
             </div>
             <p class="text-xs text-slate-400 mt-2">
-              If symbol fails to stream, you may be on an account that doesnÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂt allow it. Use a Derived/STD account for Volatility indices.
+              If symbol fails to stream, you may be on an account that doesn't allow it. Use a Derived/STD account for Volatility indices.
             </p>
           </div>
 
@@ -619,7 +619,7 @@ button, .btn{
 
           <div class="md:col-span-2 flex items-center justify-between p-3 bg-slate-700/50 rounded-lg mt-1">
             <div class="flex items-center gap-3">
-              <div class="text-purple-300 text-xl">ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¡</div>
+              <div class="text-purple-300 text-xl"></div>
               <div>
                 <div class="font-semibold text-slate-200">Auto Trading</div>
                 <div class="text-xs text-slate-400">Enable to start automated trading based on current settings</div>
@@ -727,7 +727,7 @@ button, .btn{
               <div class="col-span-2 flex items-center justify-between p-3 bg-slate-700/40 rounded-lg">
                 <div>
                   <div class="text-sm font-semibold text-slate-200">Accumulator Safe Mode</div>
-                  <div class="text-xs text-slate-400">Caps growth to <b>1ÃÂÃÂ¢ÃÂÃÂÃÂÃÂ2%</b> and lets AI Guard block spike/chop.</div>
+                  <div class="text-xs text-slate-400">Caps growth to <b>1-2%</b> and lets AI Guard block spike/chop.</div>
                 </div>
                 <label class="relative inline-flex items-center cursor-pointer">
                   <input type="checkbox" id="accu-safe" class="sr-only peer" checked>
@@ -750,7 +750,7 @@ button, .btn{
         <div class="flex items-center justify-between gap-3">
           <div>
             <div class="text-sm font-extrabold text-slate-200">Stage Ladder (Safe Mode)</div>
-            <div class="text-xs text-slate-400">Sequential âpyramidâ stages. OFF by default. Unlock Protected Defaults to enable.</div>
+            <div class="text-xs text-slate-400">Sequential pyramid stages. OFF by default. Unlock Protected Defaults to enable.</div>
           </div>
           <label class="relative inline-flex items-center cursor-pointer">
             <input type="checkbox" id="ladder-toggle" class="sr-only peer">
@@ -763,25 +763,41 @@ button, .btn{
 
         <div id="ladder-settings" class="mt-3 grid grid-cols-2 gap-3">
           <div>
-            <label class="block text-sm font-medium mb-1">Stage 1 stake ($)</label>
-            <input type="number" id="ladder-s1" step="0.01" placeholder="e.g. 1"
-              class="w-full p-2 rounded bg-slate-700 border border-slate-600 text-slate-50 focus:ring-sky-500 focus:border-sky-500">
-          </div>
-          <div>
-            <label class="block text-sm font-medium mb-1">Stage 2 stake ($)</label>
-            <input type="number" id="ladder-s2" step="0.01" placeholder="e.g. 2"
-              class="w-full p-2 rounded bg-slate-700 border border-slate-600 text-slate-50 focus:ring-sky-500 focus:border-sky-500">
-          </div>
-          <div>
-            <label class="block text-sm font-medium mb-1">Stage 3 stake ($)</label>
-            <input type="number" id="ladder-s3" step="0.01" placeholder="e.g. 4"
-              class="w-full p-2 rounded bg-slate-700 border border-slate-600 text-slate-50 focus:ring-sky-500 focus:border-sky-500">
-          </div>
-          <div>
-            <label class="block text-sm font-medium mb-1">Next-stage delay (sec)</label>
-            <input type="number" id="ladder-delay" step="1" min="0" placeholder="e.g. 5"
-              class="w-full p-2 rounded bg-slate-700 border border-slate-600 text-slate-50 focus:ring-sky-500 focus:border-sky-500">
-          </div>
+  <label class="block text-sm font-medium mb-1">Stage 1 stake ($)</label>
+  <input type="number" id="ladder-s1" step="0.01" placeholder="e.g. 1"
+    class="w-full p-2 rounded bg-slate-700 border border-slate-600 text-slate-50 focus:ring-sky-500 focus:border-sky-500">
+</div>
+<div>
+  <label class="block text-sm font-medium mb-1">Stage 1 TP ($ profit)</label>
+  <input type="number" id="ladder-s1tp" step="0.01" placeholder="e.g. 0.20"
+    class="w-full p-2 rounded bg-slate-700 border border-slate-600 text-slate-50 focus:ring-sky-500 focus:border-sky-500">
+</div>
+<div>
+  <label class="block text-sm font-medium mb-1">Stage 2 stake ($)</label>
+  <input type="number" id="ladder-s2" step="0.01" placeholder="e.g. 2"
+    class="w-full p-2 rounded bg-slate-700 border border-slate-600 text-slate-50 focus:ring-sky-500 focus:border-sky-500">
+</div>
+<div>
+  <label class="block text-sm font-medium mb-1">Stage 2 TP ($ profit)</label>
+  <input type="number" id="ladder-s2tp" step="0.01" placeholder="e.g. 0.35"
+    class="w-full p-2 rounded bg-slate-700 border border-slate-600 text-slate-50 focus:ring-sky-500 focus:border-sky-500">
+</div>
+<div>
+  <label class="block text-sm font-medium mb-1">Stage 3 stake ($)</label>
+  <input type="number" id="ladder-s3" step="0.01" placeholder="e.g. 4"
+    class="w-full p-2 rounded bg-slate-700 border border-slate-600 text-slate-50 focus:ring-sky-500 focus:border-sky-500">
+</div>
+<div>
+  <label class="block text-sm font-medium mb-1">Stage 3 TP ($ profit)</label>
+  <input type="number" id="ladder-s3tp" step="0.01" placeholder="e.g. 0.60"
+    class="w-full p-2 rounded bg-slate-700 border border-slate-600 text-slate-50 focus:ring-sky-500 focus:border-sky-500">
+</div>
+<div>
+  <label class="block text-sm font-medium mb-1">Next-stage delay (sec)</label>
+  <input type="number" id="ladder-delay" step="1" min="0" placeholder="e.g. 5"
+    class="w-full p-2 rounded bg-slate-700 border border-slate-600 text-slate-50 focus:ring-sky-500 focus:border-sky-500">
+</div>
+          
 
           <div class="col-span-2 flex items-center justify-between gap-3 p-3 bg-slate-700/40 rounded-lg">
             <div class="text-xs text-slate-300">
@@ -929,14 +945,14 @@ button, .btn{
 
             <button id="toggle-visibility-btn" class="p-3 text-slate-400 hover:text-sky-300 transition duration-150"
               type="button" title="Show Token">
-              ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ°ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ
+              
             </button>
           </div>
         </div>
 
         <div class="relative mb-3">
           <label for="start-password" class="block text-sm font-medium mb-1 text-slate-300">Start Password</label>
-          <input type="password" id="start-password" placeholder="Type password to start botÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¦"
+          <input type="password" id="start-password" placeholder="Type password to start bot"
             class="w-full p-3 rounded-lg bg-slate-700 border border-slate-600 text-slate-50 focus:ring-sky-500 focus:border-sky-500"
             autocomplete="off" />
           <p id="pw-error-message" class="mt-2 text-sm text-red-300 hidden">
@@ -973,14 +989,14 @@ button, .btn{
 
       <!-- Insights -->
       <div class="card">
-        <h2 class="text-xl font-semibold mb-4 text-emerald-400">Market Insights ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¨</h2>
+        <h2 class="text-xl font-semibold mb-4 text-emerald-400">Market Insights </h2>
 
         <div class="flex flex-col sm:flex-row gap-4 mb-4">
           <button id="analyze-market-btn" class="flex-1 py-2 rounded-lg font-bold transition duration-200 bg-emerald-700 hover:bg-emerald-800 text-white shadow-lg">
-            Analyze Market Sentiment ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¨
+            Analyze Market Sentiment 
           </button>
           <button id="assess-risk-btn" class="flex-1 py-2 rounded-lg font-bold transition duration-200 bg-pink-700 hover:bg-pink-800 text-white shadow-lg">
-            Assess Strategy Risk ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¨
+            Assess Strategy Risk 
           </button>
         </div>
 
@@ -993,7 +1009,7 @@ button, .btn{
         </div>
 
         <div class="mt-3 text-xs text-slate-400">
-          Note: This is NOT financial advice. Signals can be wrong ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ always risk-manage.
+          Note: This is NOT financial advice. Signals can be wrong  always risk-manage.
         </div>
       </div>
 
@@ -1018,7 +1034,7 @@ function logLine(msg){
   }
 }
 
-// ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ
+// 
 // Transaction log lines: CLOSED | SYMBOL | CALL/PUT | +/-value
 function txLogLine(msg){
   const t = new Date().toLocaleTimeString();
@@ -1061,11 +1077,11 @@ const appState = {
 
   currentBalance:0,
 
-  // ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ
+  // 
 // Session tracking
   sessionProfit:0,     // net P/L
   sessionLoss:0,       // absolute loss total
-  // ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ
+  // 
 // Session limits (extra safety layer)
   sessionTrades: 0,
   sessionWins: 0,
@@ -1084,7 +1100,7 @@ const appState = {
   is_sellable:0,
   isSelling:false,
 
-  // ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ
+  // 
 // Track last trade meta so TX log shows CALL/PUT + symbol
   currentDirection:null,       // "CALL" / "PUT"
   currentSymbolAtEntry:null,   // e.g., "R_100"
@@ -1135,12 +1151,12 @@ const appState = {
     lastOHLC:null,
     hasTick:false,
 
-    /* ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ
+    /* 
  PRICE ACTION: closed 1s candle history (used by filter) */
     closedCandles: []  // {time, open, high, low, close}
   },
 
-  // ÃÂÃÂ¢ÃÂÃÂÃÂÃÂ Feature guards (added, default ON but safe)
+  //  Feature guards (added, default ON but safe)
   volGuard:{
     enabled:true,
     lookbackCandles:20,
@@ -1171,25 +1187,33 @@ const appState = {
     beAt:0.12,           // move to BE after +$0.12
     beBuffer:0.01        // keep +$0.01 cushion
   },
-  // ÃÂÃÂ¢ÃÂÃÂÃÂÃÂ Accumulator (True ACCU) - optional scrape mode
+  //  Accumulator (True ACCU) - optional scrape mode
   accu:{
     enabled:false,
     growthRate:0.01,      // 1%..5% (0.01..0.05)
     takeProfit:null,      // profit amount ($) for server-side auto-sell (limit_order.take_profit)
-    safe:true             // caps growth to 1ÃÂÃÂ¢ÃÂÃÂÃÂÃÂ2% when ON
+    safe:true             // caps growth to 1-2% when ON
   },
 
-  // Stage Ladder (Safe Mode Pyramid)
-  stageLadder:{
-    enabled:false,     // user toggle (locked until Protected Defaults unlocked)
-    hold:false,        // finished -> blocks new entries until reset
-    stage:0,           // 0=idle, 1..3 active stage for next entry
-    inFlightStage:null,// set when a ladder trade is opened; cleared on close
-    s1: null,
-    s2: null,
-    s3: null,
-    delaySec: 0
-  },
+  
+// Stage Ladder (Safe Mode Pyramid)
+// - OFF by default (locked until Protected Defaults unlocked)
+// - When enabled: it does NOT start on the first trade.
+//   The first trade after enabling is a PROBE. If PROBE wins -> Stage 1 starts on the NEXT trade.
+//   If PROBE loses -> auto disables back OFF.
+stageLadder:{
+  enabled:false,
+  hold:false,              // finished -> blocks new ladder entries until reset
+  awaitingProbe:true,      // waiting for the first trade outcome (probe)
+  probeInFlight:false,     // true while probe trade is open
+  stage:0,                 // next stage to run (1..3). 0 = not armed yet
+  inFlightStage:null,      // set when a ladder stage trade is opened; cleared on close
+  tpOverride:null,         // per-trade TP override while ladder stage is active (profit $)
+  s1:null, s1tp:null,
+  s2:null, s2tp:null,
+  s3:null, s3tp:null,
+  delaySec:0
+},
 
 
 
@@ -1429,7 +1453,7 @@ const aiLayer = {
       return { allow:false, reason:`Low Confidence (${conf}% < ${minC}%)`, cooldownMs: (this.regime === "DRAWDOWN") ? 90000 : 20000 };
     }
 
-    // Allow ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ record only on FINAL stage to avoid double-count
+    // Allow  record only on FINAL stage to avoid double-count
 // this.perf.allowCount += 1;
     if (ctx?.stage === "BEFORE_BUY"){
       this.perf.tradeTimes.push(now);
@@ -1461,7 +1485,7 @@ function updateAIGuardUI(){
 // ==== AI INTELLIGENCE LAYER END ====
 
 /* =========================================================
-   ÃÂÃÂ¢ÃÂÃÂÃÂÃÂ SAFETY FEATURES MODULE (non-invasive)
+    SAFETY FEATURES MODULE (non-invasive)
    - Does NOT change signal logic (direction decision stays the same)
    - Only adds extra "allow/block" gates + trade management (optional)
 ========================================================= */
@@ -1470,11 +1494,11 @@ function _getClosedCandles(){
   return appState.chart?.closedCandles || [];
 }
 
-/* ÃÂÃÂ¢ÃÂÃÂÃÂÃÂ Volatility Guard: blocks dead market + spike conditions */
+/*  Volatility Guard: blocks dead market + spike conditions */
 function passesVolatilityGuard(){
   if (!appState.volGuard?.enabled) return true;
 
-  // Ã¢ÂÂ Anti-stuck recovery: add a small internal cooldown so the bot keeps cycling
+  //  Anti-stuck recovery: add a small internal cooldown so the bot keeps cycling
   // and you never have to "stop/start" to recover.
   const now = Date.now();
   if (appState.volGuard._cooldownUntil && now < appState.volGuard._cooldownUntil){
@@ -1500,7 +1524,7 @@ function passesVolatilityGuard(){
     return false;
   }
 
-  // Too Quiet (optional) Ã¢ÂÂ off by default so Vol 25 1s can still scrape normally.
+  // Too Quiet (optional)  off by default so Vol 25 1s can still scrape normally.
   const blockTooQuiet = !!appState.volGuard.blockTooQuiet; // set true manually if you want this behavior
   const deadMult = (typeof appState.volGuard.deadMaxMult === "number") ? appState.volGuard.deadMaxMult : 0.35;
   if (blockTooQuiet && deadMult > 0 && avgRange > 0 && last < avgRange * deadMult){
@@ -1531,7 +1555,7 @@ function passesVolatilityGuard(){
   return true;
 }
 
-/* ÃÂÃÂ¢ÃÂÃÂÃÂÃÂ Candle Structure Checks: strong close, wick rejection, optional break+retest */
+/*  Candle Structure Checks: strong close, wick rejection, optional break+retest */
 function passesCandleStructure(direction){
   if (!appState.candleChecks?.enabled) return true;
   const candles = _getClosedCandles();
@@ -1603,7 +1627,7 @@ function passesCandleStructure(direction){
   return true;
 }
 
-/* ÃÂÃÂ¢ÃÂÃÂÃÂÃÂ HTF Trend Confirm (optional). Uses ticks_history candles like H4 trend code. */
+/*  HTF Trend Confirm (optional). Uses ticks_history candles like H4 trend code. */
 function requestHTFCandles(){
   if (!appState.htfConfirm?.enabled) return;
   if (!appState.ws || !appState.isAuthenticated) return;
@@ -1652,7 +1676,7 @@ function htfAllows(direction){
   return true;
 }
 
-/* ÃÂÃÂ¢ÃÂÃÂÃÂÃÂ Trade Management (optional)
+/*  Trade Management (optional)
    - Break-even: if profit >= beAt then close if falls back to (0 + buffer)
    - Trailing TP: lock in profit as it rises (soft trailing)
 */
@@ -1818,8 +1842,11 @@ const dom = {
   ladderToggle: $("ladder-toggle"),
   ladderSettings: $("ladder-settings"),
   ladderS1: $("ladder-s1"),
+  ladderS1TP: $("ladder-s1tp"),
   ladderS2: $("ladder-s2"),
+  ladderS2TP: $("ladder-s2tp"),
   ladderS3: $("ladder-s3"),
+  ladderS3TP: $("ladder-s3tp"),
   ladderDelay: $("ladder-delay"),
   ladderReset: $("ladder-reset"),
   ladderStatus: $("ladder-status"),
@@ -1920,9 +1947,9 @@ function checkSessionLimitsAndMaybeStop(){
   const pnl = Number(appState.sessionProfit || 0);
 
   if (appState.sessMaxProfit != null && pnl >= appState.sessMaxProfit){
-    appState.sessStopReason = `TP hit (${pnl.toFixed(2)} ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¥ ${Number(appState.sessMaxProfit).toFixed(2)})`;
+    appState.sessStopReason = `TP hit (${pnl.toFixed(2)}  ${Number(appState.sessMaxProfit).toFixed(2)})`;
   } else if (appState.sessMaxLoss != null && pnl <= -Math.abs(appState.sessMaxLoss)){
-    appState.sessStopReason = `SL hit (${pnl.toFixed(2)} ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¤ -${Math.abs(appState.sessMaxLoss).toFixed(2)})`;
+    appState.sessStopReason = `SL hit (${pnl.toFixed(2)}  -${Math.abs(appState.sessMaxLoss).toFixed(2)})`;
   } else if (appState.sessMaxTrades != null && appState.sessionTrades >= appState.sessMaxTrades){
     appState.sessStopReason = `Max trades hit (${appState.sessionTrades}/${appState.sessMaxTrades})`;
   } else if (appState.sessMaxWins != null && appState.sessionWins >= appState.sessMaxWins){
@@ -1991,28 +2018,38 @@ function updateUI(){
   }
   if (dom.priceActionStatus){
     const on = !!(appState.candleChecks && appState.candleChecks.enabled);
-    dom.priceActionStatus.textContent = on ? "
-
+    dom.priceActionStatus.textContent = on
+      ? "Price Action Filter is ENABLED."
+      : "Price Action Filter is DISABLED.";
+  }
 
   // Stage Ladder UI sync (Safe Mode Pyramid)
+
   if (appState.stageLadder){
     if (dom.ladderToggle && document.activeElement !== dom.ladderToggle) dom.ladderToggle.checked = !!appState.stageLadder.enabled;
     if (dom.ladderSettings) dom.ladderSettings.style.display = (appState.stageLadder.enabled ? "grid" : "none");
+
     if (dom.ladderS1 && document.activeElement !== dom.ladderS1) dom.ladderS1.value = appState.stageLadder.s1 != null ? String(appState.stageLadder.s1) : "";
+    if (dom.ladderS1TP && document.activeElement !== dom.ladderS1TP) dom.ladderS1TP.value = appState.stageLadder.s1tp != null ? String(appState.stageLadder.s1tp) : "";
+
     if (dom.ladderS2 && document.activeElement !== dom.ladderS2) dom.ladderS2.value = appState.stageLadder.s2 != null ? String(appState.stageLadder.s2) : "";
+    if (dom.ladderS2TP && document.activeElement !== dom.ladderS2TP) dom.ladderS2TP.value = appState.stageLadder.s2tp != null ? String(appState.stageLadder.s2tp) : "";
+
     if (dom.ladderS3 && document.activeElement !== dom.ladderS3) dom.ladderS3.value = appState.stageLadder.s3 != null ? String(appState.stageLadder.s3) : "";
+    if (dom.ladderS3TP && document.activeElement !== dom.ladderS3TP) dom.ladderS3TP.value = appState.stageLadder.s3tp != null ? String(appState.stageLadder.s3tp) : "";
+
     if (dom.ladderDelay && document.activeElement !== dom.ladderDelay) dom.ladderDelay.value = String(Number(appState.stageLadder.delaySec || 0));
+
     if (dom.ladderStatus){
       let t = "OFF";
       if (appState.stageLadder.enabled){
         if (appState.stageLadder.hold) t = "DONE (reset required)";
+        else if (appState.stageLadder.awaitingProbe) t = "PROBE (stages start after 1st WIN)";
         else if (appState.stageLadder.stage === 0) t = "ARMED (Stage 1 next)";
         else t = "ARMED (Stage " + appState.stageLadder.stage + " next)";
       }
       dom.ladderStatus.textContent = t;
     }
-  }
-Price Action Filter is ENABLED." : "Price Action Filter is DISABLED.";
   }
 
   setIfNotEditing(dom.stakeInput, appState.stakeAmount.toFixed(2));
@@ -2092,9 +2129,13 @@ Price Action Filter is ENABLED." : "Price Action Filter is DISABLED.";
 /* =========================================================
    STAGE LADDER (Safe Mode Pyramid)
    - OFF by default, unlocked via Protected Defaults
-   - Opens Stage 1 on next valid signal, then Stage 2/3 only after wins
-   - Does NOT stop bot; when finished it holds entries until reset
-   - Respects existing Max TP/SL + Session Limits + Accumulator TP
+   - NEW: does NOT start on the first trade.
+       * When you turn it ON, the next trade is a PROBE (normal settings).
+       * If PROBE wins -> Stage 1 runs on the NEXT trade.
+       * If PROBE loses -> Stage Ladder auto-disables back OFF.
+   - Each Stage can have its own TP (profit $). If blank, it falls back to your normal TP (or Accu Scrape TP).
+   - Does NOT stop the bot; when finished it holds entries until reset
+   - Still respects existing Max TP/SL + Session Limits + Cooldown + Accumulator TP
 ========================================================= */
 function ladderGetStakeForStage(stage){
   const L = appState.stageLadder || {};
@@ -2106,27 +2147,82 @@ function ladderGetStakeForStage(stage){
   if (stage === 3 && Number.isFinite(s3) && s3 > 0) return s3;
   return appState.stakeAmount;
 }
-function ladderReset(){
+function ladderGetTPForStage(stage){
+  const L = appState.stageLadder || {};
+  const t1 = Number(L.s1tp);
+  const t2 = Number(L.s2tp);
+  const t3 = Number(L.s3tp);
+  if (stage === 1 && Number.isFinite(t1) && t1 > 0) return t1;
+  if (stage === 2 && Number.isFinite(t2) && t2 > 0) return t2;
+  if (stage === 3 && Number.isFinite(t3) && t3 > 0) return t3;
+  return null; // fall back to normal TP / Accu TP
+}
+function ladderReset(opts){
   if (!appState.stageLadder) return;
-  appState.stageLadder.hold = false;
-  appState.stageLadder.stage = 0;
-  appState.stageLadder.inFlightStage = null;
+  const L = appState.stageLadder;
+
+  L.hold = false;
+  L.stage = 0;
+  L.inFlightStage = null;
+  L.tpOverride = null;
+
+  // Reset goes back to PROBE mode if enabled; otherwise it is fully OFF.
+  L.awaitingProbe = true;
+  L.probeInFlight = false;
+
   updateUI();
   logLine("Stage Ladder reset.");
+}
+function ladderDisableAuto(reason){
+  const L = appState.stageLadder;
+  if (!L) return;
+  L.enabled = false;
+  L.hold = false;
+  L.stage = 0;
+  L.inFlightStage = null;
+  L.tpOverride = null;
+  L.awaitingProbe = true;
+  L.probeInFlight = false;
+  if (dom.ladderToggle) dom.ladderToggle.checked = false;
+  updateUI();
+  logLine("Stage Ladder auto-disabled: " + reason);
 }
 function ladderOnTradeClosed(profit){
   const L = appState.stageLadder;
   if (!L || !L.enabled) return;
-  // Only advance if this closed trade belongs to ladder
+
+  // Always clear any TP override when a trade closes
+  L.tpOverride = null;
+
+  const win = (Number(profit) > 0);
+
+  // --- PROBE flow: first trade after enabling ---
+  if (L.awaitingProbe && L.probeInFlight){
+    L.probeInFlight = false;
+
+    if (win){
+      L.awaitingProbe = false;
+      L.hold = false;
+      L.stage = 1; // Stage 1 will run on the NEXT trade
+      logLine("Stage Ladder: PROBE WIN -> Stage 1 armed for next trade.");
+    } else {
+      ladderDisableAuto("PROBE LOSS");
+      return;
+    }
+    updateUI();
+    return;
+  }
+
+  // --- Stage flow ---
+  // Only advance if this closed trade belongs to a ladder stage
   if (L.inFlightStage == null) return;
 
   const wasStage = Number(L.inFlightStage);
   L.inFlightStage = null;
 
-  const win = (Number(profit) > 0);
   if (!win){
-    L.hold = true; // lose ends the ladder
-    logLine("Stage Ladder: LOSS -> DONE (hold). Reset required.");
+    L.hold = true; // lose ends the ladder (does NOT stop bot)
+    logLine("Stage Ladder: LOSS at Stage " + wasStage + " -> DONE (hold). Reset required.");
     updateUI();
     return;
   }
@@ -2158,7 +2254,7 @@ function setSettingsLock(isLocked){
     dom.tpInput, dom.slInput, dom.maxTradesInput, dom.cooldownInput,
     dom.modeSelect, dom.safeToggle, dom.priceActionToggle, dom.autoResumeToggle, dom.autoSellToggle,
     dom.accuToggle, dom.accuSafe, dom.accuTP, dom.accuGrowth,
-    dom.ladderToggle, dom.ladderS1, dom.ladderS2, dom.ladderS3, dom.ladderDelay, dom.ladderReset,
+    dom.ladderToggle, dom.ladderS1, dom.ladderS1TP, dom.ladderS2, dom.ladderS2TP, dom.ladderS3, dom.ladderS3TP, dom.ladderDelay, dom.ladderReset,
     dom.sessLimitEnabled, dom.sessMaxProfit, dom.sessMaxLoss, dom.sessMaxTrades, dom.sessMaxWins, dom.sessMaxLosses, dom.sessLimitReset
   ].filter(Boolean);
 
@@ -2168,6 +2264,24 @@ function setSettingsLock(isLocked){
     try{ if (isLocked && document.activeElement === el) el.blur(); }catch(_){}
     el.disabled = isLocked;
   });
+
+  // Force Stage Ladder OFF when locked (matches "Protected Defaults" rule)
+  if (isLocked){
+    try{
+      if (appState.stageLadder){
+        appState.stageLadder.enabled = false;
+        appState.stageLadder.hold = false;
+        appState.stageLadder.awaitingProbe = true;
+        appState.stageLadder.probeInFlight = false;
+        appState.stageLadder.stage = 0;
+        appState.stageLadder.inFlightStage = null;
+        appState.stageLadder.tpOverride = null;
+      }
+      if (dom.ladderToggle) dom.ladderToggle.checked = false;
+      if (dom.ladderSettings) dom.ladderSettings.style.display = "none";
+      if (dom.ladderStatus) dom.ladderStatus.textContent = "OFF";
+    }catch(_){}
+  }
 
   // Accumulator growth buttons are not native inputs; lock the whole Accu settings box.
   if (dom.accuSettings){
@@ -2215,16 +2329,33 @@ function updateStateFromUI(){
     }catch(_){}
 
 
-    // Stage Ladder (Safe Mode)
-    if (!appState.stageLadder) appState.stageLadder = {enabled:false, hold:false, stage:0, inFlightStage:null, s1:null, s2:null, s3:null, delaySec:0};
-    if (dom.ladderToggle){ appState.stageLadder.enabled = !!dom.ladderToggle.checked; }
-    if (dom.ladderS1){ const v = Number(dom.ladderS1.value); if (Number.isFinite(v) && v>0) appState.stageLadder.s1 = v; }
-    if (dom.ladderS2){ const v = Number(dom.ladderS2.value); if (Number.isFinite(v) && v>0) appState.stageLadder.s2 = v; }
-    if (dom.ladderS3){ const v = Number(dom.ladderS3.value); if (Number.isFinite(v) && v>0) appState.stageLadder.s3 = v; }
-    if (dom.ladderDelay){ const v = Number(dom.ladderDelay.value); if (Number.isFinite(v) && v>=0) appState.stageLadder.delaySec = v; }
+    
+// Stage Ladder (Safe Mode)
+if (!appState.stageLadder) appState.stageLadder = {
+  enabled:false, hold:false, awaitingProbe:true, probeInFlight:false,
+  stage:0, inFlightStage:null, tpOverride:null,
+  s1:null, s1tp:null, s2:null, s2tp:null, s3:null, s3tp:null,
+  delaySec:0
+};
+
+// Toggle is locked behind Protected Defaults (setSettingsLock handles forced OFF on lock)
+if (dom.ladderToggle){ appState.stageLadder.enabled = !!dom.ladderToggle.checked; }
+
+// Stakes
+if (dom.ladderS1){ const v = Number(dom.ladderS1.value); appState.stageLadder.s1 = (Number.isFinite(v) && v>0) ? v : null; }
+if (dom.ladderS2){ const v = Number(dom.ladderS2.value); appState.stageLadder.s2 = (Number.isFinite(v) && v>0) ? v : null; }
+if (dom.ladderS3){ const v = Number(dom.ladderS3.value); appState.stageLadder.s3 = (Number.isFinite(v) && v>0) ? v : null; }
+
+// Per-stage TP overrides (profit $). Leave blank to use your normal TP / Accu TP.
+if (dom.ladderS1TP){ const v = Number(dom.ladderS1TP.value); appState.stageLadder.s1tp = (Number.isFinite(v) && v>0) ? v : null; }
+if (dom.ladderS2TP){ const v = Number(dom.ladderS2TP.value); appState.stageLadder.s2tp = (Number.isFinite(v) && v>0) ? v : null; }
+if (dom.ladderS3TP){ const v = Number(dom.ladderS3TP.value); appState.stageLadder.s3tp = (Number.isFinite(v) && v>0) ? v : null; }
+
+// Delay between stages (sec)
+if (dom.ladderDelay){ const v = Number(dom.ladderDelay.value); appState.stageLadder.delaySec = (Number.isFinite(v) && v>=0) ? v : 0; }
 
 
-    // Session limits (extra safety)
+// Session limits (extra safety) (extra safety)
     syncSessionLimitsFromUI();
 
 
@@ -2256,7 +2387,7 @@ function loadDefaults(mode){
   appState.useTrendFilter = !!d.trend;
   appState.breakoutStrict = !!d.strict;
 
-  // ÃÂÃÂ¢ÃÂÃÂÃÂÃÂ Extra guards per mode (safe defaults)
+  //  Extra guards per mode (safe defaults)
   appState.volGuard.enabled = true;
   appState.candleChecks.enabled = true;
   appState.candleChecks.requireBreakRetest = !!appState.breakoutStrict;
@@ -2266,7 +2397,7 @@ function loadDefaults(mode){
   appState.trend.enabled = appState.useTrendFilter;
   appState.trend.status = appState.trend.enabled ? "LOADING" : "OFF";
 
-  // ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ
+  // 
 // if we are already connected, refresh H4 trend immediately when switching to MOMENTUM/H4
   appState.trend.lastUpdated = 0;
   if (appState.trend.enabled && appState.isAuthenticated) requestH4Candles();
@@ -2319,7 +2450,7 @@ function initChart(){
       series = chart.addSeries(LightweightCharts.LineSeries, { priceLineVisible:false, lastValueVisible:true });
     }
     seriesKind = "line";
-    logLine("Chart fallback ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ line series (candles unavailable).");
+    logLine("Chart fallback  line series (candles unavailable).");
   }
 
   if (dom.chartStatus) setPill(dom.chartStatus, "READY", "bg-emerald-700 text-white");
@@ -2376,7 +2507,7 @@ function updateSeriesFromTick(price){
     c.close = price;
     try{ series.update(c); }catch(_){}
   } else {
-    /* ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ
+    /* 
  PRICE ACTION: finalize previous candle into history */
     if (appState.chart.lastOHLC){
       appState.chart.closedCandles.push({ ...appState.chart.lastOHLC });
@@ -2408,7 +2539,7 @@ function trendClassify(emaFast, emaSlow){
   return "NEUTRAL";
 }
 
-/* ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ
+/* 
  FIXED: Proper Deriv candles request uses ticks_history + style:"candles"
    Response comes back as msg_type:"history" with history.candles[] */
 function requestH4Candles(){
@@ -2474,7 +2605,7 @@ function passesBreakoutFilter(direction){
 }
 
 /* =========================================================
-   ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ
+   
  PRICE ACTION FILTER (ALL 3 MODES)
    - Uses real 1s candles from chart aggregator
    - Blocks: doji/weak body, wick traps, fake range breakouts
@@ -2512,7 +2643,7 @@ function paIsFakeBreakout(last, rangeHi, rangeLo, direction, buffer){
 }
 
 function passesPriceActionFilter(direction){
-  // Ã¢ÂÂ Respect Price Action toggle: when OFF, never block trades
+  //  Respect Price Action toggle: when OFF, never block trades
   if (appState.candleChecks && appState.candleChecks.enabled === false){
     return true;
   }
@@ -2603,7 +2734,7 @@ function updateClustering(price){
 
   if (sameCount >= 3){
     dom.clusterAlert?.classList.remove("hidden");
-    if (dom.clusterText) dom.clusterText.textContent = `Clustering Detected: ${sameCount} repeats in last 5 ticks ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ possible reversal/indecision.`;
+    if (dom.clusterText) dom.clusterText.textContent = `Clustering Detected: ${sameCount} repeats in last 5 ticks  possible reversal/indecision.`;
   } else {
     dom.clusterAlert?.classList.add("hidden");
   }
@@ -2614,7 +2745,7 @@ function updateClustering(price){
 ========================================================= */
 function computeConfidence(){
   const buf = appState.tickBuffer;
-  if (buf.length < appState.tickBufferSize) return { score: 0, signal: "WAIT", notes: "Waiting ticksÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¦" };
+  if (buf.length < appState.tickBufferSize) return { score: 0, signal: "WAIT", notes: "Waiting ticks..." };
 
   const first = buf[0];
   const last = buf[buf.length-1];
@@ -2641,7 +2772,7 @@ function computeConfidence(){
   if (dir && score >= 70) signal = (dir === "CALL") ? "BUY" : "SELL";
   else if (dir && score >= 45) signal = "WATCH";
 
-  const notes = `ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ=${delta.toFixed(4)} | Mode=${appState.mode} | Trend=${appState.trend.enabled ? appState.trend.status : "OFF"} | Breakout=${breakoutOk ? "OK" : "WAIT"}`;
+  const notes = `=${delta.toFixed(4)} | Mode=${appState.mode} | Trend=${appState.trend.enabled ? appState.trend.status : "OFF"} | Breakout=${breakoutOk ? "OK" : "WAIT"}`;
   return { score, signal, notes };
 }
 
@@ -2777,7 +2908,7 @@ function startBot(){
   appState.chart.hasTick = false;
   appState.lastDigits = [];
 
-  // ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ
+  // 
 // PRICE ACTION: reset candle history on start
   appState.chart.closedCandles = [];
 
@@ -2854,7 +2985,7 @@ function handleResponse(res){
       appState.trend.lastUpdated = 0;
       if (appState.trend.enabled){
         appState.trend.status = "LOADING";
-        requestH4Candles(); // ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ
+        requestH4Candles(); // 
 // now correct request
       } else {
         appState.trend.status = "OFF";
@@ -2908,7 +3039,7 @@ function handleResponse(res){
       break;
     }
 
-    /* ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ
+    /* 
  FIXED: H4 candles now arrive as msg_type:"history" */
     case "history":{
       // H4 trend + optional HTF confirm both use msg_type:"history"
@@ -3112,17 +3243,24 @@ function checkAndEnterTrade(){
   }
 
 
-  // Stage Ladder gate (Safe Mode Pyramid)
-  if (appState.stageLadder && appState.stageLadder.enabled){
-    if (appState.stageLadder.hold){
-      if (dom.blockReasonDisplay) dom.blockReasonDisplay.textContent = "Stage Ladder DONE (reset required)";
-      return;
-    }
-    // If armed and idle, Stage 1 is next
-    if (appState.stageLadder.stage === 0) appState.stageLadder.stage = 1;
+
+// Stage Ladder gate (Safe Mode Pyramid)
+if (appState.stageLadder && appState.stageLadder.enabled){
+  const L = appState.stageLadder;
+  if (L.hold){
+    if (dom.blockReasonDisplay) dom.blockReasonDisplay.textContent = "Stage Ladder DONE (reset required)";
+    return;
   }
 
-  const direction = getMomentumDirection();
+  // NEW: while awaitingProbe, we do NOT arm Stage 1 and do NOT change stake.
+  // Probe is the next normal trade; if it wins, stages start on the following trade.
+  if (!L.awaitingProbe){
+    // If armed and idle, Stage 1 is next
+    if (L.stage === 0) L.stage = 1;
+  }
+}
+
+const direction = getMomentumDirection();
   if (!direction){
     if (dom.blockReasonDisplay) dom.blockReasonDisplay.textContent = "Waiting Good Move";
     return;
@@ -3143,24 +3281,24 @@ function checkAndEnterTrade(){
     }
   }
 
-  /* ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ
+  /* 
  PRICE ACTION GATE (AUTO) */
   if (!passesPriceActionFilter(direction)){
     // block reason already set inside the filter
     return;
   }
 
-  /* ÃÂÃÂ¢ÃÂÃÂÃÂÃÂ VOLATILITY GUARD (AUTO) */
+  /*  VOLATILITY GUARD (AUTO) */
   if (!passesVolatilityGuard()){
     return;
   }
 
-  /* ÃÂÃÂ¢ÃÂÃÂÃÂÃÂ CANDLE STRUCTURE CHECKS (AUTO) */
+  /*  CANDLE STRUCTURE CHECKS (AUTO) */
   if (!passesCandleStructure(direction)){
     return;
   }
 
-  /* ÃÂÃÂ¢ÃÂÃÂÃÂÃÂ HTF CONFIRM (OPTIONAL) */
+  /*  HTF CONFIRM (OPTIONAL) */
   if (appState.htfConfirm?.enabled){
     if (appState.htfConfirm.status === "OFF") requestHTFCandles();
     if (!htfAllows(direction)){
@@ -3170,15 +3308,36 @@ function checkAndEnterTrade(){
   }
 
   if (dom.blockReasonDisplay) dom.blockReasonDisplay.textContent = "None";
-  let stakeToUse = appState.stakeAmount;
-  if (appState.stageLadder && appState.stageLadder.enabled){
-    stakeToUse = ladderGetStakeForStage(appState.stageLadder.stage || 1);
-    appState.stageLadder.inFlightStage = appState.stageLadder.stage || 1;
-    // optional delay between stages
-    const d = Number(appState.stageLadder.delaySec || 0);
+
+let stakeToUse = appState.stakeAmount;
+
+if (appState.stageLadder && appState.stageLadder.enabled){
+  const L = appState.stageLadder;
+
+  if (L.awaitingProbe){
+    // PROBE trade uses normal stake & normal TP.
+    // Mark probe in-flight so we can evaluate its result.
+    if (!L.probeInFlight){
+      L.probeInFlight = true;
+      logLine("Stage Ladder: PROBE trade started (normal settings).");
+      updateUI();
+    }
+    L.inFlightStage = null;
+    L.tpOverride = null;
+  } else {
+    const stageNum = Number(L.stage || 1);
+    stakeToUse = ladderGetStakeForStage(stageNum);
+
+    L.inFlightStage = stageNum;
+    L.tpOverride = ladderGetTPForStage(stageNum);
+
+    // optional delay between stages (respects your cooldown system by extending cooldownUntil)
+    const d = Number(L.delaySec || 0);
     if (d > 0) appState.cooldownUntil = Math.max(appState.cooldownUntil || 0, Date.now() + (d*1000));
   }
-  enterTrade(direction, stakeToUse);
+}
+
+enterTrade(direction, stakeToUse);
 }
 
 function enterTrade(direction, stake){
@@ -3225,7 +3384,7 @@ function enterTrade(direction, stake){
   // Build proposal request (ACCU uses growth_rate + optional limit_order.take_profit)
   let req;
   if (appState.accu && appState.accu.enabled){
-    // Safe Mode: cap growth to 1ÃÂÃÂ¢ÃÂÃÂÃÂÃÂ2%
+    // Safe Mode: cap growth to 1-2%
     const safe = !!appState.accu.safe;
     const growth = Math.max(0.01, Math.min(0.05, Number(appState.accu.growthRate || 0.01)));
     const growthRate = safe ? Math.min(growth, 0.02) : growth;
@@ -3241,8 +3400,20 @@ function enterTrade(direction, stake){
     };
 
     // Server-side auto sell by profit target (TP)
-    const tp = Number(appState.accu.takeProfit);
-    if (Number.isFinite(tp) && tp > 0){
+    // If Stage Ladder is running a stage, its per-stage TP override wins; otherwise use your Accu Scrape TP.
+    let tp = null;
+    try{
+      const L = appState.stageLadder;
+      const tpo = Number(L && L.enabled ? L.tpOverride : null);
+      if (Number.isFinite(tpo) && tpo > 0) tp = tpo;
+    }catch(_){}
+
+    if (tp === null){
+      const base = Number(appState.accu.takeProfit);
+      tp = (Number.isFinite(base) && base > 0) ? base : null;
+    }
+
+    if (tp !== null){
       req.limit_order = { take_profit: tp };
     }
   } else {
@@ -3279,13 +3450,20 @@ function checkProfitAndLoss(contract){
 
   if (!appState.autoSellEnabled) return;
 
-  // ÃÂÃÂ¢ÃÂÃÂÃÂÃÂ Optional trade management (non-invasive). If it triggers, it sells and returns.
+  //  Optional trade management (non-invasive). If it triggers, it sells and returns.
   if (appState.currentContractId){
     if (applyTradeManagement(currentProfit)) return;
   }
 
-  // Default TP behavior (unchanged)
-  if (currentProfit >= appState.tpUSD){
+  // Default TP behavior (supports Stage Ladder per-stage TP override when active)
+  let effTP = appState.tpUSD;
+  try{
+    const L = appState.stageLadder;
+    const tpo = Number(L && L.enabled ? L.tpOverride : null);
+    if (Number.isFinite(tpo) && tpo > 0) effTP = tpo;
+  }catch(_){}
+
+  if (currentProfit >= effTP){
     sellContract();
     return;
   }
@@ -3329,31 +3507,31 @@ function fallbackInsight(type){
     const conf = computeConfidence();
     return [
       `Safe Entry Suggestion (Fallback):`,
-      `ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ Symbol: ${appState.symbol}`,
-      `ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ Mode: ${appState.mode}`,
-      `ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ Trend Filter: ${trend}`,
-      `ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ Momentum: ${dir} | ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ=${delta.toFixed(4)}`,
-      `ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ Breakout Strict: ${appState.breakoutStrict ? "ON" : "OFF"}`,
-      `ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ Confidence: ${conf.score}% | Signal: ${conf.signal}`,
+      ` Symbol: ${appState.symbol}`,
+      ` Mode: ${appState.mode}`,
+      ` Trend Filter: ${trend}`,
+      ` Momentum: ${dir} | =${delta.toFixed(4)}`,
+      ` Breakout Strict: ${appState.breakoutStrict ? "ON" : "OFF"}`,
+      ` Confidence: ${conf.score}% | Signal: ${conf.signal}`,
       ``,
       `Suggested Action:`,
-      conf.signal === "BUY" ? "ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ BUY setup is strong (conditions passing)" :
-      conf.signal === "SELL" ? "ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ SELL setup is strong (conditions passing)" :
-      conf.signal === "WATCH" ? "ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ WATCH (signal forming, wait cleaner move)" :
-      "ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ WAIT (not enough confirmation)",
+      conf.signal === "BUY" ? " BUY setup is strong (conditions passing)" :
+      conf.signal === "SELL" ? " SELL setup is strong (conditions passing)" :
+      conf.signal === "WATCH" ? " WATCH (signal forming, wait cleaner move)" :
+      " WAIT (not enough confirmation)",
       ``,
-      `Risk Level: MEDIUM (synthetics move fast ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ keep stake small).`
+      `Risk Level: MEDIUM (synthetics move fast  keep stake small).`
     ].join("\n");
   }
 
   return [
     `Risk Check (Fallback):`,
-    `ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ Stake: $${appState.stakeAmount.toFixed(2)}`,
-    `ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ TP: $${appState.tpUSD.toFixed(2)} | SL: $${appState.slUSD.toFixed(2)} (SL sells only if Safe Mode ON)`,
-    `ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ Duration: ${appState.duration} ${appState.durationUnit}`,
-    `ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ Cooldown: ${appState.cooldownDuration}s`,
-    `ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ Auto Trading: ${appState.autoTradingEnabled ? "ON" : "OFF"}`,
-    `ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ Session P/L: $${appState.sessionProfit.toFixed(2)} | Loss: $${appState.sessionLoss.toFixed(2)}`
+    ` Stake: $${appState.stakeAmount.toFixed(2)}`,
+    ` TP: $${appState.tpUSD.toFixed(2)} | SL: $${appState.slUSD.toFixed(2)} (SL sells only if Safe Mode ON)`,
+    ` Duration: ${appState.duration} ${appState.durationUnit}`,
+    ` Cooldown: ${appState.cooldownDuration}s`,
+    ` Auto Trading: ${appState.autoTradingEnabled ? "ON" : "OFF"}`,
+    ` Session P/L: $${appState.sessionProfit.toFixed(2)} | Loss: $${appState.sessionLoss.toFixed(2)}`
   ].join("\n");
 }
 
@@ -3411,7 +3589,7 @@ function manualPlaceTrade(mult=1){
     return;
   }
 
-  /* ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ
+  /* 
  PRICE ACTION GATE (MANUAL) */
   if (!passesPriceActionFilter(dir)){
     updateTradeStatus("WAIT: price action", "bg-yellow-600 text-white");
@@ -3489,7 +3667,7 @@ function appendUsdQuoteSymbolsToSelect(activeList){
     const sep = document.createElement("option");
     sep.value = sepValue;
     sep.disabled = true;
-    sep.textContent = "ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ USD Markets (Auto) ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ";
+    sep.textContent = " USD Markets (Auto) ";
     dom.symbolSelect.appendChild(sep);
     existing.add(sepValue);
   }
@@ -3529,7 +3707,7 @@ function setSymbol(newSymbol){
   appState.chart.lastCandleTime = 0;
   appState.chart.lastOHLC = null;
 
-  // ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ
+  // 
 // PRICE ACTION: reset candle history on symbol switch
   appState.chart.closedCandles = [];
 
@@ -3539,7 +3717,7 @@ function setSymbol(newSymbol){
   if (appState.isAuthenticated){
     subscribeTicks(newSymbol);
 
-    // ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ
+    // 
 // refresh trend candles for the NEW symbol
     if (appState.trend.enabled) requestH4Candles();
 
@@ -3581,43 +3759,68 @@ document.addEventListener("DOMContentLoaded", () => {
         appState.accu.enabled = !!dom.accuToggle.checked;
         updateUI();
         logLine(`Accumulator: ${appState.accu.enabled ? "ON" : "OFF"}`);
-
-    // =========================
-    // UI wiring (Stage Ladder)
-    // =========================
-    if (dom.ladderToggle){
-      dom.ladderToggle.addEventListener("change", () => {
-        if (!appState.stageLadder) appState.stageLadder = {enabled:false, hold:false, stage:0, inFlightStage:null, s1:null, s2:null, s3:null, delaySec:0};
-        // If locked, ignore toggle
-        if (appState.isSettingsLocked){
-          dom.ladderToggle.checked = false;
-          appState.stageLadder.enabled = false;
-          return;
-        }
-        appState.stageLadder.enabled = !!dom.ladderToggle.checked;
-        // When enabling: arm Stage 1
-        if (appState.stageLadder.enabled){
-          appState.stageLadder.hold = false;
-          appState.stageLadder.stage = 0;
-          appState.stageLadder.inFlightStage = null;
-          logLine("Stage Ladder: ON (armed).");
-        } else {
-          ladderReset();
-          logLine("Stage Ladder: OFF.");
-        }
-        updateStateFromUI();
-        updateUI();
-      });
-    }
-    if (dom.ladderReset){
-      dom.ladderReset.addEventListener("click", (e) => {
-        e.preventDefault();
-        ladderReset();
       });
     }
 
-      });
+    // =========================
+    
+// =========================
+// UI wiring (Stage Ladder)
+// =========================
+if (dom.ladderToggle){
+  dom.ladderToggle.addEventListener("change", () => {
+    if (!appState.stageLadder) appState.stageLadder = {
+      enabled:false, hold:false, awaitingProbe:true, probeInFlight:false,
+      stage:0, inFlightStage:null, tpOverride:null,
+      s1:null, s1tp:null, s2:null, s2tp:null, s3:null, s3tp:null,
+      delaySec:0
+    };
+
+    // If locked, ignore toggle
+    if (appState.isSettingsLocked){
+      dom.ladderToggle.checked = false;
+      appState.stageLadder.enabled = false;
+      updateUI();
+      return;
     }
+
+    appState.stageLadder.enabled = !!dom.ladderToggle.checked;
+
+    if (appState.stageLadder.enabled){
+      // NEW behavior: probe first, stages start on second trade if probe wins.
+      appState.stageLadder.hold = false;
+      appState.stageLadder.awaitingProbe = true;
+      appState.stageLadder.probeInFlight = false;
+      appState.stageLadder.stage = 0;
+      appState.stageLadder.inFlightStage = null;
+      appState.stageLadder.tpOverride = null;
+      logLine("Stage Ladder: ON (PROBE mode). First trade is normal; stages start next trade if WIN.");
+    } else {
+      // Fully off
+      appState.stageLadder.hold = false;
+      appState.stageLadder.awaitingProbe = true;
+      appState.stageLadder.probeInFlight = false;
+      appState.stageLadder.stage = 0;
+      appState.stageLadder.inFlightStage = null;
+      appState.stageLadder.tpOverride = null;
+      logLine("Stage Ladder: OFF.");
+    }
+
+    updateStateFromUI();
+    updateUI();
+  });
+}
+
+if (dom.ladderReset){
+  dom.ladderReset.addEventListener("click", (e) => {
+    e.preventDefault();
+    // Reset keeps ladder enabled if toggle is ON, and returns to PROBE mode.
+    ladderReset({ keepEnabled: !!(dom.ladderToggle && dom.ladderToggle.checked) });
+    if (dom.ladderToggle && dom.ladderToggle.checked){
+      logLine("Stage Ladder: reset -> PROBE mode.");
+    }
+  });
+}
 
     // Accumulator Safe Mode
     if (dom.accuSafe){
@@ -3759,7 +3962,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     dom.accuSafe?.addEventListener("change", (e) => {
       appState.accu.safe = !!e.target.checked;
-      // if safe is ON, clamp growth to 1ÃÂÃÂ¢ÃÂÃÂÃÂÃÂ2%
+      // if safe is ON, clamp growth to 1-2%
       if (appState.accu.safe && appState.accu.growthRate > 0.02){
         appState.accu.growthRate = 0.02;
       }
